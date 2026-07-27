@@ -35,7 +35,6 @@ export interface AdminDashboardData {
     pendingRssSourceApplicationCount: number
     pendingOAuthClientCount: number
     pendingPaymentApplicationCount: number
-    pendingAdOrderCount: number
     activeUserCount7d: number
     mutedUserCount: number
     bannedUserCount: number

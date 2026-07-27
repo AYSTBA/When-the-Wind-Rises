@@ -13,7 +13,6 @@ import {
   Info,
   KeyRound,
   LayoutGrid,
-  Megaphone,
   MessageSquare,
   Rss,
   Shield,
@@ -302,13 +301,6 @@ export function AdminOverviewDashboard({
               value={data.overview.pendingRssSourceApplicationCount}
               description="审核用户提交的 RSS 博客收录申请"
               icon={<Rss className="h-3.5 w-3.5" />}
-            />
-            <PendingReviewCard
-              href="/admin/apps/self-serve-ads"
-              title="广告审核"
-              value={data.overview.pendingAdOrderCount}
-              description="审核自助推广广告位申请内容"
-              icon={<Megaphone className="h-3.5 w-3.5" />}
             />
             <PendingReviewCard
               href="/admin?tab=reports"

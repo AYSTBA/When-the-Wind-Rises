@@ -1,8 +1,5 @@
 import { unstable_cache } from "next/cache"
 
-import { countPendingSelfServeOrders } from "@/db/self-serve-ads"
-
-
 import { prisma } from "@/db/client"
 import { Prisma, type Prisma as PrismaType } from "@/db/types"
 import { BUSINESS_TIME_ZONE, getBusinessDayRange, getLocalDateKey } from "@/lib/formatters"
@@ -58,7 +55,6 @@ async function getAdminDashboardRawDataUncached() {
     commentStats,
     reportStats,
     siteStats,
-    pendingAdOrderCount,
     recentPosts,
     recentComments,
     userTrendMap,
@@ -158,7 +154,6 @@ async function getAdminDashboardRawDataUncached() {
         (SELECT COALESCE(SUM("followerCount"), 0) FROM "Board") AS "totalFollowerCount",
         (SELECT COUNT(*) FROM "UserCheckInLog" WHERE "checkedInOn" = ${todayKey}) AS "todayCheckInUserCount"
     `),
-    countPendingSelfServeOrders("self-serve-ads"),
     prisma.post.findMany({
       orderBy: { createdAt: "desc" },
       take: 8,
@@ -220,7 +215,6 @@ async function getAdminDashboardRawDataUncached() {
       pendingRssSourceApplicationCount: toNumber(resolvedSiteStats?.pendingRssSourceApplicationCount),
       pendingOAuthClientCount: toNumber(resolvedSiteStats?.pendingOAuthClientCount),
       pendingPaymentApplicationCount: toNumber(resolvedSiteStats?.pendingPaymentApplicationCount),
-      pendingAdOrderCount,
       activeUserCount7d: toNumber(resolvedUserStats?.activeUserCount7d),
       mutedUserCount: toNumber(resolvedUserStats?.mutedUserCount),
       bannedUserCount: toNumber(resolvedUserStats?.bannedUserCount),

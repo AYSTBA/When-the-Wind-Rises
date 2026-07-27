@@ -9,11 +9,10 @@ import { getAdminActorPermissionState } from "@/lib/admin-page-auth"
 import { getHostAppBySlug } from "@/lib/apps"
 import type { AdminManagementTier, AdminPermissionKey } from "@/lib/admin-permission-policy"
 
-import { getGobangAppConfig, getSelfServeAdsAppConfig, getYinYangContractAppConfig } from "@/lib/app-config"
+import { getGobangAppConfig, getYinYangContractAppConfig } from "@/lib/app-config"
 import { AiReplyAdminPage } from "@/components/admin/ai-reply-admin-page"
 import { GobangAdminPage } from "@/components/admin/gobang-admin-page"
 import { RssHarvestAdminPage } from "@/components/admin/rss-harvest-admin-page"
-import { SelfServeAdsAdminPage } from "@/components/admin/self-serve-ads-admin-page"
 import { YinYangContractAdminPage } from "@/components/admin/yinyang-contract-admin-page"
 import { getAiReplyAdminData } from "@/lib/ai-reply"
 import { getRssAdminData } from "@/lib/rss-harvest"
@@ -110,11 +109,6 @@ export default async function AdminAppPage(props: PageProps<"/admin/apps/[app]">
       GobangAdminPage as ComponentType<ConfigAdminComponentProps>,
       "gobang",
       await getGobangAppConfig(),
-    ),
-    "self-serve-ads": async () => renderConfigPage(
-      SelfServeAdsAdminPage as ComponentType<ConfigAdminComponentProps>,
-      "self-serve-ads",
-      await getSelfServeAdsAppConfig(),
     ),
     "yinyang-contract": async () => renderConfigPage(
       YinYangContractAdminPage as ComponentType<ConfigAdminComponentProps>,
