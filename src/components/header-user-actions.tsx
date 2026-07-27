@@ -6,7 +6,6 @@ import { Gem, LayoutDashboard, LogOut, Medal, MessageSquareMore, Settings, Trend
 
 import { useInboxRealtime } from "@/components/inbox-realtime-provider"
 import { useCurrentUser, type CurrentUserClient } from "@/components/current-user-provider"
-import { HeaderNotificationsPopover } from "@/components/notification/header-notifications-popover"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   DropdownMenu,
@@ -234,8 +233,6 @@ export function HeaderUserActions({ user: userOverride, messageEnabled = true }:
   return (
     <>
       <div className="flex items-center gap-1 sm:hidden">
-        <HeaderNotificationsPopover unreadCount={unreadNotificationCount} badgeClassName="right-0.5 top-0.5" />
-
         {messageEnabled ? (
           <Link href="/messages" className="relative">
             <Button variant="ghost" size="icon" className="size-8 rounded-md">
@@ -263,8 +260,6 @@ export function HeaderUserActions({ user: userOverride, messageEnabled = true }:
       </div>
 
       <div className="hidden items-center gap-1.5 sm:flex">
-        <HeaderNotificationsPopover unreadCount={unreadNotificationCount} badgeClassName="right-0.5 top-0.5" />
-
         {messageEnabled ? (
           <Link href="/messages" className="relative">
             <Button variant="ghost" className="h-8 rounded-md px-3 gap-1.5">

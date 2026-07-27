@@ -4,7 +4,7 @@ import { FolderOpen, Tag } from "lucide-react"
 import { AddonSlotRenderer } from "@/addons-host"
 import { PostTableOfContents } from "@/components/post/post-table-of-contents"
 import { PostTagManager } from "@/components/post/post-tag-manager"
-import { SelfServeAdsSidebarPanelSlot } from "@/components/self-serve-ads-sidebar-panel"
+
 import { SidebarUserCard, type SidebarUserCardData } from "@/components/user/sidebar-user-card"
 import { getPostPath } from "@/lib/post-links"
 import type { MarkdownHeadingItem } from "@/lib/markdown/toc"
@@ -59,7 +59,7 @@ export function PostSidebarPanels({
   return (
     <div className="post-sidebar-panels mobile-sidebar-stack flex min-w-0 w-full max-w-full flex-col gap-4 lg:h-full">
       <AddonSlotRenderer slot="post.sidebar.top" />
-      <SelfServeAdsSidebarPanelSlot surface="post" slot="home-right-top" />
+
       <SidebarUserCard user={currentUser} siteName={siteName} siteDescription={siteDescription} siteLogoPath={siteLogoPath} siteIconPath={siteIconPath} />
 
       <div className="mobile-sidebar-section rounded-xl border border-border bg-card p-4 shadow-xs shadow-black/5 dark:shadow-black/30">
@@ -124,13 +124,13 @@ export function PostSidebarPanels({
           ) : null}
         </div>
       </div>
-      <SelfServeAdsSidebarPanelSlot surface="post" slot="home-right-middle" />
+
       {tableOfContents.length > 0 ? (
         <div className="min-h-0 w-full lg:sticky lg:top-20">
           <PostTableOfContents items={tableOfContents} />
         </div>
       ) : null}
-      <SelfServeAdsSidebarPanelSlot surface="post" slot="home-right-bottom" />
+
       <AddonSlotRenderer slot="post.sidebar.bottom" />
     </div>
   )
