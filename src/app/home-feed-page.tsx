@@ -19,7 +19,6 @@ import {
 import { PageNumberPagination } from "@/components/page-number-pagination"
 import { RssUniverseFeedView } from "@/components/rss/rss-universe-feed-view"
 import { RssUniversePageClient } from "@/components/rss/rss-universe-page-client"
-import { SelfServeAdsSidebar } from "@/components/self-serve-ads-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { getHomeAnnouncements } from "@/lib/announcements"
 import {
@@ -49,7 +48,7 @@ import {
 import { getHomeSidebarHotTopics } from "@/lib/home-sidebar"
 import { groupHomeSidebarPanels } from "@/lib/home-sidebar-layout"
 import { getHomeSidebarStats } from "@/lib/home-sidebar-stats"
-import { POST_LIST_DISPLAY_MODE_GALLERY } from "@/lib/post-list-display"
+import { POST_LIST_DISPLAY_MODE_WEIBO } from "@/lib/post-list-display"
 import { POST_LIST_LOAD_MODE_INFINITE } from "@/lib/post-list-load-mode"
 import {
   attachPostListTipSummaries,
@@ -58,16 +57,11 @@ import {
 import { resolveContentVisibleAdminActor } from "@/lib/admin-scope-permissions"
 import { getRssHomeDisplaySettings } from "@/lib/rss-harvest"
 import { getRssUniverseFeedPage } from "@/lib/rss-public-feed"
-import {
-  getSelfServeAdsAppConfig,
-  getSelfServeAdsPanelData,
-} from "@/lib/self-serve-ads"
-import { toSelfServeAdConfig } from "@/lib/self-serve-ads.shared"
 import { getSiteSettings } from "@/lib/site-settings"
 import { getZones } from "@/lib/zones"
 
 const HOME_FEED_LABELS: Record<HomeFeedSort, string> = {
-  latest: "首页",
+  latest: "论坛",
   new: "新贴",
   hot: "热门",
   featured: "精华",
@@ -92,10 +86,10 @@ export async function generateHomeFeedMetadata(
   const pageTitle = HOME_FEED_LABELS[sort]
 
   return {
-    title: `${settings.siteName} - ${pageTitle}`,
+    title: `${settings.siteName} · ${pageTitle}`,
     description: settings.siteDescription,
     openGraph: {
-      title: `${settings.siteName} - ${pageTitle}`,
+      title: `${settings.siteName} · ${pageTitle}`,
       description: settings.siteDescription,
       type: "website",
     },
@@ -120,10 +114,10 @@ export async function generateAddonHomeFeedMetadata(
     metadata?.description?.trim() || tab?.description || settings.siteDescription
 
   return {
-    title: `${settings.siteName} - ${pageTitle}`,
+    title: `${settings.siteName} · ${pageTitle}`,
     description: pageDescription,
     openGraph: {
-      title: `${settings.siteName} - ${pageTitle}`,
+      title: `${settings.siteName} · ${pageTitle}`,
       description: pageDescription,
       type: "website",
     },
@@ -164,8 +158,6 @@ export async function HomeFeedPage({
     settings,
     rssHomeSettings,
     friendLinks,
-    selfServeAdsConfig,
-    selfServeAdsPanelData,
     addonTabs,
   ] = await Promise.all([
     getBoards(),
@@ -175,8 +167,6 @@ export async function HomeFeedPage({
     settingsPromise,
     rssHomeSettingsPromise,
     getFriendLinkListData(10),
-    getSelfServeAdsAppConfig(),
-    getSelfServeAdsPanelData(),
     addonTabsPromise,
   ])
 
@@ -220,7 +210,7 @@ export async function HomeFeedPage({
   const needsServerCurrentUser =
     currentSort === "following"
     || (currentSort === "universe" && !enableUniverseSourceFilter)
-    || Boolean(currentSort && shouldAttachPostListTipSummaries(settings.homeFeedPostListDisplayMode))
+    || Boolean(currentSort && shouldAttachPostListTipSummaries(POST_LIST_DISPLAY_MODE_WEIBO))
   const currentUser = needsServerCurrentUser ? await getCurrentUser() : null
   const addonHookSearchParams = buildAddonHookSearchParams(resolvedSearchParams)
   const adminActor = currentUser ? await resolveContentVisibleAdminActor(currentUser) : null
@@ -277,42 +267,22 @@ export async function HomeFeedPage({
             items: postFeedPage.items,
             sort: currentSort,
             settings,
-            listDisplayMode: settings.homeFeedPostListDisplayMode,
+            listDisplayMode: POST_LIST_DISPLAY_MODE_WEIBO,
             pathname: feedPathname,
             searchParams: addonHookSearchParams,
           })
 
-          return shouldAttachPostListTipSummaries(settings.homeFeedPostListDisplayMode)
+          return shouldAttachPostListTipSummaries(POST_LIST_DISPLAY_MODE_WEIBO)
             ? attachPostListTipSummaries(displayItems, currentUser?.id)
             : displayItems
         })()
       : null
 
-  const selfServeAdsResolvedConfig = toSelfServeAdConfig(selfServeAdsConfig)
   const sidebarStats = settings.homeSidebarStatsCardEnabled
     ? await getHomeSidebarStats()
     : null
-  const sidebarPanels = groupHomeSidebarPanels(
-    selfServeAdsPanelData
-      && selfServeAdsResolvedConfig.enabled
-      && selfServeAdsResolvedConfig.visibleOnHome
-      ? [
-          {
-            id: "self-serve-ads",
-            slot: selfServeAdsResolvedConfig.sidebarSlot,
-            order: selfServeAdsResolvedConfig.sidebarOrder,
-            content: (
-              <SelfServeAdsSidebar
-                AppId="self-serve-ads"
-                config={selfServeAdsConfig}
-                panelData={selfServeAdsPanelData}
-              />
-            ),
-          },
-        ]
-      : [],
-  )
-  const shouldShowRightSidebar = settings.homeFeedPostListDisplayMode !== POST_LIST_DISPLAY_MODE_GALLERY
+  const sidebarPanels = groupHomeSidebarPanels([])
+  const shouldShowRightSidebar = true
 
   const sortBeforeSlot =
     currentSort === "new"
@@ -412,13 +382,13 @@ export async function HomeFeedPage({
                   initialPage={page}
                   initialHasNextPage={hasNextPage}
                   currentSort={currentSort}
-                  listDisplayMode={settings.homeFeedPostListDisplayMode}
+                  listDisplayMode={POST_LIST_DISPLAY_MODE_WEIBO}
                   postLinkDisplayMode={settings.postLinkDisplayMode}
                 />
               ) : (
                 <ForumFeedView
                   items={homeFeedDisplayItems}
-                  listDisplayMode={settings.homeFeedPostListDisplayMode}
+                  listDisplayMode={POST_LIST_DISPLAY_MODE_WEIBO}
                   postLinkDisplayMode={settings.postLinkDisplayMode}
                 />
               )}
@@ -522,7 +492,6 @@ export async function HomeFeedPage({
                     siteLogoPath={settings.siteLogoPath}
                     siteIconPath={settings.siteIconPath}
                     currentUserSettings={buildHomeSidebarCurrentUserSettings(settings)}
-                    selfServeAdsSurface={false}
                   />
                 </AddonSurfaceRenderer>
                 <AddonSlotRenderer slot="feed.sidebar.after" props={feedSlotProps} />

@@ -5,20 +5,16 @@ import {
   type HomeFeedSort,
 } from "@/lib/home-feed-route"
 
-export const BUILTIN_HOME_FEED_TAB_ORDER: Record<HomeFeedSort, number> = {
+export const BUILTIN_HOME_FEED_TAB_ORDER: Partial<Record<HomeFeedSort, number>> = {
   latest: 100,
   new: 200,
-  hot: 300,
-  featured: 350,
   following: 400,
   universe: 500,
 }
 
-const BUILTIN_HOME_FEED_TAB_LABELS: Record<HomeFeedSort, string> = {
+const BUILTIN_HOME_FEED_TAB_LABELS: Partial<Record<HomeFeedSort, string>> = {
   latest: "最新",
   new: "新贴",
-  hot: "热门",
-  featured: "精华",
   following: "关注",
   universe: "宇宙",
 }
@@ -64,7 +60,7 @@ export function resolveDefaultAddonHomeFeedTab(
   })
 
   const first = sorted[0] ?? null
-  if (!first || first.order >= BUILTIN_HOME_FEED_TAB_ORDER.latest) {
+  if (!first || first.order >= BUILTIN_HOME_FEED_TAB_ORDER.latest!) {
     return null
   }
 
@@ -79,50 +75,34 @@ export function buildResolvedHomeFeedTabs(input: {
   const builtinTabs: ResolvedHomeFeedTab[] = [
     {
       key: "latest",
-      label: BUILTIN_HOME_FEED_TAB_LABELS.latest,
+      label: BUILTIN_HOME_FEED_TAB_LABELS.latest!,
       href: buildHomeFeedHref("latest"),
-      order: BUILTIN_HOME_FEED_TAB_ORDER.latest,
+      order: BUILTIN_HOME_FEED_TAB_ORDER.latest!,
       kind: "builtin",
       builtinSort: "latest",
     },
     {
       key: "new",
-      label: BUILTIN_HOME_FEED_TAB_LABELS.new,
+      label: BUILTIN_HOME_FEED_TAB_LABELS.new!,
       href: buildHomeFeedHref("new"),
-      order: BUILTIN_HOME_FEED_TAB_ORDER.new,
+      order: BUILTIN_HOME_FEED_TAB_ORDER.new!,
       kind: "builtin",
       builtinSort: "new",
     },
     {
-      key: "hot",
-      label: BUILTIN_HOME_FEED_TAB_LABELS.hot,
-      href: buildHomeFeedHref("hot"),
-      order: BUILTIN_HOME_FEED_TAB_ORDER.hot,
-      kind: "builtin",
-      builtinSort: "hot",
-    },
-    {
-      key: "featured",
-      label: BUILTIN_HOME_FEED_TAB_LABELS.featured,
-      href: buildHomeFeedHref("featured"),
-      order: BUILTIN_HOME_FEED_TAB_ORDER.featured,
-      kind: "builtin",
-      builtinSort: "featured",
-    },
-    {
       key: "following",
-      label: BUILTIN_HOME_FEED_TAB_LABELS.following,
+      label: BUILTIN_HOME_FEED_TAB_LABELS.following!,
       href: buildHomeFeedHref("following"),
-      order: BUILTIN_HOME_FEED_TAB_ORDER.following,
+      order: BUILTIN_HOME_FEED_TAB_ORDER.following!,
       kind: "builtin",
       builtinSort: "following",
     },
     ...(input.showUniverse
       ? [{
           key: "universe",
-          label: BUILTIN_HOME_FEED_TAB_LABELS.universe,
+          label: BUILTIN_HOME_FEED_TAB_LABELS.universe!,
           href: buildHomeFeedHref("universe"),
-          order: BUILTIN_HOME_FEED_TAB_ORDER.universe,
+          order: BUILTIN_HOME_FEED_TAB_ORDER.universe!,
           kind: "builtin" as const,
           builtinSort: "universe" as const,
         }]

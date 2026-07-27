@@ -2,10 +2,9 @@
 
 import Link from "next/link"
 import { useState, useTransition } from "react"
-import { Bookmark, Gift, MessageSquare, Paperclip, ThumbsUp, type LucideIcon } from "lucide-react"
+import { Bookmark, MessageSquare, Paperclip, ThumbsUp, type LucideIcon } from "lucide-react"
 
 import { LevelIcon } from "@/components/level-icon"
-import { MarkdownContentClient } from "@/components/markdown-content-client"
 import { PostListLink } from "@/components/post/post-list-link"
 import {
   getPostTitleClassName,
@@ -15,7 +14,6 @@ import {
   PostStatusBadge,
   PostTypeBadge,
 } from "@/components/post/post-list-shared"
-import { PostTipPanel } from "@/components/post/post-tip-panel"
 import { TimeTooltip } from "@/components/time-tooltip"
 import { toast } from "@/components/ui/toast"
 import { Tooltip } from "@/components/ui/tooltip"
@@ -24,7 +22,7 @@ import { UserDisplayedBadges } from "@/components/user/user-displayed-badges"
 import { UserProfilePreviewCardTrigger } from "@/components/user/user-profile-preview-card-trigger"
 import { UserStatusBadge } from "@/components/user/user-status-badge"
 import { VipNameTooltip } from "@/components/vip/vip-name-tooltip"
-import { formatCompactNumber, formatCompactPointValue, formatNumber } from "@/lib/formatters"
+import { formatCompactNumber, formatNumber } from "@/lib/formatters"
 import type { PostStreamDisplayItem } from "@/lib/forum-post-stream-display"
 import { omitPostListPreviewMediaFromMarkdown, type PostListPreviewMedia } from "@/lib/post-list-media"
 import { getPostPath } from "@/lib/post-links"
@@ -35,6 +33,16 @@ interface PostWeiboFeedProps {
   showBoard?: boolean
   postLinkDisplayMode?: "SLUG" | "ID"
   showPinBadge?: boolean
+}
+
+function stripMarkdown(text: string) {
+  return text
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1")
+    .replace(/[#*`~>_|\\]/g, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\n{2,}/g, "\n")
+    .trim()
 }
 
 function getEmbedPreviewFrameStyle(src: string) {
@@ -138,42 +146,6 @@ function PostNoteMedia({ href, media, title }: { href: string; media?: PostListP
 
 const iconActionClassName = "relative inline-flex h-9 min-w-9 items-center justify-center gap-1 rounded-full px-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
 
-function IconActionLink({
-  href,
-  icon: Icon,
-  value,
-  label,
-  badge,
-  tone = "default",
-}: {
-  href: string
-  icon: LucideIcon
-  value?: number
-  label: string
-  badge?: number
-  tone?: "default" | "gift"
-}) {
-  return (
-    <Tooltip content={label}>
-      <PostListLink
-        href={href}
-        className={cn(
-          iconActionClassName,
-          tone === "gift" && "bg-amber-100/70 text-amber-700 hover:bg-amber-100 dark:bg-amber-400/10 dark:text-amber-200 dark:hover:bg-amber-400/15",
-        )}
-      >
-        <Icon className="h-4 w-4" aria-hidden="true" />
-        {typeof value === "number" && value > 0 ? <span className="text-xs font-medium tabular-nums" title={`${formatNumber(value)} ${label}`}>{formatCompactNumber(value)}</span> : null}
-        {typeof badge === "number" && badge > 0 ? (
-          <span className="absolute -right-1 -top-1 min-w-4 rounded-full bg-rose-500 px-1 text-center text-[10px] font-semibold leading-4 text-white tabular-nums" title={formatNumber(badge)}>
-            {formatCompactNumber(badge)}
-          </span>
-        ) : null}
-      </PostListLink>
-    </Tooltip>
-  )
-}
-
 function IconActionButton({
   icon: Icon,
   value,
@@ -251,30 +223,6 @@ function PostNoteActions({ item, postPath }: { item: PostStreamDisplayItem; post
       <div className="flex items-center gap-1.5">
         <IconActionButton icon={ThumbsUp} value={likes} label={liked ? "取消点赞" : "点赞"} pressed={liked} disabled={isPending} onClick={() => runAction("like")} />
         <IconActionButton icon={Bookmark} value={favorites} label={favored ? "取消收藏" : "收藏"} pressed={favored} disabled={isPending} onClick={() => runAction("favorite")} />
-        {item.tipping ? (
-          <PostTipPanel
-            postId={item.id}
-            postSlug={item.slug}
-            loginRedirectTarget={postPath}
-            enabled={item.tipping.enabled}
-            isLoggedIn={item.tipping.isLoggedIn}
-            pointName={item.tipping.pointName}
-            currentUserPoints={item.tipping.currentUserPoints}
-            gifts={item.tipping.gifts}
-            giftStats={item.tipping.giftStats}
-            recentGiftEvents={item.tipping.recentGiftEvents}
-            allowedAmounts={item.tipping.allowedAmounts}
-            dailyLimit={item.tipping.dailyLimit}
-            perPostLimit={item.tipping.perPostLimit}
-            usedDailyCount={item.tipping.usedDailyCount}
-            usedPostCount={item.tipping.usedPostCount}
-            totalCount={item.tipping.totalCount}
-            totalPoints={item.tipping.totalPoints}
-            topSupporters={item.tipping.topSupporters}
-          />
-        ) : (
-          <IconActionLink href={postPath} icon={Gift} label={item.tipTotalPoints ? `打赏礼物 · 已收到 ${formatCompactPointValue(item.tipTotalPoints)}` : "打赏礼物"} badge={item.tipCount} tone="gift" />
-        )}
       </div>
       <div className="flex items-center gap-1.5">
         <PostListLink href={`${postPath}#comments`} title={`${formatNumber(item.commentCount)} 回复`} className="inline-flex h-9 items-center gap-1 rounded-full px-2 transition-colors hover:opacity-90" style={{ backgroundColor: `${item.commentAccentColor}14`, color: item.commentAccentColor }}>
@@ -292,13 +240,11 @@ export function PostWeiboFeed({ items, showBoard = true, postLinkDisplayMode = "
       {items.map((item) => {
         const postPath = getPostPath({ id: item.id, slug: item.slug }, { mode: postLinkDisplayMode })
         const isRestrictedAuthor = item.authorStatus === "BANNED" || item.authorStatus === "MUTED"
-        const hasContentMarkdown = Boolean(item.contentMarkdown)
-        const contentMarkdown = typeof item.contentPreviewMarkdown === "string"
+        const rawContent = typeof item.contentPreviewMarkdown === "string"
           ? item.contentPreviewMarkdown
           : item.contentMarkdown
           ? omitPostListPreviewMediaFromMarkdown(item.contentMarkdown, item.previewMedia)
-          : ""
-        const contentHtml = typeof item.contentPreviewHtml === "string" ? item.contentPreviewHtml : undefined
+          : item.excerpt || ""
 
         return (
           <article key={item.id} className="overflow-hidden rounded-md border border-border bg-card shadow-xs">
@@ -374,16 +320,27 @@ export function PostWeiboFeed({ items, showBoard = true, postLinkDisplayMode = "
 
                 <PostNoteMedia href={postPath} media={item.previewMedia} title={item.title} />
 
-                {contentMarkdown ? (
-                  <MarkdownContentClient
-                    content={contentMarkdown}
-                    html={contentHtml}
-                    className="mt-4 max-h-52 overflow-hidden text-sm leading-7 text-muted-foreground prose-p:my-1.5 prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5 prose-headings:my-2 prose-headings:text-foreground prose-blockquote:my-2 prose-pre:my-2"
-                    collapseLongCodeBlocks
-                  />
-                ) : !hasContentMarkdown && item.excerpt ? (
-                  <p className="mt-4 line-clamp-4 text-sm leading-7 text-muted-foreground">{item.excerpt}</p>
-                ) : null}
+                {(() => {
+                  if (!rawContent) return null
+
+                  const plain = stripMarkdown(rawContent)
+                    .replace(/\r\n/g, " ")
+                    .replace(/\n/g, " ")
+                    .replace(/\s+/g, " ")
+                    .trim()
+
+                  const display = plain.length > 20 ? plain.slice(0, 20) : plain
+
+                  return (
+                    <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                      <span>{display}</span>
+                      <span className="text-muted-foreground/60">...</span>
+                      <PostListLink href={postPath} visitedPath={postPath} dimWhenRead className="ml-0.5 font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                        全文
+                      </PostListLink>
+                    </p>
+                  )
+                })()}
               </div>
             </div>
 

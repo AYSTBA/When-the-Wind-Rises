@@ -1,21 +1,18 @@
 import Link from "next/link"
-import { Flame, Link2 } from "lucide-react"
+import { Link2 } from "lucide-react"
 import type { ComponentProps } from "react"
 
 import { HomeAnnouncementPanel } from "@/components/home/home-announcement-panel"
 import { HomeSidebarCurrentUserCard } from "@/components/home/home-sidebar-current-user-card"
 import { HomeSidebarCurrentUserReadingHistory } from "@/components/home/home-sidebar-current-user-reading-history"
-import { PostListLink } from "@/components/post/post-list-link"
 import { ReadingHistoryPanel } from "@/components/post/reading-history-panel"
 import { HomeSiteStatsCard } from "@/components/home/home-site-stats-card"
 import { SidebarUserCard, type SidebarUserCardData } from "@/components/user/sidebar-user-card"
-import { getSelfServeAdsSidebarPanel, type SelfServeAdsSidebarSurface } from "@/components/self-serve-ads-sidebar-panel"
-import { UserAvatar } from "@/components/user/user-avatar"
+
 import type { AnnouncementItem } from "@/lib/announcements"
 import type { FriendLinkItem } from "@/lib/friend-links"
 import { groupHomeSidebarPanels, type HomeSidebarPanelItem } from "@/lib/home-sidebar-layout"
 import type { HomeSidebarStatsData } from "@/lib/home-sidebar-stats"
-import { getPostPath } from "@/lib/post-links"
 import type { SiteSettingsData } from "@/lib/site-settings.types"
 import { cn } from "@/lib/utils"
 import { AddonSlotRenderer } from "@/addons-host"
@@ -32,7 +29,7 @@ interface HotTopicItem {
 
 interface HomeSidebarPanelsProps {
   user: SidebarUserCardData | null
-  hotTopics: HotTopicItem[]
+  hotTopics?: HotTopicItem[]
   postLinkDisplayMode?: "SLUG" | "ID"
   announcements?: AnnouncementItem[]
   showAnnouncements?: boolean
@@ -50,7 +47,7 @@ interface HomeSidebarPanelsProps {
   currentUserSettings?: ComponentProps<typeof HomeSidebarCurrentUserCard>["settings"]
   stickyTopClass?: string
   sticky?: boolean
-  selfServeAdsSurface?: SelfServeAdsSidebarSurface | false
+
 }
 
 export function buildHomeSidebarCurrentUserSettings(settings: SiteSettingsData): HomeSidebarPanelsProps["currentUserSettings"] {
@@ -80,13 +77,11 @@ export function buildHomeSidebarCurrentUserSettings(settings: SiteSettingsData):
   }
 }
 
-export async function HomeSidebarPanels({ user, hotTopics, postLinkDisplayMode = "SLUG", announcements = [], showAnnouncements = true, friendLinks = [], friendLinksEnabled = false, createPostHref, topPanels = [], middlePanels = [], bottomPanels = [], stats = null, siteName, siteDescription, siteLogoPath, siteIconPath, currentUserSettings, stickyTopClass = "top-20", sticky = true, selfServeAdsSurface = "global" }: HomeSidebarPanelsProps) {
-  const selfServeAdsPanel = selfServeAdsSurface ? await getSelfServeAdsSidebarPanel(selfServeAdsSurface) : null
+export async function HomeSidebarPanels({ user, hotTopics: _hotTopics, postLinkDisplayMode = "SLUG", announcements = [], showAnnouncements = true, friendLinks = [], friendLinksEnabled = false, createPostHref, topPanels = [], middlePanels = [], bottomPanels = [], stats = null, siteName, siteDescription, siteLogoPath, siteIconPath, currentUserSettings, stickyTopClass = "top-20", sticky = true }: HomeSidebarPanelsProps) {
   const sidebarPanels = groupHomeSidebarPanels([
     ...topPanels,
     ...middlePanels,
     ...bottomPanels,
-    ...(selfServeAdsPanel ? [selfServeAdsPanel] : []),
   ])
 
   return (
@@ -102,28 +97,6 @@ export async function HomeSidebarPanels({ user, hotTopics, postLinkDisplayMode =
       {sidebarPanels.top.map((panel) => <div key={panel.id}>{panel.content}</div>)}
 
       {showAnnouncements ? <HomeAnnouncementPanel announcements={announcements} /> : null}
-
-      <div className="mobile-sidebar-section rounded-xl border border-border bg-card p-3 shadow-xs shadow-black/5 dark:shadow-black/30">
-        <div className="mb-3 flex items-center gap-1.5">
-          <Flame className="h-4 w-4 text-orange-500 dark:text-orange-400" />
-          <h3 className="text-sm font-semibold">今日热帖</h3>
-        </div>
-        <div className="flex flex-col gap-1.5">
-          {hotTopics.map((topic) => {
-            const postPath = getPostPath({ id: topic.id, slug: topic.slug }, { mode: postLinkDisplayMode })
-
-            return (
-            <PostListLink key={topic.id} href={postPath} visitedPath={postPath} dimWhenRead className="-mx-1 flex items-start gap-2 rounded-lg px-1 py-1.5 transition-colors hover:bg-accent/70">
-              <UserAvatar name={topic.authorName} avatarPath={topic.authorAvatarPath} size="xs" />
-              <div className="min-w-0 flex-1">
-                <div title={topic.title} className="truncate text-[0.9rem] leading-5">{topic.title}</div>
-                <div className="mt-0.5 text-[0.733rem] leading-4 text-muted-foreground">最后回复：{topic.lastReplyAuthorName ?? topic.authorName} · {topic.lastRepliedAt}</div>
-              </div>
-            </PostListLink>
-          )})}
-        </div>
-      </div>
-
 
       <AddonSlotRenderer slot="home.right.middle" />
       {sidebarPanels.middle.map((panel) => <div key={panel.id}>{panel.content}</div>)}

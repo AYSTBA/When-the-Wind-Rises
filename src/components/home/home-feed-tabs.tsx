@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Clock3, Flame, Globe2, MessageCircle, Sparkles, Star, Users2 } from "lucide-react"
+import { Clock3, Globe2, MessageCircle, Sparkles, Users2 } from "lucide-react"
 
 import type { ResolvedHomeFeedTab } from "@/lib/home-feed-tabs"
 
@@ -18,13 +18,9 @@ export function HomeFeedTabs({
             ? Clock3
             : tab.key === "new"
               ? Sparkles
-              : tab.key === "hot"
-                ? Flame
-                : tab.key === "featured"
-                  ? Star
-                  : tab.key === "following"
-                    ? Users2
-                    : Globe2
+              : tab.key === "following"
+                ? Users2
+                : Globe2
           : MessageCircle
         const active = currentKey === tab.key
 
