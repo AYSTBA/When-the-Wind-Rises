@@ -34,7 +34,7 @@ import {
 } from "@/lib/post-list-load-mode"
 import type { BuiltInThemePreset, CustomThemeModeConfig, FontSizePreset, PostContentImageMode, ThemePreference } from "@/lib/theme"
 
-const themePresetKeys: BuiltInThemePreset[] = ["default", "sea", "jade", "amber", "graphite"]
+const themePresetKeys: BuiltInThemePreset[] = ["default", "lego", "sea", "jade", "amber", "graphite"]
 const fontSizePresetKeys: FontSizePreset[] = ["compact", "normal", "relaxed"]
 const themeModeKeys = ["light", "dark"] as const
 const themeColorKeys: Array<keyof CustomThemeModeConfig> = ["primary", "background", "card", "accent", "border"]

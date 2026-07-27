@@ -261,6 +261,45 @@ export const THEME_PRESETS = {
       },
     },
   },
+  lego: {
+    label: "乐高堆栈",
+    description: "牛皮纸底色 + 乐高亮色积木风格。",
+    preview: ["4 76% 48%", "35 38% 82%", "28 28% 55%"],
+    values: {
+      light: {
+        background: "35 38% 82%",
+        foreground: "0 0% 10%",
+        card: "36 36% 87%",
+        "card-foreground": "0 0% 10%",
+        primary: "4 76% 48%",
+        "primary-foreground": "0 0% 100%",
+        secondary: "208 100% 32%",
+        "secondary-foreground": "0 0% 100%",
+        muted: "35 28% 78%",
+        "muted-foreground": "28 15% 40%",
+        accent: "48 100% 56%",
+        "accent-foreground": "0 0% 10%",
+        border: "28 28% 55%",
+        ring: "4 76% 48%",
+      },
+      dark: {
+        background: "30 22% 12%",
+        foreground: "36 18% 90%",
+        card: "30 18% 16%",
+        "card-foreground": "36 18% 90%",
+        primary: "4 90% 58%",
+        "primary-foreground": "0 0% 100%",
+        secondary: "208 85% 50%",
+        "secondary-foreground": "0 0% 100%",
+        muted: "30 15% 18%",
+        "muted-foreground": "30 10% 55%",
+        accent: "48 95% 58%",
+        "accent-foreground": "0 0% 10%",
+        border: "28 18% 26%",
+        ring: "4 90% 58%",
+      },
+    },
+  },
 } as const satisfies Record<string, ThemePresetDefinition>
 
 export const FONT_SIZE_PRESETS = {
@@ -793,9 +832,9 @@ export interface ThemeDefaultSettings {
 
 export const DEFAULT_THEME_DEFAULT_SETTINGS: ThemeDefaultSettings = {
   preference: "light",
-  preset: "default",
+  preset: "lego",
   fontSizePreset: "normal",
-  mobilePreset: "default",
+  mobilePreset: "lego",
   mobileFontSizePreset: "normal",
 }
 
@@ -890,6 +929,24 @@ const THEME_PRESET_SOURCE_CONFIGS = {
       card: "#111827",
       accent: "#1e293b",
       border: "#334155",
+    },
+  },
+  lego: {
+    label: THEME_PRESETS.lego.label,
+    description: THEME_PRESETS.lego.description,
+    light: {
+      primary: "#DA291C",
+      background: "#D4C4A8",
+      card: "#E1D4BC",
+      accent: "#FFD720",
+      border: "#B89A7A",
+    },
+    dark: {
+      primary: "#FF4D4D",
+      background: "#1E1812",
+      card: "#2A2218",
+      accent: "#FFE066",
+      border: "#4A3A2A",
     },
   },
 } as const satisfies Record<BuiltInThemePreset, EditableThemePresetDefinition>
@@ -1005,6 +1062,7 @@ export function resolveThemeCustomizationSettings(value: unknown): ThemeCustomiz
     },
     themePresets: {
       default: normalizeEditableThemePresetDefinition(rawThemePresets.default, DEFAULT_THEME_CUSTOMIZATION_SETTINGS.themePresets.default),
+      lego: normalizeEditableThemePresetDefinition(rawThemePresets.lego, DEFAULT_THEME_CUSTOMIZATION_SETTINGS.themePresets.lego),
       sea: normalizeEditableThemePresetDefinition(rawThemePresets.sea, DEFAULT_THEME_CUSTOMIZATION_SETTINGS.themePresets.sea),
       jade: normalizeEditableThemePresetDefinition(rawThemePresets.jade, DEFAULT_THEME_CUSTOMIZATION_SETTINGS.themePresets.jade),
       amber: normalizeEditableThemePresetDefinition(rawThemePresets.amber, DEFAULT_THEME_CUSTOMIZATION_SETTINGS.themePresets.amber),
@@ -1043,6 +1101,7 @@ export function buildThemeRuntimeSettings(settings: ThemeCustomizationSettings):
     fontSizePresets: settings.fontSizePresets,
     themePresets: {
       default: buildThemePresetDefinition(settings.themePresets.default),
+      lego: buildThemePresetDefinition(settings.themePresets.lego),
       sea: buildThemePresetDefinition(settings.themePresets.sea),
       jade: buildThemePresetDefinition(settings.themePresets.jade),
       amber: buildThemePresetDefinition(settings.themePresets.amber),

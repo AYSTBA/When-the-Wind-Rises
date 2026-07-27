@@ -4,8 +4,6 @@ import type { ComponentProps } from "react"
 
 import { HomeAnnouncementPanel } from "@/components/home/home-announcement-panel"
 import { HomeSidebarCurrentUserCard } from "@/components/home/home-sidebar-current-user-card"
-import { HomeSidebarCurrentUserReadingHistory } from "@/components/home/home-sidebar-current-user-reading-history"
-import { ReadingHistoryPanel } from "@/components/post/reading-history-panel"
 import { HomeSiteStatsCard } from "@/components/home/home-site-stats-card"
 import { SidebarUserCard, type SidebarUserCardData } from "@/components/user/sidebar-user-card"
 
@@ -133,12 +131,6 @@ export async function HomeSidebarPanels({ user, hotTopics: _hotTopics, postLinkD
       {sidebarPanels.bottom.map((panel) => <div key={panel.id}>{panel.content}</div>)}
 
       {stats ? <HomeSiteStatsCard stats={stats} /> : null}
-
-            {currentUserSettings ? (
-              <HomeSidebarCurrentUserReadingHistory />
-            ) : user ? (
-              <ReadingHistoryPanel variant="sidebar" title="近期访问" limit={5} moreHref="/settings?tab=follows&followTab=history" showOnlyToday requireLoggedIn isLoggedIn hideWhenEmpty stabilizeLayoutOnHydration />
-            ) : null}
     </div>
   )
 }

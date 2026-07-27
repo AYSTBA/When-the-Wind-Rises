@@ -2,6 +2,7 @@ import { BrowsingSettingsPanel } from "@/components/profile/browsing-settings-pa
 import { ProfileAccountBindingSettings } from "@/components/profile/profile-account-binding-settings"
 import { ProfileEditForm } from "@/components/profile/profile-edit-form"
 import { ProfileNotificationSettings } from "@/components/profile/profile-notification-settings"
+import { ReadingHistoryPanel } from "@/components/post/reading-history-panel"
 import { SettingsTabs } from "@/components/settings/settings-tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { profileTabs } from "@/app/settings/settings-page-loader"
@@ -99,7 +100,14 @@ export function ProfileSettingsSection({ data }: { data: SettingsPageData }) {
           <ProfileAccountBindingSettings providers={accountBindings.providers} passkey={accountBindings.passkey} />
         ) : null}
 
-        {route.currentProfileTab === "browsing" ? <BrowsingSettingsPanel /> : null}
+        {route.currentProfileTab === "browsing" ? (
+          <>
+            <BrowsingSettingsPanel />
+            <div className="pt-4">
+              <ReadingHistoryPanel variant="page" title="浏览记录" showClearButton />
+            </div>
+          </>
+        ) : null}
       </CardContent>
     </Card>
   )
