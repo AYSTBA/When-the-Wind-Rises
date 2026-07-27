@@ -15,7 +15,6 @@ import { SITE_SETTINGS_CACHE_TAG } from "@/lib/site-settings"
 
 const APP_CONFIG_KEYS = {
   gobang: "app.gobang",
-  selfServeAds: "app.self-serve-ads",
   yinYangContract: "app.yinyang-contract",
 } as const
 
@@ -176,27 +175,7 @@ export const GOBANG_DEFAULT_CONFIG = {
   matchLabel: "五子棋人机对战",
 } satisfies AppConfigValue
 
-export const SELF_SERVE_ADS_DEFAULT_CONFIG = {
-  enabled: true,
-  visibleOnHome: true,
-  visibleOnPostDetail: false,
-  visibleOnGlobalSidebar: false,
-  cardTitle: "推广广告位",
 
-  sidebarSlot: "home-right-middle",
-  sidebarOrder: 40,
-  imageSlotCount: 2,
-  textSlotCount: 6,
-  imagePriceMonthly: 300,
-  imagePriceQuarterly: 800,
-  imagePriceSemiAnnual: 1500,
-  imagePriceYearly: 2800,
-  textPriceMonthly: 120,
-  textPriceQuarterly: 320,
-  textPriceSemiAnnual: 600,
-  textPriceYearly: 1100,
-  placeholderLabel: "点击购买",
-} satisfies AppConfigValue
 
 export const YINYANG_CONTRACT_DEFAULT_CONFIG = {
   enabled: true,
@@ -229,28 +208,6 @@ export async function getGobangAppConfig() {
 
 export async function updateGobangAppConfig(input: Record<string, unknown>) {
   return upsertAppConfig(APP_CONFIG_KEYS.gobang, GOBANG_DEFAULT_CONFIG, input)
-}
-
-async function readSelfServeAdsAppConfig() {
-  const { state } = await readStateMap()
-  return normalizeConfig(SELF_SERVE_ADS_DEFAULT_CONFIG, state[APP_CONFIG_KEYS.selfServeAds]?.config)
-}
-
-const getPersistentSelfServeAdsAppConfig = unstable_cache(
-  readSelfServeAdsAppConfig,
-  ["app-config:self-serve-ads"],
-  {
-    tags: [APP_CONFIG_CACHE_TAG, SITE_SETTINGS_CACHE_TAG],
-    revalidate: 60,
-  },
-)
-
-export async function getSelfServeAdsAppConfig() {
-  return getPersistentSelfServeAdsAppConfig()
-}
-
-export async function updateSelfServeAdsAppConfig(input: Record<string, unknown>) {
-  return upsertAppConfig(APP_CONFIG_KEYS.selfServeAds, SELF_SERVE_ADS_DEFAULT_CONFIG, input)
 }
 
 async function readYinYangContractAppConfig() {

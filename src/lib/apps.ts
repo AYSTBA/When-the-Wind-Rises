@@ -26,15 +26,7 @@ export const HOST_APPS = [
     adminHref: "/admin/apps/yinyang-contract",
     category: "游戏",
   },
-  {
-    id: "self-serve-ads",
-    slug: "self-serve-ads",
-    name: "自助广告位",
-    description: "首页广告位投放系统，支持图片与文字广告购买、审核与展示。",
-    href: "/funs/self-serve-ads",
-    adminHref: "/admin/apps/self-serve-ads",
-    category: "运营",
-  },
+
   {
     id: "rss-harvest",
     slug: "rss-harvest",

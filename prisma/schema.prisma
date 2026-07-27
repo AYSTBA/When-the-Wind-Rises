@@ -331,18 +331,6 @@ enum GobangMatchStatus {
   FINISHED
 }
 
-enum SelfServeAdSlotType {
-  IMAGE
-  TEXT
-}
-
-enum SelfServeAdOrderStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  EXPIRED
-  CANCELLED
-}
 
 enum YinYangChallengeStatus {
   OPEN
@@ -851,30 +839,6 @@ model GobangMove {
   @@index([matchId, step])
 }
 
-model SelfServeAdOrder {
-  id              String                 @id
-  appCode         String                 @default("self-serve-ads")
-  userId          Int
-  slotType        SelfServeAdSlotType
-  slotIndex       Int
-  title           String?
-  linkUrl         String
-  imageUrl        String?
-  textColor       String?
-  backgroundColor String?
-  durationMonths  Int
-  pricePoints     Int
-  status          SelfServeAdOrderStatus
-  reviewNote      String?
-  startsAt        DateTime?              @db.Timestamptz(3)
-  endsAt          DateTime?              @db.Timestamptz(3)
-  createdAt       DateTime               @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime               @updatedAt @db.Timestamptz(3)
-
-  @@index([status, slotType, slotIndex])
-  @@index([userId, createdAt])
-  @@map("SelfServeAdOrder")
-}
 
 model YinYangChallenge {
   id            String                   @id
