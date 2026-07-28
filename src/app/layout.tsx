@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 
 import { generateRootMetadata, RootRuntimeProviders } from "@/app/root-runtime-providers"
+import { MobileBottomDock } from "@/components/mobile-bottom-dock"
 
 
 
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Suspense fallback={null}>
           <RootRuntimeProviders>{children}</RootRuntimeProviders>
         </Suspense>
+        <MobileBottomDock />
 
 
 

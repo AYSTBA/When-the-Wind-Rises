@@ -190,24 +190,6 @@ export function MobileHeaderQuickActions({
           type="button"
           variant="ghost"
           size="icon"
-          className="relative size-8 rounded-md"
-          onClick={() => {
-            setSearchOpen(false)
-            setNavOpen(true)
-          }}
-          aria-label="打开移动导航"
-          title="打开移动导航"
-        >
-          <Grid2x2 className="h-4 w-4" />
-          {isLoggedIn && !checkedInToday ? (
-            <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-amber-500" />
-          ) : null}
-        </Button>
-
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
           className="size-8 rounded-md"
           onClick={() => {
             setNavOpen(false)
