@@ -230,7 +230,7 @@ export function PointsSettingsSection({ data }: { data: SettingsPageData }) {
   if (!pointsDashboard) {
     return (
       <Card>
-        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载积分明细，请稍后刷新重试。</CardContent>
+        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载风铃明细，请稍后刷新重试。</CardContent>
       </Card>
     )
   }
@@ -272,10 +272,6 @@ export function PointsSettingsSection({ data }: { data: SettingsPageData }) {
                     value={pointsDashboard.currentBalance}
                     className="text-4xl font-semibold tracking-tight md:text-5xl"
                   />
-                  <Link href="/topup" className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
-                    <Wallet className="h-3.5 w-3.5" />
-                    充值 / 兑换
-                  </Link>
                 </div>
               </div>
 
@@ -582,7 +578,7 @@ export function PointsSettingsSection({ data }: { data: SettingsPageData }) {
             <div className="pt-4">
               {activeLogs.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-border px-4 py-10 text-sm text-muted-foreground">
-                  {route.pointsRecordTab === "today" ? "今天还没有积分变动记录。" : "当前还没有历史积分记录。"}
+                  {route.pointsRecordTab === "today" ? "今天还没有风铃变动记录。" : "当前还没有历史风铃记录。"}
                 </div>
               ) : (
                 <div className="flex flex-col">

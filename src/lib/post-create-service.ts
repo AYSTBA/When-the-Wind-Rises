@@ -117,6 +117,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
   const manualTags = normalizeManualTags(Array.isArray(rawBody?.manualTags)
     ? rawBody.manualTags.filter((item): item is string => typeof item === "string")
     : [])
+  const mood = typeof rawBody?.mood === "string" && rawBody.mood.trim() ? rawBody.mood.trim() : null
   const tagsSafety = manualTags.length > 0 ? await enforceSensitiveText({ scene: "post.tags", text: manualTags.join("\n") }) : null
   const sanitizedManualTags = normalizeManualTags(tagsSafety?.sanitizedText.split(/\n+/).map((item) => item.trim()).filter(Boolean) ?? manualTags)
   const redPacketConfig = rawBody?.redPacketConfig && typeof rawBody.redPacketConfig === "object" && !Array.isArray(rawBody.redPacketConfig)
@@ -146,7 +147,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
   }
 
   if (isAnonymous && normalizedRedPacket.data?.enabled && normalizedRedPacket.data.mode === "RED_PACKET") {
-    apiError(400, "匿名发布暂不支持帖子红包")
+    apiError(400, "匿名发布暂不支持风笺红包")
   }
 
   const titleHookResult = await executeAddonWaterfallHook("post.title.value", title, {
@@ -234,7 +235,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
 
   if (isAnonymous) {
     if (!settings.anonymousPostEnabled) {
-      apiError(403, "当前站点未开启匿名发帖")
+      apiError(403, "当前站点未开启匿名发笺")
     }
 
     if (postType !== "NORMAL" && postType !== "POLL") {
@@ -259,22 +260,22 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
       })
 
       if (todayAnonymousPostCount >= settings.anonymousPostDailyLimit) {
-        apiError(400, `你今天可匿名发帖 ${settings.anonymousPostDailyLimit} 次，已达上限`)
+        apiError(400, `你今天可匿名发笺 ${settings.anonymousPostDailyLimit} 次，已达上限`)
       }
     }
   }
 
   if (boardContext.board.status !== "ACTIVE" || !boardContext.board.allowPost) {
-    apiError(403, "当前节点暂不允许发帖")
+    apiError(403, "当前节点暂不允许发笺")
   }
 
   const permission = checkBoardPermission(author, boardContext.settings, "post", settings.pointName)
   if (!permission.allowed) {
-    apiError(403, permission.message || "当前没有发帖权限")
+    apiError(403, permission.message || "当前没有发笺权限")
   }
 
   if (!boardContext.settings.allowedPostTypes.includes(postType)) {
-    apiError(403, "当前节点不支持此帖子类型")
+    apiError(403, "当前节点不支持此风笺类型")
   }
 
   enforceInteractionGate({
@@ -287,7 +288,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
   if (boardContext.settings.postIntervalSeconds > 0 && lastPostAt) {
     const waitSeconds = boardContext.settings.postIntervalSeconds - Math.floor((Date.now() - new Date(lastPostAt).getTime()) / 1000)
     if (waitSeconds > 0) {
-      apiError(429, `发帖过于频繁，请 ${waitSeconds} 秒后再试`)
+      apiError(429, `发笺过于频繁，请 ${waitSeconds} 秒后再试`)
     }
   }
 
@@ -326,7 +327,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
     + redPacketTotalPoints
 
   if (author.points < totalRequiredPointCost) {
-    apiError(400, `当前${settings.pointName}不足，无法在该节点发布此帖子`)
+    apiError(400, `当前${settings.pointName}不足，无法在该节点发布此风笺`)
   }
 
   const normalizedAttachments = await normalizePostAttachmentInputs(rawBody?.attachments, {
@@ -390,6 +391,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
           commentsVisibleToAuthorOnly,
           minViewLevel,
           minViewVipLevel,
+          mood,
           bountyPoints: postType === "BOUNTY" ? bountyPoints : null,
           pollExpiresAt: postType === "POLL" ? pollExpiresAt : null,
           lotteryStatus: postType === "LOTTERY" ? (shouldPending ? "DRAFT" : "ACTIVE") : null,
@@ -403,7 +405,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
           activityAt: createdAt,
           editableUntil: resolvePostEditableUntil(createdAt, postEditableMinutes),
           publishedAt: shouldPending ? null : createdAt,
-          reviewNote: shouldPending ? "当前节点开启发帖审核，帖子已进入审核" : null,
+          reviewNote: shouldPending ? "当前节点开启发笺审核，风笺已进入审核" : null,
           pollOptions: postType === "POLL" ? { create: pollOptions.map((option, index) => ({ content: option, sortOrder: index })) } : undefined,
           lotteryPrizes: postType === "LOTTERY" ? { create: buildLotteryPrizeCreateInputs(lotteryData?.prizes ?? [], settings) } : undefined,
           lotteryConditions: postType === "LOTTERY" ? { create: (lotteryData?.conditions ?? []).map((condition, index) => ({ type: condition.type, operator: condition.operator ?? "GTE", value: condition.value, description: condition.description, groupKey: condition.groupKey ?? "default", sortOrder: index })) } : undefined,
@@ -435,7 +437,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
             beforeBalance: authorPointBalanceCursor,
             prepared: preparedPostDelta,
             pointName: settings.pointName,
-            reason: "在指定节点发帖",
+            reason: "在指定节点发笺",
             eventType: POINT_LOG_EVENT_TYPES.BOARD_POST_CHARGE,
             eventData: {
               boardId: boardContext.board.id,
@@ -464,7 +466,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
             beforeBalance: authorPointBalanceCursor,
             prepared: preparedBountyDelta,
             pointName: settings.pointName,
-            reason: "发布悬赏帖冻结积分",
+            reason: "发布悬赏帖冻结风铃",
             relatedType: "POST",
             relatedId: createdPost.id,
           })
@@ -504,7 +506,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
             beforeBalance: authorPointBalanceCursor,
             prepared: anonymousPreparedDelta,
             pointName: settings.pointName,
-            reason: "匿名发布帖子",
+            reason: "匿名发布风笺",
             relatedType: "POST",
             relatedId: createdPost.id,
           })
@@ -558,7 +560,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
   }
 
   if (!post) {
-    apiError(500, "帖子 slug 生成失败，请稍后再试")
+    apiError(500, "风笺 slug 生成失败，请稍后再试")
   }
 
   const taxonomyResult = await syncPostTaxonomy(post.id, titleSafety.sanitizedText, serializedContent, sanitizedManualTags)

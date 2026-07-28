@@ -149,7 +149,7 @@ export function AiReplyModerationPage() {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="space-y-1">
                     <div className="font-medium">
-                      {item.post?.title ?? `帖子 ${item.postId}`}
+                      {item.post?.title ?? `风笺 ${item.postId}`}
                     </div>
                     <div className="text-xs text-muted-foreground">
                       作者 {item.post?.author?.nickname ?? item.post?.author?.username ?? "-"} ·

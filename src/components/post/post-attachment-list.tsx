@@ -39,7 +39,7 @@ function getRequirementTextClassName(label: string) {
     return "text-sky-600 dark:text-sky-300"
   }
 
-  if (label.includes("积分")) {
+  if (label.includes("风铃")) {
     return "text-amber-600 dark:text-amber-300"
   }
 

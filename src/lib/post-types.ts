@@ -44,16 +44,16 @@ export function serializePostTypes(values?: readonly LocalPostType[] | null): st
 export function getPostTypeLabel(type: LocalPostType | string) {
   switch (type) {
     case "BOUNTY":
-      return "悬赏帖"
+      return "悬赏风笺"
     case "POLL":
-      return "投票帖"
+      return "投票风笺"
     case "LOTTERY":
-      return "抽奖帖"
+      return "抽奖风笺"
     case "AUCTION":
-      return "拍卖帖"
+      return "拍卖风笺"
     case "NORMAL":
     default:
-      return "普通帖"
+      return "风笺"
   }
 }
 

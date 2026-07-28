@@ -36,7 +36,7 @@ export function PostEditPanel({
   appendixCount = 0,
   offlinePrice = 0,
   offlinePriceLabel = "普通用户",
-  pointName = "积分",
+  pointName = "风铃",
   canOffline = true,
 }: PostEditPanelProps) {
   const [appendText, setAppendText] = useState("")
@@ -127,7 +127,7 @@ export function PostEditPanel({
       })
 
       const result = await response.json()
-      setMessage(result.message ?? (response.ok ? "帖子已下线" : "帖子下线失败"))
+      setMessage(result.message ?? (response.ok ? "风笺已下线" : "风笺下线失败"))
 
       if (response.ok) {
         setOfflineModalOpen(false)
@@ -146,25 +146,25 @@ export function PostEditPanel({
             <h3 className="text-base font-semibold">作者操作</h3>
             <p className="text-sm text-muted-foreground">
               {canEditOriginal
-                ? `${isPermanentPostEditWindow(editWindowMinutes) ? "当前允许随时" : `发帖后 ${formatPostEditWindowLabel(editWindowMinutes)}内可`}跳转到编辑页修改标题和正文。`
+                ? `${isPermanentPostEditWindow(editWindowMinutes) ? "当前允许随时" : `发笺后 ${formatPostEditWindowLabel(editWindowMinutes)}内可`}跳转到编辑页修改标题和正文。`
                 : `原帖正文已锁定，可通过弹窗追加附言。`}
             </p>
             <p className="text-xs text-muted-foreground">
               已追加 {appendixCount} 条附言{!canEditOriginal ? `，每次追加需间隔 ${APPEND_INTERVAL_MINUTES} 分钟` : ""}。
             </p>
             <p className="text-xs text-muted-foreground">
-              下线帖子费用：{offlinePrice === 0 ? "免费" : `${formatCompactPointValue(offlinePrice)} ${pointName}`}（当前身份：{offlinePriceLabel}）。
+              下线风笺费用：{offlinePrice === 0 ? "免费" : `${formatCompactPointValue(offlinePrice)} ${pointName}`}（当前身份：{offlinePriceLabel}）。
             </p>
           </div>
           <div className="flex items-center gap-3">
             {canOffline ? (
               <Button type="button" variant="outline" onClick={() => setOfflineModalOpen(true)}>
-                下线帖子
+                下线风笺
               </Button>
             ) : null}
             {canEditOriginal ? (
               <Link href={`/write?mode=edit&post=${postSlug}`}>
-                <Button type="button" variant="outline">编辑帖子</Button>
+                <Button type="button" variant="outline">编辑风笺</Button>
               </Link>
             ) : null}
             {!canEditOriginal ? (
@@ -215,8 +215,8 @@ export function PostEditPanel({
         open={offlineModalOpen}
         onClose={() => setOfflineModalOpen(false)}
         size="md"
-        title="下线帖子"
-        description={`帖子下线后将不再对普通用户展示，当前身份费用为 ${offlinePrice === 0 ? "免费" : `${formatCompactPointValue(offlinePrice)} ${pointName}`}。`}
+        title="下线风笺"
+        description={`风笺下线后将不再对普通用户展示，当前身份费用为 ${offlinePrice === 0 ? "免费" : `${formatCompactPointValue(offlinePrice)} ${pointName}`}。`}
         footer={(
           <div className="flex items-center justify-end gap-3">
             <Button type="button" variant="ghost" onClick={() => setOfflineModalOpen(false)} disabled={offlineLoading}>取消</Button>

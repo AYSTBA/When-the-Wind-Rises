@@ -52,7 +52,7 @@ export async function generateMetadata(props: PageProps<"/tags">): Promise<Metad
 
   return {
     title: `${sortLabel} - ${settings.siteName}`,
-    description: `浏览 ${settings.siteName} 的全部标签，支持按帖子关联数量或创建时间查看。`,
+    description: `浏览 ${settings.siteName} 的全部标签，支持按风笺关联数量或创建时间查看。`,
     alternates: {
       canonical: currentSort === "hot" ? "/tags" : `/tags?sort=${currentSort}`,
     },
@@ -77,7 +77,7 @@ export default async function TagsPage(props: PageProps<"/tags">) {
   const sidebarUser = await resolveSidebarUser(currentUser, settings)
   const pageTitle = currentSort === "hot" ? "热门标签" : "新标签"
   const pageDescription = currentSort === "hot"
-    ? "默认按照每个标签关联的帖子数量排序，帮助快速发现讨论最集中的主题。"
+    ? "默认按照每个标签关联的风笺数量排序，帮助快速发现讨论最集中的主题。"
     : "按照标签创建时间排序，方便查看社区刚刚出现的新话题。"
 
   return (
@@ -117,7 +117,7 @@ export default async function TagsPage(props: PageProps<"/tags">) {
                 <CardContent className="space-y-6 p-6">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-muted-foreground" title={`共 ${formatNumber(tagPage.pagination.total)} 个标签`}>共 {formatCompactNumber(tagPage.pagination.total)} 个标签，第 {tagPage.pagination.page} / {tagPage.pagination.totalPages} 页</p>
-                    <p className="text-sm text-muted-foreground">当前展示 {currentSort === "hot" ? "按帖子数排序" : "按创建时间排序"}</p>
+                    <p className="text-sm text-muted-foreground">当前展示 {currentSort === "hot" ? "按风笺数排序" : "按创建时间排序"}</p>
                   </div>
 
                   {tagPage.items.length === 0 ? (
@@ -133,7 +133,7 @@ export default async function TagsPage(props: PageProps<"/tags">) {
                           <div className="flex items-start justify-between gap-3">
                             <div>
                               <p className="text-base font-semibold text-foreground transition-colors group-hover:text-accent-foreground">#{tag.name}</p>
-                              <p className="mt-2 text-sm text-muted-foreground" title={`关联 ${formatNumber(tag.count)} 篇帖子`}>关联 {formatCompactNumber(tag.count)} 篇帖子</p>
+                              <p className="mt-2 text-sm text-muted-foreground" title={`关联 ${formatNumber(tag.count)} 篇风笺`}>关联 {formatCompactNumber(tag.count)} 篇风笺</p>
                             </div>
                             <span className="rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground">
                               {currentSort === "hot" ? `TOP ${index + 1 + (tagPage.pagination.page - 1) * tagPage.pagination.pageSize}` : "NEW"}

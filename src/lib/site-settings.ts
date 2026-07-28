@@ -460,7 +460,7 @@ function mapSiteSettings(record: SiteSettingsRecordData, tippingGifts: SiteTippi
     siteLogoPath: record.siteLogoPath,
     siteIconPath: siteBrandingSettings.iconPath || null,
     siteSeoKeywords: String(record.siteSeoKeywords || "").split(/[，,\n]+/).map((item) => item.trim()).filter(Boolean),
-    pointName: record.pointName.trim() || "积分",
+    pointName: record.pointName.trim() || "风铃",
     redeemCodeHelpEnabled: redeemCodeHelpSettings.enabled,
     redeemCodeHelpTitle: redeemCodeHelpSettings.title,
     redeemCodeHelpUrl: redeemCodeHelpSettings.url,

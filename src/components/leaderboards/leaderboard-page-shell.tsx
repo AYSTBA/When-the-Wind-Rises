@@ -127,7 +127,7 @@ function CurrentRankSidebarCard<TEntry extends LeaderboardShellEntry>({
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{currentUserEntry.displayName}</p>
                 <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <span>论坛第 {getPublicUidLabel(currentUserEntry)} 号会员</span>
+                  <span>风广场第 {getPublicUidLabel(currentUserEntry)} 号会员</span>
                   {renderMeta ? renderMeta(currentUserEntry) : null}
                 </div>
               </div>
@@ -298,7 +298,7 @@ export function LeaderboardPageShell<TEntry extends LeaderboardShellEntry>({
                                 {isCurrentUser ? <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-400/15 dark:text-amber-100">我</span> : null}
                               </div>
                               <div className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
-                                <span>论坛第 {getPublicUidLabel(entry)} 号会员</span>
+                                <span>风广场第 {getPublicUidLabel(entry)} 号会员</span>
                                 {renderMeta ? renderMeta(entry) : null}
                               </div>
                             </div>

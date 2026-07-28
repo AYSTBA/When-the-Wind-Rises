@@ -9,7 +9,7 @@ import { withRequestWriteGuard } from "@/lib/write-guard"
 
 export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   const body = await readJsonBody(request)
-  const postId = requireStringField(body, "postId", "缺少帖子参数")
+  const postId = requireStringField(body, "postId", "缺少风笺参数")
   const amount = requireNumberField(body, "amount", "缺少出价金额")
 
   if (!Number.isSafeInteger(amount) || amount <= 0) {

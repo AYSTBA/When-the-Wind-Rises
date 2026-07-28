@@ -1,4 +1,4 @@
-﻿import { getCurrentUser } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/auth"
 import { apiSuccess, createUserRouteHandler, readJsonBody, readOptionalStringField, requireNumberField, requireSearchParam, requireStringField } from "@/lib/api-route"
 import { revalidateContentListCaches } from "@/lib/content-list-cache"
 import { revalidatePostCommentCache, revalidatePostViewerCache } from "@/lib/post-detail-cache"
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
 export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   const body = await readJsonBody(request)
-  const postId = requireStringField(body, "postId", "缺少帖子参数")
+  const postId = requireStringField(body, "postId", "缺少风笺参数")
   const commentId = requireStringField(body, "commentId", "缺少评论参数")
   const amount = requireNumberField(body, "amount", "缺少打赏金额")
   const giftId = readOptionalStringField(body, "giftId") || undefined

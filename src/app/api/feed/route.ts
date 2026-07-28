@@ -54,6 +54,6 @@ export const GET = createRouteHandler(async ({ request }) => {
       : items,
   })
 }, {
-  errorMessage: "获取首页帖子失败",
+  errorMessage: "获取首页风笺失败",
   logPrefix: "[api/feed] unexpected error",
 })

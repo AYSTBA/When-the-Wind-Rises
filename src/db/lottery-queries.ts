@@ -239,7 +239,7 @@ function buildFixedPointDelta(scopeKey: PreparedPointDelta["scopeKey"], delta: n
 function addPointCost(total: number, amount: number) {
   const nextTotal = addSafeIntegers(total, amount)
   if (nextTotal === null || nextTotal < 0) {
-    throw new Error("抽奖自动奖品积分结算溢出")
+    throw new Error("抽奖自动奖品风铃结算溢出")
   }
 
   return nextTotal
@@ -281,7 +281,7 @@ async function deliverLotteryAutomaticPrizes(input: {
         select: { points: true },
       })
       if (!user) {
-        throw new Error("中奖用户不存在，无法发放积分奖品")
+        throw new Error("中奖用户不存在，无法发放风铃奖品")
       }
 
       await applyPointDelta({
@@ -289,7 +289,7 @@ async function deliverLotteryAutomaticPrizes(input: {
         userId: winner.userId,
         beforeBalance: user.points,
         prepared: buildFixedPointDelta("LOTTERY_PRIZE_POINTS_AWARD", amount),
-        pointName: input.prizeCostSettings.pointName ?? "积分",
+        pointName: input.prizeCostSettings.pointName ?? "风铃",
         reason: `抽奖帖《${input.post.title}》中奖奖励：${prize.title}`,
         eventType: POINT_LOG_EVENT_TYPES.LOTTERY_PRIZE_POINTS_AWARD,
         eventData: {
@@ -386,7 +386,7 @@ async function deliverLotteryAutomaticPrizes(input: {
       userId: input.post.authorId,
       beforeBalance: author.points,
       prepared: buildFixedPointDelta("LOTTERY_PRIZE_REFUND", refundPoints),
-      pointName: input.prizeCostSettings.pointName ?? "积分",
+      pointName: input.prizeCostSettings.pointName ?? "风铃",
       reason: `抽奖帖《${input.post.title}》未发出的自动奖品退回`,
       eventType: POINT_LOG_EVENT_TYPES.LOTTERY_PRIZE_REFUND,
       eventData: {
@@ -503,7 +503,7 @@ export async function executeLotteryDrawTransaction(input: {
       relatedType: "POST" as const,
       relatedId: post.id,
       title: "你在抽奖帖中中奖了",
-      content: `恭喜你在《${post.title}》中获得 ${winner.prize.title}，请前往帖子查看开奖结果。`,
+      content: `恭喜你在《${post.title}》中获得 ${winner.prize.title}，请前往风笺查看开奖结果。`,
     }))
 
     if (notifications.length > 0) {

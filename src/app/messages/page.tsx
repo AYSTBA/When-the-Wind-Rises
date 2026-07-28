@@ -41,7 +41,7 @@ export default async function MessagesPage(props: PageProps<"/messages">) {
           className="mb-3 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ChevronLeft className="size-4" />
-          返回论坛
+          返回风广场
         </Link>
         <AddonSurfaceRenderBoundary
           surface="messages.page"

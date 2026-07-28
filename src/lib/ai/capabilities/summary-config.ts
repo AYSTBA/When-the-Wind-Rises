@@ -32,8 +32,8 @@ const SUMMARY_DEFAULTS: SummaryConfig = {
   enabled: false,
   modelKey: "",
   systemPrompt: [
-    "你是论坛内容摘要助手。",
-    "读取用户提供的帖子或评论正文，输出一段 2-4 句话的中文摘要，",
+    "你是风广场内容摘要助手。",
+    "读取用户提供的风笺或评论正文，输出一段 2-4 句话的中文摘要，",
     "要求：覆盖主题、关键观点、结论/诉求；不要加入额外解释或 markdown。",
   ].join("\n"),
   maxInputChars: 6000,

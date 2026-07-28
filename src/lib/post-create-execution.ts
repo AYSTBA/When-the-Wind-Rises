@@ -34,7 +34,7 @@ async function resolvePostAuthor(author?: CurrentUserRecord | null) {
 
   const currentUser = await getCurrentUserRecord()
   if (!currentUser) {
-    apiError(401, "请先登录后再发帖")
+    apiError(401, "请先登录后再发笺")
   }
 
   return currentUser
@@ -46,11 +46,11 @@ function assertPostAuthorStatus(author: CurrentUserRecord) {
   }
 
   if (author.status === "MUTED") {
-    apiError(403, "当前账号已被禁言，暂不可发帖")
+    apiError(403, "当前账号已被禁言，暂不可发笺")
   }
 
   if (author.status === "BANNED") {
-    apiError(403, "当前账号已被拉黑，无法发帖")
+    apiError(403, "当前账号已被拉黑，无法发笺")
   }
 
   apiError(403, "当前账号状态不可执行该操作")

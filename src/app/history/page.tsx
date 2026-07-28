@@ -30,7 +30,7 @@ export default function ReadingHistoryPage() {
               afterContent={<AddonSlotRenderer slot="history.panel.after" />}
               title="足迹"
               showClearButton
-              emptyDescription="打开帖子详情后会自动写入当前浏览器本地，可用于今日访问和阅读记录扩展。"
+              emptyDescription="打开风笺详情后会自动写入当前浏览器本地，可用于今日访问和阅读记录扩展。"
             />
           </div>
         </AddonSurfaceRenderer>

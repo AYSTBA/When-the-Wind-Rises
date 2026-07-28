@@ -99,8 +99,8 @@ export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
 
   const failedCount = failures.length
   const resultMessage = failedCount > 0
-    ? `已处理 ${successCount} 篇帖子，${failedCount} 篇失败`
-    : `已处理 ${successCount} 篇帖子`
+    ? `已处理 ${successCount} 篇风笺，${failedCount} 篇失败`
+    : `已处理 ${successCount} 篇风笺`
 
   return apiSuccess({
     successCount,
@@ -108,8 +108,8 @@ export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
     failures,
   }, resultMessage)
 }, {
-  errorMessage: "批量管理帖子失败",
+  errorMessage: "批量管理风笺失败",
   logPrefix: "[api/admin/posts/bulk] unexpected error",
-  unauthorizedMessage: "无权批量管理帖子",
+  unauthorizedMessage: "无权批量管理风笺",
   allowModerator: true,
 })

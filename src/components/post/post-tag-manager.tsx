@@ -179,7 +179,7 @@ export function PostTagManager({ postId, tags }: PostTagManagerProps) {
         onClose={closeModal}
         closeDisabled={saving}
         title="编辑主题标签"
-        description={`管理员和版主可以直接调整该帖子的主题标签，最多 ${MAX_MANUAL_TAGS} 个。`}
+        description={`管理员和版主可以直接调整该风笺的主题标签，最多 ${MAX_MANUAL_TAGS} 个。`}
         size="md"
         footer={(
           <div className="flex flex-wrap items-center justify-between gap-3">

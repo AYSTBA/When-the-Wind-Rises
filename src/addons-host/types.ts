@@ -387,7 +387,7 @@ export const ADDON_ACTION_HOOK_NAMES = [
   // 认证
   "auth.logout.before",
   "auth.logout.after",
-  // 帖子
+  // 风笺
   "post.update.before",
   "post.update.after",
   "post.delete.before",
@@ -410,7 +410,7 @@ export const ADDON_ACTION_HOOK_NAMES = [
   // 通知
   "notification.create.before",
   "notification.create.after",
-  // 积分
+  // 风铃
   "points.change.after",
   // 上传
   "upload.file.before",
@@ -1728,7 +1728,7 @@ export interface AddonActionHookPayloadMap {
     username: string
     sessionId?: string
   }
-  // ─── 帖子 ───
+  // ─── 风笺 ───
   "post.update.before": {
     postId: string
     editorId: string
@@ -2015,7 +2015,7 @@ export interface AddonActionHookPayloadMap {
   "notification.create.after": {
     notification?: AddonNotificationRecord
   }
-  // ─── 积分 ───
+  // ─── 风铃 ───
   "points.change.after": {
     userId: string
     delta: number

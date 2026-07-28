@@ -450,7 +450,7 @@ export async function createRegisterFlow(options: RegisterFlowOptions): Promise<
         beforeBalance: pointBalanceCursor,
         prepared: preparedRegisterInitialReward,
         pointName: settings.pointName,
-        reason: "新用户注册赠送积分",
+        reason: "新用户注册赠送风铃",
       })
 
       pointBalanceCursor = registerInitialRewardResult.afterBalance

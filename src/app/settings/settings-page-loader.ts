@@ -61,7 +61,7 @@ export const profileTabs: Array<{ key: ProfileTabKey; label: string }> = [
   { key: "browsing", label: "浏览设置" },
 ]
 export const postManagementTabs: Array<{ key: BuiltInPostManagementTabKey; label: string }> = [
-  { key: "posts", label: "我的帖子" },
+  { key: "posts", label: "我的风笺" },
   { key: "replies", label: "我的回复" },
   { key: "favorites", label: "我的收藏" },
   { key: "collections", label: "我的合集" },
@@ -72,7 +72,7 @@ export const followTabs: Array<{ key: FollowTabKey; label: string }> = [
   { key: "users", label: "用户" },
   { key: "followers", label: "粉丝" },
   { key: "tags", label: "标签" },
-  { key: "posts", label: "帖子" },
+  { key: "posts", label: "风笺" },
   { key: "history", label: "足迹" },
   { key: "blocks", label: "拉黑" },
 ]
@@ -80,12 +80,12 @@ export const followTabs: Array<{ key: FollowTabKey; label: string }> = [
 export const settingsTabTitles: Record<SettingsTabKey, string> = {
   profile: "个人设置",
   invite: "邀请中心",
-  "post-management": "帖子管理",
+  "post-management": "风笺管理",
   "board-applications": "节点申请",
   level: "等级中心",
   badges: "勋章中心",
   verifications: "认证中心",
-  points: "积分记录",
+  points: "风铃记录",
   follows: "关注管理",
   "oauth-apps": "开发者应用",
 }

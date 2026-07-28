@@ -83,7 +83,7 @@ export function buildUserProfileRadarData(params: {
         { normalized: normalizeLinear(vipLevel, 3), weight: 0.2 },
       ]),
       displayScore: 0,
-      detail: `积分 ${formatCompactPointValue(points)} · VIP ${vipLevel}`,
+      detail: `风铃 ${formatCompactPointValue(points)} · VIP ${vipLevel}`,
     },
     {
       key: "experience",
@@ -134,7 +134,7 @@ export function buildUserProfileRadarData(params: {
         { normalized: normalizeLog(commentCount, 240), weight: 0.6 },
       ]),
       displayScore: 0,
-      detail: `帖子 ${formatShortCount(postCount)} · 回复 ${formatShortCount(commentCount)}`,
+      detail: `风笺 ${formatShortCount(postCount)} · 回复 ${formatShortCount(commentCount)}`,
     },
   ]
 

@@ -20,9 +20,9 @@ export default async function FaqRssGuidePage() {
 
   const globalFeeds = [
     {
-      label: "全站最新帖子",
+      label: "全站最新风笺",
       path: "/rss.xml",
-      description: "订阅整个站点最新发布的公开帖子。",
+      description: "订阅整个站点最新发布的公开风笺。",
     },
   ]
 
@@ -64,17 +64,17 @@ export default async function FaqRssGuidePage() {
               {
                 label: "节点 RSS",
                 rule: `${origin}/boards/{board-slug}/rss.xml`,
-                description: "适合只跟踪某个节点的帖子更新。",
+                description: "适合只跟踪某个节点的风笺更新。",
               },
               {
                 label: "标签 RSS",
                 rule: `${origin}/tags/{tag-slug}/rss.xml`,
-                description: "适合订阅某个话题标签下的最新帖子。",
+                description: "适合订阅某个话题标签下的最新风笺。",
               },
               {
                 label: "用户 RSS",
                 rule: `${origin}/users/{username}/rss.xml`,
-                description: "适合订阅某个用户公开发布的最新帖子。",
+                description: "适合订阅某个用户公开发布的最新风笺。",
               },
             ].map((item) => (
               <div key={item.label} className="rounded-xl border border-border bg-card p-4">

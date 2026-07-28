@@ -377,14 +377,14 @@ function buildPostReplyUserPrompt(task: NonNullable<AiReplyTaskWorkerRecord>) {
     : ""
 
   return [
-    "论坛帖子上下文：",
+    "风广场风笺上下文：",
     `节点：${task.post.board.name}`,
-    `发帖人：${postAuthorName}`,
-    `发帖用户：${buildDisplayName(task.triggerUser)}`,
-    `帖子标题：${task.post.title}`,
-    `帖子正文：\n${postVisibleText || "（无正文）"}`,
+    `发笺人：${postAuthorName}`,
+    `发笺用户：${buildDisplayName(task.triggerUser)}`,
+    `风笺标题：${task.post.title}`,
+    `风笺正文：\n${postVisibleText || "（无正文）"}`,
     appendedContentText
-      ? `帖子补充：\n${appendedContentText}`
+      ? `风笺补充：\n${appendedContentText}`
       : "",
     "请基于整帖语义回复。直接输出评论正文，不要带标题或额外说明。",
   ].filter(Boolean).join("\n\n")
@@ -407,11 +407,11 @@ function buildCommentReplyUserPrompt(task: NonNullable<AiReplyTaskWorkerRecord>)
     : ""
 
   return [
-    "论坛评论上下文：",
+    "风广场评论上下文：",
     `节点：${task.post.board.name}`,
-    `帖子标题：${task.post.title}`,
-    `帖子作者：${postAuthorName}`,
-    `帖子正文摘要：\n${truncateText(getPostVisibleText(task.post), AI_REPLY_MAX_CONTEXT_CHARS) || "（无正文）"}`,
+    `风笺标题：${task.post.title}`,
+    `风笺作者：${postAuthorName}`,
+    `风笺正文摘要：\n${truncateText(getPostVisibleText(task.post), AI_REPLY_MAX_CONTEXT_CHARS) || "（无正文）"}`,
     `当前评论作者：${sourceCommentAuthorName}`,
     `当前评论内容：\n${sourceCommentText || "（无内容）"}`,
     repliedComment
@@ -434,7 +434,7 @@ async function callAiReplyModel(params: {
 }) {
   const systemPrompt = [
     params.agentConfig.systemPrompt.trim(),
-    `你当前扮演的论坛账号是 @${params.agentUser.username}${params.agentUser.nickname ? `（${params.agentUser.nickname}）` : ""}。`,
+    `你当前扮演的风广场账号是 @${params.agentUser.username}${params.agentUser.nickname ? `（${params.agentUser.nickname}）` : ""}。`,
     params.sourceType === AiReplyTaskSourceType.POST
       ? params.agentConfig.postReplyPrompt.trim()
       : params.agentConfig.commentReplyPrompt.trim(),
@@ -519,8 +519,8 @@ export async function sendAiReplyConnectivityTest(params: {
     sourceType: AiReplyTaskSourceType.COMMENT,
     agentUser: params.agentUser,
     prompt: [
-      "这是论坛后台的 AI 连通性测试，不是真实帖子或评论。",
-      "请直接回复一句不超过 30 个字的简体中文，表达你已准备好参与论坛讨论。",
+      "这是风广场后台的 AI 连通性测试，不是真实风笺或评论。",
+      "请直接回复一句不超过 30 个字的简体中文，表达你已准备好参与风广场讨论。",
       "不要输出标题、编号、代码块或多余解释。",
     ].join("\n"),
   })
@@ -805,21 +805,21 @@ function assertTaskStillRunnable(task: NonNullable<AiReplyTaskWorkerRecord>, con
   }
 
   if (!task.post || task.post.status !== "NORMAL") {
-    throw new AiReplyTaskCancelledError("源帖子已不存在或不可见，任务已取消")
+    throw new AiReplyTaskCancelledError("源风笺已不存在或不可见，任务已取消")
   }
 
   if (task.sourceType === AiReplyTaskSourceType.POST) {
     if (task.post.authorId === task.agentUserId) {
-      throw new AiReplyTaskCancelledError("AI 自己发布的帖子不会再次触发 AI 回复")
+      throw new AiReplyTaskCancelledError("AI 自己发布的风笺不会再次触发 AI 回复")
     }
 
     const triggerReason = readAiReplyTriggerReason(task.sourceKey)
     if (triggerReason === "mention" && !agentConfig.respondToPostMentions) {
-      throw new AiReplyTaskCancelledError("当前未启用帖子提及回复")
+      throw new AiReplyTaskCancelledError("当前未启用风笺提及回复")
     }
 
     if (triggerReason === "mention" && !doesPostStillMentionAgent(task.post, task.agentUser)) {
-      throw new AiReplyTaskCancelledError("帖子中已不存在对 AI 账号的提及，任务已取消")
+      throw new AiReplyTaskCancelledError("风笺中已不存在对 AI 账号的提及，任务已取消")
     }
 
     return
@@ -839,7 +839,7 @@ function assertTaskStillRunnable(task: NonNullable<AiReplyTaskWorkerRecord>, con
   }
 
   if (task.sourceComment.postId !== task.postId) {
-    throw new AiReplyTaskCancelledError("源评论与帖子不匹配，任务已取消")
+    throw new AiReplyTaskCancelledError("源评论与风笺不匹配，任务已取消")
   }
 
   if (triggerReason === "mention" && !doesCommentStillMentionAgent(task.sourceComment.content, task.agentUser)) {
@@ -900,8 +900,8 @@ async function dispatchAiReplyNotifications(params: {
       senderId: params.task.agentUserId,
       relatedType: "COMMENT",
       relatedId: params.generatedCommentId,
-      title: "你的帖子有了新回复",
-      content: `${buildDisplayName(params.task.agentUser)} 回复了你的帖子：${preview}`,
+      title: "你的风笺有了新回复",
+      content: `${buildDisplayName(params.task.agentUser)} 回复了你的风笺：${preview}`,
     })
     excludeUserIds.push(params.task.post.authorId)
   }

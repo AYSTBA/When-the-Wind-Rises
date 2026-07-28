@@ -199,7 +199,7 @@ export function AiReplySummaryPage() {
                 }
               >
                 <option value="">全部</option>
-                <option value="post">帖子</option>
+                <option value="post">风笺</option>
                 <option value="comment">评论</option>
               </select>
             </label>

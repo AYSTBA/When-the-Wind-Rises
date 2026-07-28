@@ -1,15 +1,11 @@
 "use client"
 
 import { createElement, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
-import { ChevronDown, Coins, Gavel, Gift, Info, Loader2, MessageSquareText, Vote, type LucideIcon } from "lucide-react"
+import { ChevronDown, Coins, Gavel, Gift, Info, Loader2, MessageSquareText, Settings2, Vote, type LucideIcon } from "lucide-react"
 
 import { AddonSurfaceClientRenderer } from "@/addons-host/client/addon-surface-client-renderer"
 import { BoardSelectField } from "@/components/board/board-select-field"
 import {
-  AuctionSettingsSection,
-  BountySettingsSection,
-  LotterySettingsSection,
-  PollSettingsSection,
   PostEnhancementsSection,
 } from "@/components/post/create-post-form-sections"
 import { PostDraftNotice, type PostDraftNoticeAction } from "@/components/post/post-draft-notice"
@@ -72,6 +68,14 @@ function PostTypeIcon({ type, ...props }: { type: LocalPostType } & ComponentPro
   return createElement(getPostTypeIcon(type), props)
 }
 
+const MOOD_OPTIONS = [
+  { value: "很开心", emoji: "😄", label: "很开心" },
+  { value: "开心", emoji: "😊", label: "开心" },
+  { value: "一般", emoji: "😐", label: "一般" },
+  { value: "低落", emoji: "😔", label: "低落" },
+  { value: "很失落", emoji: "😞", label: "很失落" },
+]
+
 export function CreatePostFormShell({
   boardOptions,
   pointName,
@@ -132,8 +136,6 @@ export function CreatePostFormShell({
     currentUser,
     patchDraft,
     updateDraftField,
-    setShowBoardTips,
-    setActiveModal,
     setTagModalOpen,
     setAttachmentModalOpen,
     setCoverModalOpen,
@@ -148,20 +150,14 @@ export function CreatePostFormShell({
     updatePollOption,
     addPollOption,
     removePollOption,
-    updateLotteryPrize,
-    addLotteryPrize,
-    removeLotteryPrize,
-    updateLotteryCondition,
-    addLotteryCondition,
-    addLotteryConditionGroup,
-    removeLotteryCondition,
-    removeLotteryConditionGroup,
     resolveAvailableRewardPoolMode,
   } = draftController
 
   const { loading, showSlowSubmitHint, slowSubmitWaitSeconds, handleSubmit } =
     submitController
+
   const [draftBoxModalOpen, setDraftBoxModalOpen] = useState(false)
+  const [isProMode, setIsProMode] = useState(false)
 
   const hasDraftBoxEntries = draftBoxEntries.length > 0
   const draftMetaTimestamp = pendingDraftToRestore?.updatedAt ?? lastSavedDraftAt
@@ -226,15 +222,11 @@ export function CreatePostFormShell({
   )
 
   const draftNoticeDescription = pendingDraftToRestore
-    ? `你在${isEditMode ? "编辑帖子" : "发帖"}页的草稿箱里有历史草稿，可先恢复最近一份。`
+    ? `你在${isEditMode ? "编辑风笺" : "发笺"}页的草稿箱里有历史草稿，可先恢复最近一份。`
     : undefined
-  const postTypeHelperText = isEditMode
-    ? "编辑模式下暂不允许切换帖子类型。"
-    : selectedPostTypeOption
-      ? `当前类型：${selectedPostTypeOption.label}，${selectedPostTypeOption.hint}${anonymousPostEnabled ? "，可按需搭配匿名发布" : ""}。`
-      : "选择帖子类型后，下方会展开对应扩展配置。"
 
-  const toolsContent = (
+  // ─── Pro mode: full editor ───────────────────────────────────────
+  const proToolsContent = (
     <>
       {addonToolsBefore}
       <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
@@ -243,7 +235,7 @@ export function CreatePostFormShell({
           {!isEditMode && canUseAutoBoardSelection && boardSelectionMode === "auto" ? (
             <div className="rounded-xl border border-border bg-card/70 px-4 py-3">
               <p className="text-sm leading-7 text-muted-foreground">
-                节点会在你点击发布时，根据标题和正文由 AI 自动选择。
+                节点会在你点击发布时，根据内容由 AI 自动选择。
                 <button
                   type="button"
                   className="ml-1 text-foreground underline underline-offset-4 transition-opacity hover:opacity-70"
@@ -296,7 +288,7 @@ export function CreatePostFormShell({
 
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-medium">帖子类型</p>
+            <p className="text-sm font-medium">风笺类型</p>
             <p className="text-xs text-muted-foreground">选择后再填写对应内容</p>
           </div>
           <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
@@ -313,7 +305,7 @@ export function CreatePostFormShell({
                   value={draft.postType}
                   onChange={(event) => updateDraftField("postType", event.target.value as LocalPostType)}
                   disabled={isEditMode}
-                  aria-label="帖子类型"
+                  aria-label="风笺类型"
                   className="h-11 w-full appearance-none rounded-full border border-border bg-card pr-10 pl-12 text-sm font-medium text-foreground outline-hidden transition-colors hover:bg-accent/35 focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {availablePostTypes.map((item) => (
@@ -348,141 +340,53 @@ export function CreatePostFormShell({
               </label>
             ) : null}
           </div>
-          <p className="text-xs leading-6 text-muted-foreground">{postTypeHelperText}</p>
+          <p className="text-xs leading-6 text-muted-foreground">
+            {isEditMode
+              ? "编辑模式下暂不允许切换风笺类型。"
+              : selectedPostTypeOption
+                ? `当前类型：${selectedPostTypeOption.label}，${selectedPostTypeOption.hint}。`
+                : "选择风笺类型后，下方会展开对应扩展配置。"}
+          </p>
+
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-medium text-muted-foreground">心情</span>
+            {MOOD_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => updateDraftField("mood", draft.mood === option.value ? "" : option.value)}
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                  draft.mood === option.value
+                    ? "border-foreground/30 bg-foreground/5 text-foreground"
+                    : "border-border text-muted-foreground hover:bg-accent/35"
+                }`}
+                title={option.label}
+              >
+                <span>{option.emoji}</span>
+                <span className="hidden sm:inline">{option.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {!canPostInBoard ? (
-        <div className="rounded-xl border border-border bg-card/70 px-4 py-3">
-          <button
-            type="button"
-            className="flex w-full items-center justify-between gap-3 text-left"
-            onClick={() => setShowBoardTips((current) => !current)}
-          >
-            <div className="flex items-center gap-2 text-sm font-medium">
-              <Info className="h-4 w-4 text-muted-foreground" />
-              <span>发帖提示与权限要求</span>
-            </div>
-            <ChevronDown
-              className={
-                showBoardTips
-                  ? "h-4 w-4 rotate-180 text-muted-foreground transition-transform"
-                  : "h-4 w-4 text-muted-foreground transition-transform"
-              }
-            />
-          </button>
-          {showBoardTips ? (
-            <div className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {selectedBoard?.allowUserPost === false && currentUser.role !== "ADMIN" && currentUser.role !== "MODERATOR" ? (
-                <p>当前节点仅管理员和版主可发帖。</p>
-              ) : null}
-              <p>
-                当前节点要求：最低{pointName} {formatCompactPointValue(selectedBoard?.minPostPoints ?? 0)}
-                ，最低等级 Lv.{selectedBoard?.minPostLevel ?? 0}，最低 VIP 等级{" "}
-                {minPostVipLevel}，
-                {selectedBoard?.requirePostReview ? "发帖后需审核" : "发帖默认直发"}。
-              </p>
-              <p>
-                当前账号：
-                <span className={currentUserVipClassName}>{currentUserSummary.split(" · ")[0]}</span>
-                {` · Lv.${currentUser.level} · ${formatCompactPointValue(currentUser.points)} ${pointName} ${draftController.isVipActive ? `· VIP ${currentVipLevel}` : "· 非 VIP"}`}
-              </p>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-
-      {!canPostInBoard ? (
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {selectedBoard?.allowUserPost === false && currentUser.role !== "ADMIN" && currentUser.role !== "MODERATOR"
-            ? "当前节点仅管理员和版主可发帖。"
-            : `当前不满足该节点发帖权限，请提升${pointName}、等级、VIP 等级或开通 VIP 后再试。`}
+            ? "当前节点仅管理员和版主可发笺。"
+            : `当前不满足该节点发笺权限，请提升${pointName}、等级、VIP 等级或开通 VIP 后再试。`}
         </div>
-      ) : null}
-
-      {draft.postType === "BOUNTY" ? (
-        <BountySettingsSection
-          pointName={pointName}
-          bountyPoints={draft.bountyPoints}
-          onBountyPointsChange={(value) => updateDraftField("bountyPoints", value)}
-          disabled={isEditMode}
-        />
-      ) : null}
-
-      {draft.postType === "AUCTION" ? (
-        <AuctionSettingsSection
-          pointName={pointName}
-          auctionMode={draft.auctionMode}
-          auctionPricingRule={draft.auctionPricingRule}
-          auctionStartPrice={draft.auctionStartPrice}
-          auctionIncrementStep={draft.auctionIncrementStep}
-          auctionStartsAt={draft.auctionStartsAt}
-          auctionEndsAt={draft.auctionEndsAt}
-          auctionWinnerOnlyContent={draft.auctionWinnerOnlyContent}
-          auctionWinnerOnlyContentPreview={draft.auctionWinnerOnlyContentPreview}
-          onAuctionModeChange={(value) => updateDraftField("auctionMode", value)}
-          onAuctionPricingRuleChange={(value) => updateDraftField("auctionPricingRule", value)}
-          onAuctionStartPriceChange={(value) => updateDraftField("auctionStartPrice", value)}
-          onAuctionIncrementStepChange={(value) => updateDraftField("auctionIncrementStep", value)}
-          onAuctionStartsAtChange={(value) => updateDraftField("auctionStartsAt", value)}
-          onAuctionEndsAtChange={(value) => updateDraftField("auctionEndsAt", value)}
-          onAuctionWinnerOnlyContentChange={(value) => updateDraftField("auctionWinnerOnlyContent", value)}
-          onAuctionWinnerOnlyContentPreviewChange={(value) => updateDraftField("auctionWinnerOnlyContentPreview", value)}
-          disabled={isEditMode}
-        />
-      ) : null}
-
-      {draft.postType === "POLL" ? (
-        <PollSettingsSection
-          pollOptions={draft.pollOptions}
-          normalizedPollOptionsCount={normalizedPollOptions.length}
-          pollExpiresAt={draft.pollExpiresAt}
-          onPollOptionChange={updatePollOption}
-          onPollExpiresAtChange={(value) => updateDraftField("pollExpiresAt", value)}
-          onAddPollOption={addPollOption}
-          onRemovePollOption={removePollOption}
-          disabled={isEditMode}
-        />
-      ) : null}
-
-      {draft.postType === "LOTTERY" ? (
-        <LotterySettingsSection
-          pointName={pointName}
-          lotteryStartsAt={draft.lotteryStartsAt}
-          lotteryEndsAt={draft.lotteryEndsAt}
-          lotteryParticipantGoal={draft.lotteryParticipantGoal}
-          lotteryPrizes={draft.lotteryPrizes}
-          lotteryConditions={draft.lotteryConditions}
-          userLevelOptions={viewLevelOptions}
-          vipLevelOptions={viewVipLevelOptions}
-          vipMonthlyPrice={vipMonthlyPrice}
-          vipQuarterlyPrice={vipQuarterlyPrice}
-          vipYearlyPrice={vipYearlyPrice}
-          onLotteryStartsAtChange={(value) => updateDraftField("lotteryStartsAt", value)}
-          onLotteryEndsAtChange={(value) => updateDraftField("lotteryEndsAt", value)}
-          onLotteryParticipantGoalChange={(value) =>
-            updateDraftField("lotteryParticipantGoal", value)}
-          onLotteryPrizeChange={updateLotteryPrize}
-          onAddLotteryPrize={addLotteryPrize}
-          onRemoveLotteryPrize={removeLotteryPrize}
-          onLotteryConditionChange={updateLotteryCondition}
-          onAddLotteryConditionGroup={addLotteryConditionGroup}
-          onAddLotteryCondition={addLotteryCondition}
-          onRemoveLotteryCondition={removeLotteryCondition}
-          onRemoveLotteryConditionGroup={removeLotteryConditionGroup}
-          disabled={isEditMode}
-        />
       ) : null}
       {addonToolsAfter}
     </>
   )
 
-  const editorContent = (
+  const proEditorContent = (
     <div className="space-y-2">
       {addonEditorBefore}
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-medium">公开正文</p>
-        <p className="text-xs text-muted-foreground">请遵守社区规则，文明发帖！</p>
+        <p className="text-xs text-muted-foreground">请遵守社区规则，文明发笺！</p>
       </div>
       <AddonEditor
         context="post"
@@ -495,7 +399,7 @@ export function CreatePostFormShell({
     </div>
   )
 
-  const enhancementsContent = (
+  const proEnhancementsContent = (
     <>
       {addonEnhancementsBefore}
       <PostEnhancementsSection
@@ -507,12 +411,6 @@ export function CreatePostFormShell({
           coverUploading: draftController.coverUploading,
           coverPath: draft.coverPath,
           commentsVisibleToAuthorOnly: draft.commentsVisibleToAuthorOnly,
-          loginUnlockContent: draft.loginUnlockContent,
-          replyUnlockContent: draft.replyUnlockContent,
-          purchaseUnlockContent: draft.purchaseUnlockContent,
-          purchasePrice: draft.purchasePrice,
-          minViewLevel: draft.minViewLevel,
-          minViewVipLevel: draft.minViewVipLevel,
           redPacketEnabled: draft.redPacketEnabled,
           redPacketMode: draft.redPacketMode,
           redPacketGrantMode: draft.redPacketGrantMode,
@@ -534,16 +432,6 @@ export function CreatePostFormShell({
           onCoverClear: () => updateDraftField("coverPath", ""),
           onCommentsVisibleToAuthorOnlyChange: (checked) =>
             updateDraftField("commentsVisibleToAuthorOnly", checked),
-          onOpenLoginModal: () => setActiveModal("login"),
-          onClearLoginUnlock: () => updateDraftField("loginUnlockContent", ""),
-          onOpenReplyModal: () => setActiveModal("reply"),
-          onClearReplyUnlock: () => updateDraftField("replyUnlockContent", ""),
-          onOpenPurchaseModal: () => setActiveModal("purchase"),
-          onClearPurchaseUnlock: () =>
-            patchDraft({ purchaseUnlockContent: "", purchasePrice: "20" }),
-          onOpenViewLevelModal: () => setActiveModal("view-level"),
-          onClearViewLevel: () =>
-            patchDraft({ minViewLevel: "0", minViewVipLevel: "0" }),
           onOpenRewardPoolModal: () => setRewardPoolModalOpen(true),
           onClearRewardPool: () =>
             patchDraft({
@@ -596,6 +484,134 @@ export function CreatePostFormShell({
     </>
   )
 
+  const proFormContent = (
+    <>
+      <AddonSurfaceClientRenderer
+        surface="post.create.tools"
+        surfaceProps={{
+          boardOptions,
+          canPostInBoard,
+          currentUser,
+          currentUserSummary,
+          currentUserVipClassName,
+          draft,
+          draftController,
+          isEditMode,
+          minPostVipLevel,
+          pointName,
+          selectedBoard,
+          selectedPostTypeOption,
+          showBoardTips,
+          viewLevelOptions,
+          viewVipLevelOptions,
+        }}
+        fallback={proToolsContent}
+      />
+
+      <div className="space-y-2">
+        <p className="text-sm font-medium">标题</p>
+        <input
+          value={draft.title}
+          onChange={(event) => updateDraftField("title", event.target.value)}
+          className="h-11 w-full rounded-full border border-border bg-card px-4 text-sm outline-hidden"
+          placeholder="写一个让人愿意点进来的标题"
+        />
+      </div>
+
+      <AddonSurfaceClientRenderer
+        surface="post.create.editor"
+        surfaceProps={{
+          draft,
+          draftController,
+          markdownEmojiMap,
+        }}
+        fallback={proEditorContent}
+      />
+
+      <AddonSurfaceClientRenderer
+        surface="post.create.enhancements"
+        surfaceProps={{
+          draft,
+          draftController,
+          pointName,
+        }}
+        fallback={proEnhancementsContent}
+      />
+    </>
+  )
+
+  // ─── Simple mode: minimal editor ─────────────────────────────────
+  const simpleFormContent = (
+    <>
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1">
+          {selectedPostTypeOption ? (
+            <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center gap-2">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-muted-foreground">
+                <PostTypeIcon type={selectedPostTypeOption.value} className="h-4 w-4" />
+              </span>
+            </span>
+          ) : null}
+          <select
+            value={draft.postType}
+            onChange={(event) => updateDraftField("postType", event.target.value as LocalPostType)}
+            disabled={isEditMode}
+            aria-label="风笺类型"
+            className="h-11 w-full appearance-none rounded-full border border-border bg-card pr-10 pl-12 text-sm font-medium text-foreground outline-hidden transition-colors hover:bg-accent/35 focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {availablePostTypes.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        </div>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="h-9 shrink-0 gap-1.5 text-xs text-muted-foreground"
+          onClick={() => setIsProMode(true)}
+        >
+          <Settings2 className="h-3.5 w-3.5" />
+          专业编辑
+        </Button>
+      </div>
+
+      <div className="flex items-center gap-2">
+        {MOOD_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => updateDraftField("mood", draft.mood === option.value ? "" : option.value)}
+            className={`flex flex-1 flex-col items-center gap-1.5 rounded-2xl border-2 px-3 py-4 text-center transition-all ${
+              draft.mood === option.value
+                ? "border-foreground bg-foreground/5 shadow-sm scale-[1.03]"
+                : "border-border hover:border-foreground/30 hover:bg-accent/35"
+            }`}
+            title={option.label}
+          >
+            <span className="text-2xl">{option.emoji}</span>
+            <span className={`text-xs font-medium ${draft.mood === option.value ? "text-foreground" : "text-muted-foreground"}`}>
+              {option.label}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <AddonEditor
+        context="post"
+        value={draft.content}
+        onChange={(value) => updateDraftField("content", value)}
+        placeholder="写点什么..."
+        markdownEmojiMap={markdownEmojiMap}
+      />
+    </>
+  )
+
+  // ─── Shared submit content ────────────────────────────────────────
   const submitContent = (
     <>
       {addonSubmitBefore}
@@ -612,9 +628,9 @@ export function CreatePostFormShell({
           />
           {loading && showSlowSubmitHint ? (
             <PostDraftNotice
-              title={isEditMode ? "保存仍在处理中" : "发帖仍在处理中"}
+              title={isEditMode ? "保存仍在处理中" : "发笺仍在处理中"}
               description={
-                `已等待 ${slowSubmitWaitSeconds} 秒。服务器当前响应较慢，请勿重复提交；创建完成后会自动跳转到帖子详情页。`
+                `已等待 ${slowSubmitWaitSeconds} 秒。服务器当前响应较慢，请勿重复提交；创建完成后会自动跳转到风笺详情页。`
               }
               tone="warning"
               size="dense"
@@ -636,9 +652,9 @@ export function CreatePostFormShell({
                   : "发布中..."}
             </>
           ) : isEditMode ? (
-            "保存帖子"
+            "保存风笺"
           ) : (
-            "发布帖子"
+            "发布风笺"
           )}
         </Button>
       </div>
@@ -646,62 +662,13 @@ export function CreatePostFormShell({
     </>
   )
 
+  // ─── Choose which form to render ─────────────────────────────────
+  const activeFormContent = isProMode ? proFormContent : simpleFormContent
+
   const formContent = (
     <>
-      <AddonSurfaceClientRenderer
-        surface="post.create.tools"
-        surfaceProps={{
-          boardOptions,
-          canPostInBoard,
-          currentUser,
-          currentUserSummary,
-          currentUserVipClassName,
-          draft,
-          draftController,
-          isEditMode,
-          minPostVipLevel,
-          pointName,
-          selectedBoard,
-          selectedPostTypeOption,
-          showBoardTips,
-          viewLevelOptions,
-          viewVipLevelOptions,
-        }}
-        fallback={toolsContent}
-      />
-
-      <div className="space-y-2">
-        <p className="text-sm font-medium">标题</p>
-        <input
-          value={draft.title}
-          onChange={(event) => updateDraftField("title", event.target.value)}
-          className="h-11 w-full rounded-full border border-border bg-card px-4 text-sm outline-hidden"
-          placeholder="写一个让人愿意点进来的标题"
-        />
-      </div>
-
-      <AddonSurfaceClientRenderer
-        surface="post.create.editor"
-        surfaceProps={{
-          draft,
-          draftController,
-          markdownEmojiMap,
-        }}
-        fallback={editorContent}
-      />
-
-      <AddonSurfaceClientRenderer
-        surface="post.create.enhancements"
-        surfaceProps={{
-          draft,
-          draftController,
-          pointName,
-        }}
-        fallback={enhancementsContent}
-      />
-
+      {activeFormContent}
       {addonCaptcha}
-
       <AddonSurfaceClientRenderer
         surface="post.create.submit"
         surfaceProps={{

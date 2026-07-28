@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { Gift } from "lucide-react"
 import { useMemo, useState, useTransition } from "react"
@@ -96,7 +96,7 @@ export function InlineTipButton({
 
   function getBlockedMessage(amount: number) {
     if (!enabled) {
-      return "当前未开启积分打赏"
+      return "当前未开启风铃打赏"
     }
     if (!isLoggedIn) {
       return "请登录后参与打赏"
@@ -229,7 +229,7 @@ export function InlineTipButton({
           ) : null}
           {normalizedAmounts.length > 0 ? (
             <div className="flex flex-col gap-1.5">
-              <span className="text-[11px] text-muted-foreground">积分打赏</span>
+              <span className="text-[11px] text-muted-foreground">风铃打赏</span>
               <div className="grid grid-cols-4 gap-1.5">
                 {normalizedAmounts.map((amount) => (
                   <button

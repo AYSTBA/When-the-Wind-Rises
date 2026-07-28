@@ -23,7 +23,7 @@ export interface LotteryPrizeDraftInput {
 
 export const LOTTERY_PRIZE_TYPE_OPTIONS = [
   { value: "MANUAL", label: "人工奖品", description: "中奖后由发起人线下或手动发放。" },
-  { value: "POINTS", label: "站内积分", description: "开奖后自动发放到中奖用户账户。" },
+  { value: "POINTS", label: "站内风铃", description: "开奖后自动发放到中奖用户账户。" },
   { value: "VIP", label: "会员权益", description: "开奖后自动开通或延长中奖用户 VIP。" },
   { value: "REDEEM_CODE", label: "兑换码", description: "每行一个码，开奖后每名中奖用户只看到自己的码。" },
 ] as const satisfies Array<{ value: LotteryPrizeTypeValue; label: string; description: string }>
@@ -93,7 +93,7 @@ export function getLotteryVipPlanDetails(plan: string | null | undefined, settin
   }
 }
 
-export function buildLotteryPrizeDefaultTitle(prize: Pick<LotteryPrizeDraftInput, "type" | "pointsAmount" | "vipPlan">, pointName = "积分") {
+export function buildLotteryPrizeDefaultTitle(prize: Pick<LotteryPrizeDraftInput, "type" | "pointsAmount" | "vipPlan">, pointName = "风铃") {
   if (prize.type === "POINTS") {
     return `${pointName}奖励`
   }
@@ -109,7 +109,7 @@ export function buildLotteryPrizeDefaultTitle(prize: Pick<LotteryPrizeDraftInput
   return ""
 }
 
-export function buildLotteryPrizeDefaultDescription(prize: Pick<LotteryPrizeDraftInput, "type" | "pointsAmount" | "vipPlan">, pointName = "积分") {
+export function buildLotteryPrizeDefaultDescription(prize: Pick<LotteryPrizeDraftInput, "type" | "pointsAmount" | "vipPlan">, pointName = "风铃") {
   if (prize.type === "POINTS") {
     const amount = Math.max(0, Math.trunc(prize.pointsAmount ?? 0))
     return amount > 0
@@ -204,7 +204,7 @@ export function buildLotteryPrizeCreateInputs(
   prizes: LotteryPrizeDraftInput[],
   settings: LotteryPrizeCostSettings,
 ) {
-  const pointName = settings.pointName ?? "积分"
+  const pointName = settings.pointName ?? "风铃"
 
   return prizes.map((prize, index) => {
     const unitCostPoints = resolveLotteryPrizeUnitCost(prize, settings)

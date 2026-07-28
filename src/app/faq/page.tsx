@@ -7,7 +7,7 @@ import { FAQ_TABS, buildFaqMetadata } from "@/lib/faq"
 import { getSiteSettings } from "@/lib/site-settings"
 
 export async function generateMetadata() {
-  return buildFaqMetadata("系统功能 FAQ", "快速理解论坛里的等级、勋章、热度、积分、认证与社交功能。")
+  return buildFaqMetadata("系统功能 FAQ", "快速理解风广场里的等级、勋章、热度、风铃、认证与社交功能。")
 }
 
 export default async function FaqPage() {
@@ -19,7 +19,7 @@ export default async function FaqPage() {
       currentPath="/faq"
       eyebrow="System Guide"
       title="系统功能 FAQ"
-      description="快速理解论坛里的等级、勋章、热度、积分、认证与社交功能。"
+      description="快速理解风广场里的等级、勋章、热度、风铃、认证与社交功能。"
     >
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {topicTabs.map((tab) => (
@@ -38,7 +38,7 @@ export default async function FaqPage() {
         {[
           {
             title: "访问与权限",
-            description: `节点、分区和帖子都可以设置 ${settings.pointName}、等级或 VIP 门槛。`,
+            description: `节点、分区和风笺都可以设置 ${settings.pointName}、等级或 VIP 门槛。`,
             icon: ShieldCheck,
           },
           {
@@ -48,7 +48,7 @@ export default async function FaqPage() {
           },
           {
             title: "互动与热度",
-            description: "帖子热度会综合浏览、回复、点赞与打赏表现实时变化。",
+            description: "风笺热度会综合浏览、回复、点赞与打赏表现实时变化。",
             icon: Flame,
           },
           {
@@ -79,9 +79,9 @@ export default async function FaqPage() {
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-2">
             {[ 
-              { step: "1", title: "先看积分与认证", description: `先理解 ${settings.pointName} 的作用和认证展示机制，再看其它规则会更顺。` },
+              { step: "1", title: "先看风铃与认证", description: `先理解 ${settings.pointName} 的作用和认证展示机制，再看其它规则会更顺。` },
               { step: "2", title: "再看等级与勋章", description: "这两套决定长期成长、可见身份和成就积累。" },
-              { step: "3", title: "再看帖子热度", description: "适合作者、版主和运营理解帖子为什么会变热。" },
+              { step: "3", title: "再看风笺热度", description: "适合作者、版主和运营理解风笺为什么会变热。" },
               { step: "4", title: "最后看关注与拉黑", description: "把日常使用里的关系管理和互动边界补齐。" },
             ].map((item) => (
               <div key={item.step} className="rounded-xl bg-secondary/50 p-4">

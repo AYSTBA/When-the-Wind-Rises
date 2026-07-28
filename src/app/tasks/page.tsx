@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: `任务中心 - ${settings.siteName}`,
-    description: `在 ${settings.siteName} 完成签到、发帖、回复、点赞等任务，获取${settings.pointName}奖励并追踪成长进度。`,
+    description: `在 ${settings.siteName} 完成签到、发笺、回复、点赞等任务，获取${settings.pointName}奖励并追踪成长进度。`,
     openGraph: {
       title: `任务中心 - ${settings.siteName}`,
       description: `完成社区任务，获取${settings.pointName}奖励并追踪你的每日与挑战进度。`,

@@ -347,7 +347,7 @@ function createReferenceStateMap(rows: UploadListRow[]) {
     {
       postAttachmentCount: row._count.postAttachments,
       directReferenceCount: 0,
-      sources: row._count.postAttachments > 0 ? new Set(["帖子附件"]) : new Set<string>(),
+      sources: row._count.postAttachments > 0 ? new Set(["风笺附件"]) : new Set<string>(),
     },
   ]))
 }
@@ -484,7 +484,7 @@ export async function resolveUploadReferenceStates(rows: UploadListRow[], option
       addReference(states, matchExactPath(item.coverPath, uploadIdsByUrlPath), "节点封面")
     }
     for (const item of posts) {
-      addReference(states, matchExactPath(item.coverPath, uploadIdsByUrlPath), "帖子封面")
+      addReference(states, matchExactPath(item.coverPath, uploadIdsByUrlPath), "风笺封面")
     }
     for (const item of friendLinks) {
       addReference(states, matchExactPath(item.logoPath, uploadIdsByUrlPath), "友情链接")
@@ -614,12 +614,12 @@ export async function resolveUploadReferenceStates(rows: UploadListRow[], option
     addReference(states, matchContainedPaths(item.configJson, rows), "节点配置")
   }
   for (const item of posts) {
-    addReference(states, matchExactPath(item.coverPath, uploadIdsByUrlPath), "帖子封面")
-    addReference(states, matchContainedPaths(item.content, rows), "帖子内容")
-    addReference(states, matchContainedPaths(item.appendedContent, rows), "帖子追加内容")
+    addReference(states, matchExactPath(item.coverPath, uploadIdsByUrlPath), "风笺封面")
+    addReference(states, matchContainedPaths(item.content, rows), "风笺内容")
+    addReference(states, matchContainedPaths(item.appendedContent, rows), "风笺追加内容")
   }
   for (const item of appendices) {
-    addReference(states, matchContainedPaths(item.content, rows), "帖子附加内容")
+    addReference(states, matchContainedPaths(item.content, rows), "风笺附加内容")
   }
   for (const item of comments) {
     addReference(states, matchContainedPaths(item.content, rows), "评论内容")

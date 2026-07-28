@@ -447,7 +447,7 @@ export async function applyPointDelta(params: {
     if (settlement.value.handled) {
       const afterBalance = settlement.value.afterBalance
       if (typeof afterBalance !== "number" || !Number.isSafeInteger(afterBalance)) {
-        apiError(500, "插件积分结算结果无效")
+        apiError(500, "插件风铃结算结果无效")
       }
 
       return {
@@ -461,7 +461,7 @@ export async function applyPointDelta(params: {
     let actualAfterBalance = addSafeIntegers(beforeBalance, finalDelta)
 
     if (actualAfterBalance === null) {
-      apiError(500, "积分结算结果溢出")
+      apiError(500, "风铃结算结果溢出")
     }
 
     if (finalDelta > 0) {
@@ -481,7 +481,7 @@ export async function applyPointDelta(params: {
       const resolvedBeforeBalance = subtractSafeIntegers(updatedUser.points, finalDelta)
 
       if (resolvedBeforeBalance === null) {
-        apiError(500, "积分结算前余额计算失败")
+        apiError(500, "风铃结算前余额计算失败")
       }
 
       actualBeforeBalance = resolvedBeforeBalance
@@ -531,7 +531,7 @@ export async function applyPointDelta(params: {
       const resolvedBeforeBalance = addSafeIntegers(updatedUser.points, changeValue)
 
       if (resolvedBeforeBalance === null) {
-        apiError(500, "积分结算前余额计算失败")
+        apiError(500, "风铃结算前余额计算失败")
       }
 
       actualBeforeBalance = resolvedBeforeBalance
@@ -560,7 +560,7 @@ export async function applyPointDelta(params: {
         reason: params.reason.trimEnd(),
       })
     } catch {
-      // 插件失败不应影响积分事务
+      // 插件失败不应影响风铃事务
     }
 
     return {

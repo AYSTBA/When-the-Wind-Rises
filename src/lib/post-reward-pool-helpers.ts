@@ -144,7 +144,7 @@ export async function normalizePostRedPacketConfig(input: unknown): Promise<{
 
     const initialPoints = toPositiveInteger(config.initialPoints)
     if (!initialPoints) {
-      return { success: false, message: "聚宝盆初始积分必须是正整数", data: null }
+      return { success: false, message: "聚宝盆初始风铃必须是正整数", data: null }
     }
 
     if (initialPoints < settings.postJackpotMinInitialPoints) {
@@ -169,7 +169,7 @@ export async function normalizePostRedPacketConfig(input: unknown): Promise<{
   }
 
   if (!settings.postRedPacketEnabled) {
-    return { success: false, message: "当前站点未开启帖子红包功能", data: null }
+    return { success: false, message: "当前站点未开启风笺红包功能", data: null }
   }
 
   const grantMode = String(config.grantMode ?? "FIXED").trim().toUpperCase()
@@ -195,7 +195,7 @@ export async function normalizePostRedPacketConfig(input: unknown): Promise<{
   }
 
   if (!totalPoints || !packetCount) {
-    return { success: false, message: "红包总积分和份数必须为正整数", data: null }
+    return { success: false, message: "红包总风铃和份数必须为正整数", data: null }
   }
 
   if (grantMode === "FIXED" && (!unitPoints || unitPoints > settings.postRedPacketMaxPoints)) {
@@ -245,11 +245,11 @@ export function allocateRedPacketAmount(packet: { grantMode: PostRedPacketGrantM
 }
 
 export function buildRedPacketClaimReason(params: { amount: number; pointName: string; postId: string; triggerType: PostRedPacketTriggerType }) {
-  return `领取帖子红包(${getPostRedPacketTriggerLabel(params.triggerType)}，${params.amount}${params.pointName})`
+  return `领取风笺红包(${getPostRedPacketTriggerLabel(params.triggerType)}，${params.amount}${params.pointName})`
 }
 
 export function buildRedPacketSendReason(params: { amount: number; pointName: string; postId: string }) {
-  return `发布帖子红包(${params.amount}${params.pointName})`
+  return `发布风笺红包(${params.amount}${params.pointName})`
 }
 
 export function buildJackpotSendReason(params: { amount: number; pointName: string; postId: string }) {

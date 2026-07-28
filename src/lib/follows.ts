@@ -24,9 +24,9 @@ export const FOLLOW_TARGET_COPY: Record<FollowTargetType, {
     unfollowAction: "取消关注标签",
   },
   post: {
-    noun: "帖子",
-    followAction: "关注帖子",
-    unfollowAction: "取消关注帖子",
+    noun: "风笺",
+    followAction: "关注风笺",
+    unfollowAction: "取消关注风笺",
   },
 }
 

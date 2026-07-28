@@ -7,7 +7,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   const postId = String(body.postId ?? "")
 
   if (!postId) {
-    apiError(400, "缺少帖子参数")
+    apiError(400, "缺少风笺参数")
   }
 
   const requestUrl = new URL(request.url)
@@ -34,7 +34,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
 
   return apiSuccess({ liked: result.liked }, result.liked ? "点赞成功" : "已取消点赞")
 }, {
-  errorMessage: "帖子点赞失败",
+  errorMessage: "风笺点赞失败",
   logPrefix: "[api/posts/like] unexpected error",
   unauthorizedMessage: "请先登录后再点赞",
   allowStatuses: ["ACTIVE", "MUTED"],

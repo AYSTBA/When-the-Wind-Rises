@@ -50,9 +50,9 @@ const actionOptions = [
   { value: "report.reject", label: "举报驳回" },
   { value: "user.ban", label: "用户封禁" },
   { value: "user.mute", label: "用户禁言" },
-  { value: "post.approve", label: "帖子通过" },
-  { value: "post.reject", label: "帖子驳回" },
-  { value: "post.delete", label: "帖子删除" },
+  { value: "post.approve", label: "风笺通过" },
+  { value: "post.reject", label: "风笺驳回" },
+  { value: "post.delete", label: "风笺删除" },
   { value: "comment.delete", label: "评论删除" },
 ]
 const checkInActionOptions = [
@@ -68,7 +68,7 @@ const pointTypeOptions = [
 const bucketTypeOptions = [
   { value: "ALL", label: "全部目录" },
   { value: "avatars", label: "头像" },
-  { value: "posts", label: "帖子图片" },
+  { value: "posts", label: "风笺图片" },
   { value: "icon", label: "图标" },
 ]
 const tabIcons = {
@@ -112,7 +112,7 @@ export function AdminLogCenter({ data }: AdminLogCenterProps) {
       badges.push(`${actionLabel}: ${activeActionOptions.find((item) => item.value === filters.action)?.label ?? filters.action}`)
     }
     if (filters.changeType !== "ALL" && data.activeTab === "points") {
-      badges.push(`积分类型: ${pointTypeOptions.find((item) => item.value === filters.changeType)?.label ?? filters.changeType}`)
+      badges.push(`风铃类型: ${pointTypeOptions.find((item) => item.value === filters.changeType)?.label ?? filters.changeType}`)
     }
     if (filters.bucketType !== "ALL" && data.activeTab === "uploads") {
       badges.push(`上传目录: ${bucketTypeOptions.find((item) => item.value === filters.bucketType)?.label ?? filters.bucketType}`)
@@ -230,7 +230,7 @@ export function AdminLogCenter({ data }: AdminLogCenterProps) {
               disabled={actionDisabled}
             />
             <AdminFilterSelectField
-              label="积分类型"
+              label="风铃类型"
               value={filters.changeType}
               onValueChange={(value) => setFilters((current) => ({ ...current, changeType: value }))}
               options={pointTypeOptions}

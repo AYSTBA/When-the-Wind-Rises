@@ -440,7 +440,7 @@ export async function withdrawBoardTreasury(input: {
 
     const withdrawAmount = board.treasuryPoints
     if (!Number.isSafeInteger(withdrawAmount) || withdrawAmount <= 0) {
-      apiError(400, "节点金库暂无可提取积分")
+      apiError(400, "节点金库暂无可提取风铃")
     }
 
     const deducted = await decrementBoardTreasuryPointsIfEnough(tx, board.id, withdrawAmount)

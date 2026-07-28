@@ -397,7 +397,7 @@ export function PaymentGatewayAdminPage({ initialData }: PaymentGatewayAdminPage
       <Card>
         <CardHeader className="border-b">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <CardTitle>积分充值套餐</CardTitle>
+            <CardTitle>风铃充值套餐</CardTitle>
             <Button type="button" variant="outline" onClick={addTopupPackage}>新增套餐</Button>
           </div>
         </CardHeader>
@@ -405,7 +405,7 @@ export function PaymentGatewayAdminPage({ initialData }: PaymentGatewayAdminPage
           <div className="rounded-xl border border-border p-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="font-medium">开放积分充值</p>
+                <p className="font-medium">开放风铃充值</p>
                 <p className="mt-1 text-sm text-muted-foreground">开启后，用户可在独立充值页发起充值。</p>
               </div>
               <Switch checked={topupEnabled} onCheckedChange={setTopupEnabled} />
@@ -416,7 +416,7 @@ export function PaymentGatewayAdminPage({ initialData }: PaymentGatewayAdminPage
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="font-medium">开放自定义金额</p>
-                <p className="mt-1 text-sm text-muted-foreground">用户可在独立充值页输入任意金额，系统按比例自动换算积分。</p>
+                <p className="mt-1 text-sm text-muted-foreground">用户可在独立充值页输入任意金额，系统按比例自动换算风铃。</p>
               </div>
               <Switch checked={topupCustomAmountEnabled} onCheckedChange={setTopupCustomAmountEnabled} />
             </div>
@@ -425,7 +425,7 @@ export function PaymentGatewayAdminPage({ initialData }: PaymentGatewayAdminPage
           <div className="grid gap-4 md:grid-cols-3">
             <TextField label="自定义最小金额（分）" value={topupCustomMinAmountFen} onChange={setTopupCustomMinAmountFen} placeholder="如 1000" />
             <TextField label="自定义最大金额（分）" value={topupCustomMaxAmountFen} onChange={setTopupCustomMaxAmountFen} placeholder="如 100000" />
-            <TextField label="每 1 元兑换积分" value={topupCustomPointsPerYuan} onChange={setTopupCustomPointsPerYuan} placeholder="如 10" />
+            <TextField label="每 1 元兑换风铃" value={topupCustomPointsPerYuan} onChange={setTopupCustomPointsPerYuan} placeholder="如 10" />
           </div>
 
           {topupPackages.length === 0 ? (
@@ -440,8 +440,8 @@ export function PaymentGatewayAdminPage({ initialData }: PaymentGatewayAdminPage
                 <div className="grid gap-4 xl:grid-cols-[1.2fr_140px_140px_140px_120px_auto_auto] xl:items-end">
                   <TextField label="套餐标题" value={item.title} onChange={(value) => updateTopupPackage(item.id, { title: value })} placeholder="如 新手包" />
                   <TextField label="支付金额（分）" value={String(item.amountFen)} onChange={(value) => updateTopupPackage(item.id, { amountFen: Number(value || 0) })} placeholder="如 1000" />
-                  <TextField label="基础积分" value={String(item.points)} onChange={(value) => updateTopupPackage(item.id, { points: Number(value || 0) })} placeholder="如 100" />
-                  <TextField label="赠送积分" value={String(item.bonusPoints)} onChange={(value) => updateTopupPackage(item.id, { bonusPoints: Number(value || 0) })} placeholder="如 20" />
+                  <TextField label="基础风铃" value={String(item.points)} onChange={(value) => updateTopupPackage(item.id, { points: Number(value || 0) })} placeholder="如 100" />
+                  <TextField label="赠送风铃" value={String(item.bonusPoints)} onChange={(value) => updateTopupPackage(item.id, { bonusPoints: Number(value || 0) })} placeholder="如 20" />
                   <TextField label="排序" value={String(item.sortOrder)} onChange={(value) => updateTopupPackage(item.id, { sortOrder: Number(value || 0) })} placeholder="如 10" />
                   <div className="rounded-xl border border-border px-4 py-3">
                     <div className="flex items-center justify-between gap-3">

@@ -243,7 +243,7 @@ export function AdminLevelSettingsForm({ initialLevels }: AdminLevelSettingsForm
 
                 <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-[92px_92px_92px_92px_112px] xl:items-end">
                   <NumberField label="签到" value={String(level.requireCheckInDays)} onChange={(value) => updateLevel(index, { requireCheckInDays: clampToNonNegative(value) })} disabled={readonlyBase} />
-                  <NumberField label="发帖" value={String(level.requirePostCount)} onChange={(value) => updateLevel(index, { requirePostCount: clampToNonNegative(value) })} disabled={readonlyBase} />
+                  <NumberField label="发笺" value={String(level.requirePostCount)} onChange={(value) => updateLevel(index, { requirePostCount: clampToNonNegative(value) })} disabled={readonlyBase} />
                   <NumberField label="回复" value={String(level.requireCommentCount)} onChange={(value) => updateLevel(index, { requireCommentCount: clampToNonNegative(value) })} disabled={readonlyBase} />
                   <NumberField label="获赞" value={String(level.requireLikeCount)} onChange={(value) => updateLevel(index, { requireLikeCount: clampToNonNegative(value) })} disabled={readonlyBase} />
 

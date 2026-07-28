@@ -41,8 +41,8 @@ export function PostManagementSettingsSection({ data }: { data: SettingsPageData
       <Card>
         <CardHeader className="space-y-4">
           <div className="space-y-1">
-            <CardTitle>帖子管理</CardTitle>
-            <p className="text-sm text-muted-foreground">集中查看你发布、回复、收藏和点赞过的帖子内容。</p>
+            <CardTitle>风笺管理</CardTitle>
+            <p className="text-sm text-muted-foreground">集中查看你发布、回复、收藏和点赞过的风笺内容。</p>
           </div>
           <SettingsTabs tabs={data.postManagementTabs} queryKey="postTab" basePath="/settings?tab=post-management" />
         </CardHeader>
@@ -76,12 +76,12 @@ function MyPostsPanel({
   if (!userPosts) {
     return (
       <Card>
-        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载我的帖子，请稍后刷新重试。</CardContent>
+        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载我的风笺，请稍后刷新重试。</CardContent>
       </Card>
     )
   }
 
-  return <PostListPanel route={route} title="我的帖子" emptyText="当前还没有发布过帖子。" posts={userPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=posts" />
+  return <PostListPanel route={route} title="我的风笺" emptyText="当前还没有发布过风笺。" posts={userPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=posts" />
 }
 
 function MyRepliesPanel({
@@ -143,7 +143,7 @@ function FavoritesPanel({
     )
   }
 
-  return <PostListPanel route={route} title="我的收藏" emptyText="当前还没有收藏的帖子。" posts={favoritePosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=favorites" />
+  return <PostListPanel route={route} title="我的收藏" emptyText="当前还没有收藏的风笺。" posts={favoritePosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=favorites" />
 }
 
 function CollectionsPanel({ favoriteCollections }: { favoriteCollections: SettingsPageData["favoriteCollections"] }) {
@@ -167,7 +167,7 @@ function MyLikesPanel({
     )
   }
 
-  return <PostListPanel route={route} title="我的点赞" emptyText="当前还没有点赞过帖子。" posts={likedPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=likes" />
+  return <PostListPanel route={route} title="我的点赞" emptyText="当前还没有点赞过风笺。" posts={likedPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=post-management&postTab=likes" />
 }
 
 function PostListPanel({

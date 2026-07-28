@@ -71,7 +71,7 @@ export async function generateMetadata(props: PageProps<"/zones/[slug]">): Promi
   return {
     title: `${zone.name} - ${settings.siteName}`,
     description: zone.description,
-    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [zone.name, zone.slug, zone.description, "分区", "论坛分区"]),
+    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [zone.name, zone.slug, zone.description, "分区", "风广场分区"]),
     alternates: {
       canonical: `/zones/${zone.slug}`,
     },
@@ -198,7 +198,7 @@ export default async function ZonePage(props: PageProps<"/zones/[slug]">) {
               <AddonSlotRenderer slot="zone.hero.before" props={zoneSlotProps} />
               <AddonSurfaceRenderer surface="zone.hero" props={zoneSlotProps}>
                 <CollapsibleInfoCard
-                  badge="论坛分区"
+                  badge="风广场分区"
                   title={zone.name}
                   icon={zone.icon}
                   description={zone.description}

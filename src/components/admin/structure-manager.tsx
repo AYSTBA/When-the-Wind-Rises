@@ -174,7 +174,7 @@ export function StructureManager({
       badges.push(`节点状态: ${boardStatusOptions.find((item) => item.value === filters.boardStatus)?.label ?? filters.boardStatus}`)
     }
     if (filters.posting !== "ALL") {
-      badges.push(`发帖权限: ${postingOptions.find((item) => item.value === filters.posting)?.label ?? filters.posting}`)
+      badges.push(`发笺权限: ${postingOptions.find((item) => item.value === filters.posting)?.label ?? filters.posting}`)
     }
 
     return badges
@@ -224,7 +224,7 @@ export function StructureManager({
     <div className="space-y-4">
       <AdminFilterCard
         title="分区与节点筛选"
-        description="按分区、节点状态和发帖权限快速收敛管理范围。"
+        description="按分区、节点状态和发笺权限快速收敛管理范围。"
         badge={<Badge variant="secondary" className="rounded-full">分区 {formatNumber(filteredZones.length)} / 节点 {formatNumber(filteredBoards.length)}</Badge>}
         activeBadges={activeFilterBadges}
       >
@@ -250,7 +250,7 @@ export function StructureManager({
             options={[{ value: "", label: "全部分区" }, ...zones.map((zone) => ({ value: zone.id, label: zone.name }))]}
           />
           <SharedAdminFilterSelectField label="节点状态" value={filters.boardStatus} onValueChange={(value) => setFilters((current) => ({ ...current, boardStatus: value }))} options={boardStatusOptions} />
-          <SharedAdminFilterSelectField label="发帖权限" value={filters.posting} onValueChange={(value) => setFilters((current) => ({ ...current, posting: value }))} options={postingOptions} />
+          <SharedAdminFilterSelectField label="发笺权限" value={filters.posting} onValueChange={(value) => setFilters((current) => ({ ...current, posting: value }))} options={postingOptions} />
           <AdminFilterActions submitLabel="筛选" resetHref="/admin?tab=structure" />
         </form>
       </AdminFilterCard>
@@ -262,7 +262,7 @@ export function StructureManager({
           { label: "启用节点", value: summary.activeBoardCount, icon: <ShieldCheck className="h-4 w-4" />, tone: "emerald" },
           { label: "隐藏节点", value: summary.hiddenBoardCount, icon: <EyeOff className="h-4 w-4" />, tone: "slate" },
           { label: "审核节点", value: summary.reviewBoardCount, icon: <ShieldCheck className="h-4 w-4" />, tone: "amber" },
-          { label: "暂停发帖", value: summary.lockedPostingBoardCount, icon: <Slash className="h-4 w-4" />, tone: "rose" },
+          { label: "暂停发笺", value: summary.lockedPostingBoardCount, icon: <Slash className="h-4 w-4" />, tone: "rose" },
         ]}
       />
 
@@ -310,12 +310,12 @@ export function StructureManager({
                       <div className="flex flex-wrap gap-1.5">
                         <Badge variant="outline">帖 {formatNumber(zone.postCount)}</Badge>
                         <Badge variant="outline">关注 {formatNumber(zone.followerCount)}</Badge>
-                        <Badge variant="outline">{zone.allowUserPost ? "用户可发帖" : "仅管理员/版主发帖"}</Badge>
-                        <Badge variant="outline">{zone.allowUserReply ? "用户可回帖" : "仅管理员/版主回帖"}</Badge>
+                        <Badge variant="outline">{zone.allowUserPost ? "用户可发笺" : "仅管理员/版主发笺"}</Badge>
+                        <Badge variant="outline">{zone.allowUserReply ? "用户可回笺" : "仅管理员/版主回笺"}</Badge>
                         <Badge variant="outline">{zone.allowPostAuthorOfflineComment ? "楼主可下线评论" : "楼主不可下线评论"}</Badge>
                         <Badge variant="outline">{zone.allowUserOfflineOwnComment ? "用户可下线自己的评论" : "用户不可下线自己的评论"}</Badge>
-                        <Badge variant="outline">{zone.requirePostReview ? "发帖审核" : "帖子直发"}</Badge>
-                        <Badge variant="outline">{zone.requireCommentReview ? "回帖审核" : "回帖直发"}</Badge>
+                        <Badge variant="outline">{zone.requirePostReview ? "发笺审核" : "风笺直发"}</Badge>
+                        <Badge variant="outline">{zone.requireCommentReview ? "回笺审核" : "回笺直发"}</Badge>
                         <Badge variant="outline">{getZoneHomeFeedVisibilityLabel(zone)}</Badge>
                         <Badge variant="outline">{zone.hiddenFromSidebar ? "左侧导航隐藏" : "左侧导航显示"}</Badge>
                       </div>
@@ -332,7 +332,7 @@ export function StructureManager({
             <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
               <div>
                 <CardTitle>节点工作台</CardTitle>
-                <CardDescription>围绕当前分区集中查看节点状态、发帖权限、审核策略和流量表现。</CardDescription>
+                <CardDescription>围绕当前分区集中查看节点状态、发笺权限、审核策略和流量表现。</CardDescription>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 {visibleZoneId && activeZone?.canEditSettings ? <Button type="button" variant="outline" className="h-8 rounded-full px-3 text-xs" onClick={() => setModal({ kind: "edit-zone", item: activeZone })}>编辑分区</Button> : null}
@@ -394,7 +394,7 @@ function BoardRow({
     if (type === "DELETE") {
       const confirmed = await showConfirm({
         title: "删除节点",
-        description: `确认删除节点“${board.name}”吗？如果该节点下仍有帖子，系统会阻止删除。`,
+        description: `确认删除节点“${board.name}”吗？如果该节点下仍有风笺，系统会阻止删除。`,
         confirmText: "删除",
         variant: "danger",
       })
@@ -450,19 +450,19 @@ function BoardRow({
       <TableCell className="align-top">
         <div className="flex flex-wrap gap-1.5">
           <Badge className={getBoardStatusBadgeClassName(board.status)}>{board.status}</Badge>
-          <Badge variant="outline">{board.allowPost ? "允许发帖" : "暂停发帖"}</Badge>
-          <Badge variant="outline">{getBoardUserPermissionLabel(board.allowUserPost, board.effectiveAllowUserPost, "发帖")}</Badge>
-          <Badge variant="outline">{getBoardUserPermissionLabel(board.allowUserReply, board.effectiveAllowUserReply, "回帖")}</Badge>
+          <Badge variant="outline">{board.allowPost ? "允许发笺" : "暂停发笺"}</Badge>
+          <Badge variant="outline">{getBoardUserPermissionLabel(board.allowUserPost, board.effectiveAllowUserPost, "发笺")}</Badge>
+          <Badge variant="outline">{getBoardUserPermissionLabel(board.allowUserReply, board.effectiveAllowUserReply, "回笺")}</Badge>
           <Badge variant="outline">{getBoardNullablePolicyLabel(board.allowPostAuthorOfflineComment, board.effectiveAllowPostAuthorOfflineComment, "楼主可下线评论", "楼主不可下线评论")}</Badge>
           <Badge variant="outline">{getBoardNullablePolicyLabel(board.allowUserOfflineOwnComment, board.effectiveAllowUserOfflineOwnComment, "用户可下线自己的评论", "用户不可下线自己的评论")}</Badge>
-          <Badge variant="outline">{board.requirePostReview ? "发帖审核" : "帖子直发"}</Badge>
-          <Badge variant="outline">{board.requireCommentReview ? "回帖审核" : "回帖直发"}</Badge>
+          <Badge variant="outline">{board.requirePostReview ? "发笺审核" : "风笺直发"}</Badge>
+          <Badge variant="outline">{board.requireCommentReview ? "回笺审核" : "回笺直发"}</Badge>
         </div>
       </TableCell>
 
       <TableCell className="align-top">
         <div className="grid gap-1.5 sm:grid-cols-2">
-          <MetricBadge label="帖子" value={board.postCount} />
+          <MetricBadge label="风笺" value={board.postCount} />
           <MetricBadge label="关注" value={board.followerCount} />
           <MetricBadge label="今日" value={board.todayPostCount} />
           <MetricBadge label="金库" value={board.treasuryPoints} />
@@ -471,7 +471,7 @@ function BoardRow({
 
       <TableCell className="align-top">
         <div className="flex flex-wrap gap-1.5">
-          <Badge variant="outline">发帖 {board.postPointDelta ?? "继承"}</Badge>
+          <Badge variant="outline">发笺 {board.postPointDelta ?? "继承"}</Badge>
           <Badge variant="outline">回复 {board.replyPointDelta ?? "继承"}</Badge>
           <Badge variant="outline">间隔 {board.postIntervalSeconds ?? "继承"}</Badge>
           <Badge variant="outline">VIP {board.minPostVipLevel ?? 0}</Badge>
@@ -487,8 +487,8 @@ function BoardRow({
         <div className="flex flex-wrap justify-end gap-1.5">
           {board.canEditSettings ? <Button type="button" variant="outline" className="h-7 rounded-full px-2.5 text-xs" onClick={onEdit}>编辑</Button> : null}
           {board.canEditSettings ? (
-            <Button type="button" variant="outline" disabled={isPending} className="h-7 rounded-full px-2.5 text-xs" onClick={() => runAction("PUT", { type: "board", id: board.id, name: board.name, slug: board.slug, description: board.description, sortOrder: board.sortOrder, zoneId: board.zoneId, allowPost: !board.allowPost, status: board.status, icon: board.icon }, board.allowPost ? "节点已暂停发帖" : "节点已开放发帖")}>
-              {board.allowPost ? "暂停发帖" : "开放发帖"}
+            <Button type="button" variant="outline" disabled={isPending} className="h-7 rounded-full px-2.5 text-xs" onClick={() => runAction("PUT", { type: "board", id: board.id, name: board.name, slug: board.slug, description: board.description, sortOrder: board.sortOrder, zoneId: board.zoneId, allowPost: !board.allowPost, status: board.status, icon: board.icon }, board.allowPost ? "节点已暂停发笺" : "节点已开放发笺")}>
+              {board.allowPost ? "暂停发笺" : "开放发笺"}
             </Button>
           ) : null}
           {board.canEditSettings ? (
@@ -507,7 +507,7 @@ function BoardRow({
   )
 }
 
-function getBoardUserPermissionLabel(value: boolean | null, effectiveValue: boolean, action: "发帖" | "回帖") {
+function getBoardUserPermissionLabel(value: boolean | null, effectiveValue: boolean, action: "发笺" | "回笺") {
   if (value == null) {
     return effectiveValue ? `用户可${action}(继承)` : `仅管理员/版主${action}(继承)`
   }
@@ -602,13 +602,13 @@ function StructureModalForm({
     ? [
         { key: "basic", label: "基础信息", hint: "名称、slug、图标、所属分区" },
         { key: "content", label: "内容展示", hint: "描述、侧栏链接、节点规则" },
-        { key: "policy", label: "策略设置", hint: "积分、频率、列表呈现" },
+        { key: "policy", label: "策略设置", hint: "风铃、频率、列表呈现" },
         { key: "access", label: "权限审核", hint: "访问门槛与审核策略" },
         { key: "moderators", label: "版主设置", hint: "查看节点版主并配置节点授权" },
       ]
     : [
         { key: "basic", label: "基础信息", hint: "名称、slug、图标、描述" },
-        { key: "policy", label: "策略设置", hint: "积分、频率、帖子列表" },
+        { key: "policy", label: "策略设置", hint: "风铃、频率、风笺列表" },
         { key: "access", label: "权限审核", hint: "访问门槛与审核策略" },
         { key: "moderators", label: "版主设置", hint: "查看分区版主并配置分区授权" },
       ]
@@ -657,9 +657,9 @@ function StructureModalForm({
 
     if (isModeratorBoardEdit) {
       const limitedFields = [
-        { label: "发帖积分", value: form.postPointDelta },
-        { label: "回复积分", value: form.replyPointDelta },
-        { label: "发帖间隔", value: form.postIntervalSeconds },
+        { label: "发笺风铃", value: form.postPointDelta },
+        { label: "回复风铃", value: form.replyPointDelta },
+        { label: "发笺间隔", value: form.postIntervalSeconds },
         { label: "回复间隔", value: form.replyIntervalSeconds },
       ]
       const invalidField = limitedFields.find((field) => field.value !== "" && Number(field.value) > 0)

@@ -317,11 +317,11 @@ export async function getManagedPostContext(postId: string) {
 export async function ensureCanManagePost(actor: AdminActor, postId: string) {
   const post = await getManagedPostContext(postId)
   if (!post) {
-    apiError(404, "帖子不存在")
+    apiError(404, "风笺不存在")
   }
 
   if (!canManageBoard(actor, post.boardId, post.board.zoneId)) {
-    apiError(403, "无权管理该帖子")
+    apiError(403, "无权管理该风笺")
   }
 
   return post
@@ -428,5 +428,5 @@ export async function ensureCanModerateUser(actor: AdminActor, params: {
     return
   }
 
-  apiError(400, "版主执行用户状态操作时必须绑定所属帖子或评论")
+  apiError(400, "版主执行用户状态操作时必须绑定所属风笺或评论")
 }

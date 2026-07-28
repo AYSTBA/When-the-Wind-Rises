@@ -1,4 +1,4 @@
-﻿import { NotificationType, RelatedType } from "@/db/types"
+import { NotificationType, RelatedType } from "@/db/types"
 
 import { findRootCommentPageById } from "@/db/comment-queries"
 import { countUnreadNotifications, findCommentsWithPostByIds, findNotificationsByUserIdCursor, findPostsByIds, findUsersByIds } from "@/db/notification-read-queries"
@@ -15,7 +15,7 @@ import { getUserDisplayName } from "@/lib/users"
 
 
 const NOTIFICATION_TYPE_LABELS: Record<NotificationType, string> = {
-  REPLY_POST: "回复了你的帖子",
+  REPLY_POST: "回复了你的风笺",
   REPLY_COMMENT: "回复了你的评论",
   LIKE: "赞了你的内容",
   MENTION: "提到了你",

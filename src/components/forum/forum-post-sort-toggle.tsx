@@ -11,17 +11,17 @@ export function ForumPostSortToggle({ currentSort, latestHref, newHref, featured
       value={[currentSort]}
       size="sm"
       spacing={1}
-      aria-label="帖子排序切换"
+      aria-label="风笺排序切换"
       className="rounded-full border border-border bg-background p-1"
     >
       <ToggleGroupItem value="latest" nativeButton={false} render={<Link href={latestHref} />} className="rounded-full px-3">
         最新评论
       </ToggleGroupItem>
       <ToggleGroupItem value="new" nativeButton={false} render={<Link href={newHref} />} className="rounded-full px-3">
-        最新帖子
+        最新风笺
       </ToggleGroupItem>
       <ToggleGroupItem value="featured" nativeButton={false} render={<Link href={featuredHref} />} className="rounded-full px-3">
-        精华帖子
+        精华风笺
       </ToggleGroupItem>
     </ToggleGroup>
   )

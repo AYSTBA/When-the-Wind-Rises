@@ -221,7 +221,7 @@ function setStatusActionDetail(context: AdminActionContext, actionText: string, 
 
 function buildAdminPointAdjustReason(message: string) {
   const trimmedMessage = message.trim()
-  return trimmedMessage ? `管理员调整用户积分：${trimmedMessage}` : "管理员调整用户积分"
+  return trimmedMessage ? `管理员调整用户风铃：${trimmedMessage}` : "管理员调整用户风铃"
 }
 
 function readUserBanCleanupOptions(context: AdminActionContext): UserBanCleanupOptions {
@@ -350,12 +350,12 @@ export const adminUserActionHandlers: Record<string, AdminActionDefinition> = {
     await writeAdminActionLog(context, adminUserActionHandlers["user.demoteToUser"].metadata)
     return { message: "用户角色已降级为普通用户" }
   }),
-  "user.points.adjust": defineAdminAction({ targetType: "USER", buildDetail: (context) => `管理员将用户积分调整为 ${Math.max(0, readAdminActionNumber(context.body, "points") ?? 0)}` }, async (context) => {
-    if (!isSiteAdmin(context.actor)) apiError(403, "仅管理员可调整积分")
+  "user.points.adjust": defineAdminAction({ targetType: "USER", buildDetail: (context) => `管理员将用户风铃调整为 ${Math.max(0, readAdminActionNumber(context.body, "points") ?? 0)}` }, async (context) => {
+    if (!isSiteAdmin(context.actor)) apiError(403, "仅管理员可调整风铃")
     const userId = normalizePositiveUserId(context.targetId)
     if (!userId) apiError(400, "用户标识不合法")
     const targetUser = requireUserStatusRecord(await findUserStatus(userId))
-    await ensureCanManageTargetUserRecord(context, targetUser, "无权调整该用户积分")
+    await ensureCanManageTargetUserRecord(context, targetUser, "无权调整该用户风铃")
     const points = Math.max(0, readAdminActionNumber(context.body, "points") ?? 0)
     const settings = await getServerSiteSettings()
     const result = await prisma.$transaction(async (tx) => {

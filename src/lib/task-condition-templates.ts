@@ -37,8 +37,8 @@ export const TASK_CONDITION_TEMPLATES = [
   },
   {
     type: TaskConditionType.APPROVED_POST_COUNT,
-    label: "审核通过发帖",
-    description: "统计审核通过或直接公开的发帖次数。",
+    label: "审核通过发笺",
+    description: "统计审核通过或直接公开的发笺次数。",
     supportsBoardFilter: true,
     supportsPostTypeFilter: true,
     supportedCategories: ALL_TASK_CATEGORIES,
@@ -87,8 +87,8 @@ export const TASK_CONDITION_TEMPLATES = [
   },
   {
     type: TaskConditionType.FAVORITE_POST_COUNT,
-    label: "收藏帖子",
-    description: "统计用户收藏帖子的次数。",
+    label: "收藏风笺",
+    description: "统计用户收藏风笺的次数。",
     supportsBoardFilter: false,
     supportsPostTypeFilter: false,
     supportedCategories: ALL_TASK_CATEGORIES,
@@ -127,8 +127,8 @@ export const TASK_CONDITION_TEMPLATES = [
   },
   {
     type: TaskConditionType.FOLLOW_POST_COUNT,
-    label: "关注帖子",
-    description: "统计用户关注帖子的次数。",
+    label: "关注风笺",
+    description: "统计用户关注风笺的次数。",
     supportsBoardFilter: false,
     supportsPostTypeFilter: false,
     supportedCategories: ALL_TASK_CATEGORIES,
@@ -193,7 +193,7 @@ export function buildTaskConditionSummary(input: {
   const boardLabel = input.config.boardIds.length > 0 ? "指定节点内" : "全站"
   const postTypeLabel = input.config.postTypes.length > 0
     ? input.config.postTypes.map((item) => POST_TYPE_LABELS[item]).join(" / ")
-    : "全部帖子类型"
+    : "全部风笺类型"
 
   switch (input.conditionType) {
     case TaskConditionType.CHECK_IN_COUNT:
@@ -209,7 +209,7 @@ export function buildTaskConditionSummary(input: {
     case TaskConditionType.APPROVED_COMMENT_DISTINCT_POST_COUNT:
       return `${boardLabel}在 ${input.targetCount} 个不同主题下完成公开回复`
     case TaskConditionType.FAVORITE_POST_COUNT:
-      return `收藏帖子 ${input.targetCount} 次`
+      return `收藏风笺 ${input.targetCount} 次`
     case TaskConditionType.FOLLOW_BOARD_COUNT:
       return input.config.boardIds.length > 0
         ? `关注指定节点 ${input.targetCount} 个`
@@ -219,7 +219,7 @@ export function buildTaskConditionSummary(input: {
     case TaskConditionType.FOLLOW_TAG_COUNT:
       return `关注标签 ${input.targetCount} 个`
     case TaskConditionType.FOLLOW_POST_COUNT:
-      return `关注帖子 ${input.targetCount} 个`
+      return `关注风笺 ${input.targetCount} 个`
     default:
       return `完成目标 ${input.targetCount} 次`
   }

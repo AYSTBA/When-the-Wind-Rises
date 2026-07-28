@@ -103,7 +103,7 @@ function getInitialSelectedType(types: VerificationTypeItem[], approvedVerificat
   return types[0] ?? null
 }
 
-export function VerificationCenter({ types, approvedVerification, pointName = "积分" }: VerificationCenterProps) {
+export function VerificationCenter({ types, approvedVerification, pointName = "风铃" }: VerificationCenterProps) {
   const initialSelectedType = getInitialSelectedType(types, approvedVerification)
   const [selectedTypeId, setSelectedTypeId] = useState(initialSelectedType?.id ?? "")
   const initialDraft = getInitialDraft(initialSelectedType, approvedVerification)
@@ -303,7 +303,7 @@ export function VerificationCenter({ types, approvedVerification, pointName = "�
                   <p className="mt-1 text-sm leading-7 text-muted-foreground">{selectedType.description || "请填写你的认证材料，后台会尽快审核。"}</p>
                   {!showCustomizationForm && !showApprovedPendingState ? (
                     <p className="mt-1 text-sm font-medium">
-                      {selectedType.pointsCost > 0 ? `提交时扣除 ${formatCompactPointValue(selectedType.pointsCost)} ${pointName}` : "提交申请不消耗积分"}
+                      {selectedType.pointsCost > 0 ? `提交时扣除 ${formatCompactPointValue(selectedType.pointsCost)} ${pointName}` : "提交申请不消耗风铃"}
                     </p>
                   ) : null}
                 </div>

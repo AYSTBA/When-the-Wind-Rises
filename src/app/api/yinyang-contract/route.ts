@@ -29,7 +29,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
     const optionA = requireStringField(body, "optionA", "请输入答案A")
     const optionB = requireStringField(body, "optionB", "请输入答案B")
     const correctOption = requireStringField(body, "correctOption", "请选择正确答案")
-    const stakePoints = requirePositiveIntegerField(body, "stakePoints", "请输入正确的积分彩头")
+    const stakePoints = requirePositiveIntegerField(body, "stakePoints", "请输入正确的风铃彩头")
     const input = {
       question,
       optionA,

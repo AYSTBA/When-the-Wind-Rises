@@ -7,7 +7,7 @@ import { revalidatePostDataCache } from "@/lib/post-detail-cache"
 
 export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   const body = await readJsonBody(request)
-  const postId = requireStringField(body, "postId", "缺少帖子参数")
+  const postId = requireStringField(body, "postId", "缺少风笺参数")
 
   const post = await prisma.post.findUnique({
     where: { id: postId },

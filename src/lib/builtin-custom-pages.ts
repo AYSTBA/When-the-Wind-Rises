@@ -83,7 +83,7 @@ function buildAboutHtml(settings: BuiltinCustomPageSettings) {
         },
         {
           title: "长期沉淀",
-          content: "帖子、评论、收藏、节点和专题页面共同构成社区资料库。随着时间增长，站点会从零散发言变成可查阅、可复用的经验集合。",
+          content: "风笺、评论、收藏、节点和专题页面共同构成社区资料库。随着时间增长，站点会从零散发言变成可查阅、可复用的经验集合。",
         },
       ]),
       `
@@ -97,12 +97,12 @@ function buildAboutHtml(settings: BuiltinCustomPageSettings) {
 
 function buildTermsHtml(settings: BuiltinCustomPageSettings) {
   const siteName = escapeHtml(settings.siteName || "本站")
-  const pointName = escapeHtml(settings.pointName || "积分")
+  const pointName = escapeHtml(settings.pointName || "风铃")
 
   return buildPageShell(
-    `${siteName} 论坛使用协议`,
+    `${siteName} 风广场使用协议`,
     "Terms of Service",
-    `继续访问、注册、登录、发帖、评论、上传、点赞、收藏、举报或使用 ${siteName} 的其他功能，即表示你已阅读并接受当前公开展示的社区规则。`,
+    `继续访问、注册、登录、发笺、评论、上传、点赞、收藏、举报或使用 ${siteName} 的其他功能，即表示你已阅读并接受当前公开展示的社区规则。`,
     buildPolicySections([
       {
         title: "一、协议适用范围",
@@ -121,14 +121,14 @@ function buildTermsHtml(settings: BuiltinCustomPageSettings) {
       {
         title: "三、内容发布与互动规范",
         paragraphs: [
-          "用户发布的帖子、评论、图片、附件、投票、悬赏内容和其他资料，应符合法律法规、平台规则和公序良俗。",
+          "用户发布的风笺、评论、图片、附件、投票、悬赏内容和其他资料，应符合法律法规、平台规则和公序良俗。",
           "不得发布违法、侵权、骚扰、侮辱、恶意引战、虚假欺诈、恶意营销或其他破坏社区秩序的内容。",
         ],
       },
       {
         title: "四、审核、下线与管理处置",
         paragraphs: [
-          "平台可根据内容安全规则、节点配置、举报结果或人工判断，对帖子、评论、用户资料与其他公开信息进行审核、隐藏、驳回、下线或限制传播。",
+          "平台可根据内容安全规则、节点配置、举报结果或人工判断，对风笺、评论、用户资料与其他公开信息进行审核、隐藏、驳回、下线或限制传播。",
           "若账户或内容违反规则，平台可视情况采取提醒、拒绝发布、撤销展示、限制功能、禁言、拉黑、公开进入小黑屋等措施。",
         ],
       },
@@ -143,7 +143,7 @@ function buildTermsHtml(settings: BuiltinCustomPageSettings) {
         title: "六、协议更新与继续使用",
         paragraphs: [
           "平台可根据社区运营需要更新本协议。更新后的协议一经在站内公开，即对后续使用行为生效。",
-          "若用户在协议更新后继续访问、登录、浏览、发帖、评论或使用任何相关功能，视为同意更新后的内容；若不同意，应停止继续使用相关服务。",
+          "若用户在协议更新后继续访问、登录、浏览、发笺、评论或使用任何相关功能，视为同意更新后的内容；若不同意，应停止继续使用相关服务。",
         ],
       },
     ]),
@@ -162,7 +162,7 @@ export function getBuiltinCustomPageSeeds(settings: BuiltinCustomPageSettings): 
       includeRightSidebar: true,
     },
     {
-      title: "论坛协议",
+      title: "风广场协议",
       routePath: normalizeCustomPageRoutePath("/terms") as "/terms",
       htmlContent: buildTermsHtml(settings),
       includeHeader: true,

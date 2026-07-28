@@ -41,7 +41,7 @@ export interface BadgeEligibilitySnapshot {
 const RULE_LABELS: Record<string, string> = {
   REGISTER_DAYS: "注册天数",
   REGISTER_TIME_RANGE: "注册时间",
-  POST_COUNT: "发帖数",
+  POST_COUNT: "发笺数",
   COMMENT_COUNT: "回复数",
   RECEIVED_LIKE_COUNT: "获赞数",
   GOD_COMMENT_COUNT: "神评数",

@@ -15,14 +15,14 @@ export const POST = createUserRouteHandler(async ({ request }) => {
     id: result.post.id,
     slug: result.post.slug,
     status: result.post.status,
-  }, result.shouldPending ? "当前节点开启发帖审核，已提交审核" : result.contentAdjusted ? "发布成功，部分内容已自动替换" : "发布成功")
+  }, result.shouldPending ? "当前节点开启发笺审核，已提交审核" : result.contentAdjusted ? "发布成功，部分内容已自动替换" : "发布成功")
 }, {
-  errorMessage: "创建帖子失败",
+  errorMessage: "创建风笺失败",
   logPrefix: "[api/posts/create] unexpected error",
-  unauthorizedMessage: "请先登录后再发帖",
+  unauthorizedMessage: "请先登录后再发笺",
   allowStatuses: ["ACTIVE"],
   forbiddenMessages: {
-    MUTED: "账号已被禁言，暂不可发帖",
-    BANNED: "账号已被拉黑，无法发帖",
+    MUTED: "账号已被禁言，暂不可发笺",
+    BANNED: "账号已被拉黑，无法发笺",
   },
 })

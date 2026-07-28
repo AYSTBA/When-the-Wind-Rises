@@ -80,7 +80,7 @@ export function AdminPostMoveBoardButton({
     }
 
     if (selectedBoardSlug === currentBoardSlug) {
-      setFeedback("帖子已在当前节点，无需移动")
+      setFeedback("风笺已在当前节点，无需移动")
       return
     }
 
@@ -98,7 +98,7 @@ export function AdminPostMoveBoardButton({
 
       const result = await response.json()
       if (!response.ok) {
-        setFeedback(result.message ?? "移动帖子失败")
+        setFeedback(result.message ?? "移动风笺失败")
         return
       }
 
@@ -119,8 +119,8 @@ export function AdminPostMoveBoardButton({
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title="移动帖子到指定节点"
-        description={`帖子：${postTitle}`}
+        title="移动风笺到指定节点"
+        description={`风笺：${postTitle}`}
         footer={(
           <div className="flex items-center gap-2">
             <Button type="button" disabled={isPending} className="h-9 rounded-full px-4 text-xs" onClick={submitMove}>
@@ -143,7 +143,7 @@ export function AdminPostMoveBoardButton({
             boardOptions={boardOptions}
             disabled={isPending}
             title="选择目标节点"
-            description="支持按分区、节点名或 slug 搜索，确认后帖子会迁移到新的节点。"
+            description="支持按分区、节点名或 slug 搜索，确认后风笺会迁移到新的节点。"
           />
           {feedback ? <p className="text-xs text-red-500">{feedback}</p> : null}
         </div>

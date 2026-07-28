@@ -439,7 +439,7 @@ export async function runUserBanCleanupActions(input: {
 
 export function formatUserBanCleanupSummary(result: UserBanCleanupResult) {
   const parts = [
-    result.offlinePosts > 0 ? `下线帖子 ${result.offlinePosts} 篇` : null,
+    result.offlinePosts > 0 ? `下线风笺 ${result.offlinePosts} 篇` : null,
     result.offlineComments > 0 ? `下线评论 ${result.offlineComments} 条` : null,
     result.profileCleared ? "清空个人资料" : null,
     result.profileIntroductionSkipped ? "个人介绍功能未开启" : null,

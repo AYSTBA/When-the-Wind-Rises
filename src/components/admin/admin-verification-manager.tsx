@@ -363,7 +363,7 @@ export function AdminVerificationManager({ initialTypes, initialApplications, mo
                             <p className="truncate text-sm font-semibold">{item.name}</p>
                             <Badge className={item.status ? "border-transparent bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200" : "border-transparent bg-slate-100 text-slate-600 dark:bg-slate-500/15 dark:text-slate-300"}>{item.status ? "启用" : "停用"}</Badge>
                           </div>
-                          <p className="mt-1 truncate text-xs text-muted-foreground">{item.slug} · {item.pointsCost > 0 ? `${formatNumber(item.pointsCost)} 积分` : "免费"} · 字段 {item.formFields.length} · 申请 {item.applicationCount ?? 0}</p>
+                          <p className="mt-1 truncate text-xs text-muted-foreground">{item.slug} · {item.pointsCost > 0 ? `${formatNumber(item.pointsCost)} 风铃` : "免费"} · 字段 {item.formFields.length} · 申请 {item.applicationCount ?? 0}</p>
                         </div>
                       </div>
                       <Pencil className="h-4 w-4 text-muted-foreground" />
@@ -435,7 +435,7 @@ export function AdminVerificationManager({ initialTypes, initialApplications, mo
               <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <Field label="认证名称" value={editingType.name} onChange={(value) => updateType(editingIndex!, { name: value })} placeholder="如 个人认证" />
                 <Field label="唯一标识" value={editingType.slug} onChange={(value) => updateType(editingIndex!, { slug: value.replace(/\s+/g, "-") })} placeholder="如 personal-verified" />
-                <Field label="申请消耗积分" type="number" value={String(editingType.pointsCost)} onChange={(value) => updateType(editingIndex!, { pointsCost: Math.max(0, Math.floor(Number(value) || 0)) })} placeholder="0" />
+                <Field label="申请消耗风铃" type="number" value={String(editingType.pointsCost)} onChange={(value) => updateType(editingIndex!, { pointsCost: Math.max(0, Math.floor(Number(value) || 0)) })} placeholder="0" />
                 <Field label="排序" type="number" value={String(editingType.sortOrder)} onChange={(value) => updateType(editingIndex!, { sortOrder: Math.max(0, Number(value) || 0) })} placeholder="0" />
                 <IconPicker
                   label="认证图标"
@@ -498,7 +498,7 @@ export function AdminVerificationManager({ initialTypes, initialApplications, mo
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <h4 className="text-base font-semibold">认证审核</h4>
-                  <p className="mt-1 text-sm text-muted-foreground">审核通过后，用户会在帖子详情和评论作者名前展示认证图标，也会同步生效自定义图标与介绍。</p>
+                  <p className="mt-1 text-sm text-muted-foreground">审核通过后，用户会在风笺详情和评论作者名前展示认证图标，也会同步生效自定义图标与介绍。</p>
                 </div>
                 <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">待审 {pendingApplications.length}</span>
               </div>

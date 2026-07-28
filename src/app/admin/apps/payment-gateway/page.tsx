@@ -35,7 +35,7 @@ export default async function PaymentGatewayAdminRoute() {
       adminRole={admin.role}
       adminTier={adminTier}
       effectivePermissions={auth.effectivePermissions}
-      headerDescription="维护支付网关基础配置、路由规则、积分充值套餐，以及选择每个业务场景使用哪个接口。"
+      headerDescription="维护支付网关基础配置、路由规则、风铃充值套餐，以及选择每个业务场景使用哪个接口。"
       headerSearch={
         <div className="space-y-3">
           <AdminModuleSearch className="w-full" />

@@ -35,7 +35,7 @@ export function ReportDialog({ targetType, targetId, targetLabel, buttonText = "
   const [isPending, startTransition] = useTransition()
 
 
-  const title = useMemo(() => (targetType === "POST" ? "举报帖子" : targetType === "COMMENT" ? "举报回复" : "举报用户"), [targetType])
+  const title = useMemo(() => (targetType === "POST" ? "举报风笺" : targetType === "COMMENT" ? "举报回复" : "举报用户"), [targetType])
 
   const reset = useCallback(() => {
     setReasonType(REPORT_REASON_OPTIONS[0])

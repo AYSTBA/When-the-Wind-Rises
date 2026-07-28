@@ -206,7 +206,7 @@ export function AdminRegistrationSettingsForm({
   }), [draft.siteName])
   const paymentOrderSuccessPreviewVariables = useMemo(() => ({
     siteName: draft.siteName.trim() || "示例站点",
-    orderSubject: "积分充值 · 330积分",
+    orderSubject: "风铃充值 · 330风铃",
     merchantOrderNo: "pay_20260415_demo123456",
     bizScene: "points.topup",
     amount: "CNY 30.00",
@@ -214,7 +214,7 @@ export function AdminRegistrationSettingsForm({
     channelCode: "alipay.page",
     paidAt: "2026-04-15 21:30:00",
     username: "demo_user",
-    pointName: "积分",
+    pointName: "风铃",
     points: "300",
     bonusPoints: "30",
     totalPoints: "330",
@@ -265,7 +265,7 @@ export function AdminRegistrationSettingsForm({
             <AdminBooleanSelectField label="显示登录/注册页左侧内容" checked={draft.authPageShowcaseEnabled} onChange={(value) => updateDraftField("authPageShowcaseEnabled", value)} />
             <AdminBooleanSelectField label="显示邀请码输入框" checked={draft.registerInviteCodeEnabled} onChange={(value) => updateDraftField("registerInviteCodeEnabled", value)} />
             <AdminBooleanSelectField label="注册必须邀请码" checked={draft.registrationRequireInviteCode} onChange={(value) => updateDraftField("registrationRequireInviteCode", value)} />
-            <AdminBooleanSelectField label="开启积分购买邀请码" checked={draft.inviteCodePurchaseEnabled} onChange={(value) => updateDraftField("inviteCodePurchaseEnabled", value)} />
+            <AdminBooleanSelectField label="开启风铃购买邀请码" checked={draft.inviteCodePurchaseEnabled} onChange={(value) => updateDraftField("inviteCodePurchaseEnabled", value)} />
           </div>
           {draft.registerInviteCodeEnabled ? (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -275,11 +275,11 @@ export function AdminRegistrationSettingsForm({
             </div>
           ) : null}
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <TextField label="初始注册赠送积分" value={draft.registerInitialPoints} onChange={(value) => updateDraftField("registerInitialPoints", value)} placeholder="如 0" />
+            <TextField label="初始注册赠送风铃" value={draft.registerInitialPoints} onChange={(value) => updateDraftField("registerInitialPoints", value)} placeholder="如 0" />
             <TextField label="邀请人奖励数量" value={draft.inviteRewardInviter} onChange={(value) => updateDraftField("inviteRewardInviter", value)} placeholder="如 10" />
             <TextField label="被邀请人奖励数量" value={draft.inviteRewardInvitee} onChange={(value) => updateDraftField("inviteRewardInvitee", value)} placeholder="如 5" />
           </div>
-          <p className="text-xs leading-6 text-muted-foreground">填写 `0` 表示新用户首次注册时不额外赠送积分；若大于 `0`，会在注册成功后单独写入一条积分审计日志。</p>
+          <p className="text-xs leading-6 text-muted-foreground">填写 `0` 表示新用户首次注册时不额外赠送风铃；若大于 `0`，会在注册成功后单独写入一条风铃审计日志。</p>
         </div>
       ) : null}
 
@@ -541,7 +541,7 @@ export function AdminRegistrationSettingsForm({
               <TextField label="Google Client Secret" type="password" value={draft.googleClientSecret} onChange={(value) => updateDraftField("googleClientSecret", value)} placeholder="填写 Google OAuth Client Secret" />
               <div className="hidden xl:block" />
               <TextField label="Passkey RP ID" value={draft.passkeyRpId} onChange={(value) => updateDraftField("passkeyRpId", value)} placeholder="如 forum.example.com" />
-              <TextField label="Passkey RP Name" value={draft.passkeyRpName} onChange={(value) => updateDraftField("passkeyRpName", value)} placeholder="如 兴趣论坛" />
+              <TextField label="Passkey RP Name" value={draft.passkeyRpName} onChange={(value) => updateDraftField("passkeyRpName", value)} placeholder="如 风广场" />
               <TextField label="Passkey Origin" value={draft.passkeyOrigin} onChange={(value) => updateDraftField("passkeyOrigin", value)} placeholder="如 https://forum.example.com" />
             </div>
             <p className="text-xs leading-6 text-muted-foreground">开启对应登录方式前，请先在这里填写完整凭据；未填写时，运行时会直接报错，不再回退读取环境变量。</p>

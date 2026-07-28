@@ -11,8 +11,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
   return {
     title: `阴阳契 - ${settings.siteName}`,
-    description: `在 ${settings.siteName} 发起双选项积分挑战，参与阴阳契应战、查看胜负排行与积分盈利榜。`,
-    keywords: buildMetadataKeywords(settings.siteSeoKeywords, ["阴阳契", "积分挑战", "排行榜", "赢家榜", "盈利榜"]),
+    description: `在 ${settings.siteName} 发起双选项风铃挑战，参与阴阳契应战、查看胜负排行与风铃盈利榜。`,
+    keywords: buildMetadataKeywords(settings.siteSeoKeywords, ["阴阳契", "风铃挑战", "排行榜", "赢家榜", "盈利榜"]),
   }
 }
 

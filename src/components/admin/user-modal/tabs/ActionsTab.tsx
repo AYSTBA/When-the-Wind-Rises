@@ -152,15 +152,15 @@ export function ActionsTab({
       <div className="grid gap-4 xl:grid-cols-2">
         <section className="rounded-xl border border-border p-4">
           <div className="flex flex-col gap-1">
-            <h4 className="text-sm font-semibold">积分校正</h4>
-            <p className="text-xs text-muted-foreground">支持手动修正积分，并记录发放或扣减原因。</p>
+            <h4 className="text-sm font-semibold">风铃校正</h4>
+            <p className="text-xs text-muted-foreground">支持手动修正风铃，并记录发放或扣减原因。</p>
           </div>
           <div className="mt-4 flex flex-col gap-3">
-            <Field label="积分值" value={operations.state.points} onChange={operations.setPoints} />
+            <Field label="风铃值" value={operations.state.points} onChange={operations.setPoints} />
             <TextAreaField label="操作备注" value={operations.state.pointsMessage} onChange={operations.setPointsMessage} placeholder="记录调整原因、工单号或审核说明" rows={4} />
             {operations.state.pointsFeedback ? <p className="text-xs text-muted-foreground">{operations.state.pointsFeedback}</p> : null}
             <Button type="button" disabled={isPending} className="h-9 rounded-full px-4 text-xs" onClick={operations.savePoints}>
-              {isPending ? "保存中..." : "保存积分"}
+              {isPending ? "保存中..." : "保存风铃"}
             </Button>
           </div>
         </section>

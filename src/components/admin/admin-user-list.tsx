@@ -101,9 +101,9 @@ const sortOptions = [
   { value: "newest", label: "最新注册" },
   { value: "oldest", label: "最早注册" },
   { value: "lastLogin", label: "最近登录" },
-  { value: "mostPosts", label: "发帖最多" },
+  { value: "mostPosts", label: "发笺最多" },
   { value: "mostComments", label: "评论最多" },
-  { value: "mostPoints", label: "积分最高" },
+  { value: "mostPoints", label: "风铃最高" },
 ]
 const bulkActionOptions: Array<{ value: AdminUserBulkAction; label: string; danger?: boolean }> = [
   { value: "setRole", label: "批量改用户组" },
@@ -760,10 +760,10 @@ function UserMobileCard({
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
-        <span className="rounded-full bg-muted/60 px-2.5 py-1">帖子 {formatNumber(user.postCount)}</span>
+        <span className="rounded-full bg-muted/60 px-2.5 py-1">风笺 {formatNumber(user.postCount)}</span>
         <span className="rounded-full bg-muted/60 px-2.5 py-1">评论 {formatNumber(user.commentCount)}</span>
         <span className="rounded-full bg-muted/60 px-2.5 py-1">获赞 {formatNumber(user.likeReceivedCount)}</span>
-        <span className="rounded-full bg-muted/60 px-2.5 py-1">积分 {formatNumber(user.points)}</span>
+        <span className="rounded-full bg-muted/60 px-2.5 py-1">风铃 {formatNumber(user.points)}</span>
       </div>
 
       {user.status === "MUTED" || user.status === "BANNED" ? (
@@ -844,7 +844,7 @@ function UserTimeCell({ user }: { user: AdminUserListItem }) {
     <div className="space-y-1 text-xs text-muted-foreground">
       <p>注册 {formatDateTime(user.createdAt)}</p>
       <p>{user.lastLoginAt ? `登录 ${formatDateTime(user.lastLoginAt)}` : "从未登录"}</p>
-      <p>积分 {formatNumber(user.points)}</p>
+      <p>风铃 {formatNumber(user.points)}</p>
     </div>
   )
 }
@@ -852,7 +852,7 @@ function UserTimeCell({ user }: { user: AdminUserListItem }) {
 function UserContentMetricsCell({ user }: { user: AdminUserListItem }) {
   return (
     <div className="space-y-1 text-xs text-muted-foreground">
-      <p>帖子 {formatNumber(user.postCount)}</p>
+      <p>风笺 {formatNumber(user.postCount)}</p>
       <p>评论 {formatNumber(user.commentCount)}</p>
     </div>
   )

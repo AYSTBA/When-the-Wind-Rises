@@ -4,17 +4,17 @@ import { DEFAULT_MESSAGE_PROMPT_AUDIO_PATH } from "@/lib/message-prompt-audio"
 import { DEFAULT_GOD_COMMENT_AUTO_LIKE_THRESHOLD } from "@/lib/god-comment-settings"
 import { DEFAULT_EDITOR_TOOLBAR_ORDER } from "@/lib/editor-toolbar-settings"
 
-const defaultFooterCopyrightText = `Rhex 论坛系统 ${new Date().getFullYear()}`
+const defaultFooterCopyrightText = `Rhex 风广场系统 ${new Date().getFullYear()}`
 
 export const defaultSiteSettingsCreateInput = {
 
-  siteName: "Rhex 论坛系统",
+  siteName: "Rhex 风广场系统",
   siteSlogan: "专注长期讨论与高质量交流",
-  siteDescription: "Rhex 论坛系统是一个适合开源部署的现代论坛基础站点，默认提供可维护的正式初始化数据。",
-  siteLogoText: "Rhex 论坛系统",
+  siteDescription: "Rhex 风广场系统是一个适合开源部署的现代风广场基础站点，默认提供可维护的正式初始化数据。",
+  siteLogoText: "Rhex 风广场系统",
   siteLogoPath: null,
-  siteSeoKeywords: "Rhex,Rhex 论坛系统,论坛,社区,Next.js,Prisma",
-  pointName: "积分",
+  siteSeoKeywords: "Rhex,Rhex 风广场系统,风广场,社区,Next.js,Prisma",
+  pointName: "风铃",
   footerLinksJson: JSON.stringify(DEFAULT_FOOTER_LINKS),
   analyticsCode: null,
   postLinkDisplayMode: "SLUG",
@@ -32,9 +32,6 @@ export const defaultSiteSettingsCreateInput = {
   postOfflineVip2Price: 0,
   postOfflineVip3Price: 0,
   inviteRewardInviter: 0,
-
-
-
   inviteRewardInvitee: 0,
   registrationEnabled: true,
   registrationRequireInviteCode: false,
@@ -49,17 +46,17 @@ export const defaultSiteSettingsCreateInput = {
   commentEditableMinutes: 5,
   godCommentAutoLikeThreshold: DEFAULT_GOD_COMMENT_AUTO_LIKE_THRESHOLD,
   tippingEnabled: false,
-  tippingDailyLimit: 3,
-  tippingPerPostLimit: 1,
-  tippingAmounts: "10,30,50,100",
+  tippingDailyLimit: 0,
+  tippingPerPostLimit: 0,
+  tippingAmounts: "",
   postRedPacketEnabled: false,
-  postRedPacketMaxPoints: 100,
-  postRedPacketDailyLimit: 100,
+  postRedPacketMaxPoints: 0,
+  postRedPacketDailyLimit: 0,
   heatViewWeight: 1,
   heatCommentWeight: 8,
   heatLikeWeight: 6,
-  heatTipCountWeight: 10,
-  heatTipPointsWeight: 1,
+  heatTipCountWeight: 0,
+  heatTipPointsWeight: 0,
   heatStageThresholds: "0,80,180,320,520,780,1100,1500,2000",
   heatStageColors: "#4A4A4A,#808080,#9B8F7F,#B87333,#C4A777,#E8C547,#FFA500,#D96C3B,#C41E3A",
   registerEmailEnabled: false,
@@ -80,9 +77,9 @@ export const defaultSiteSettingsCreateInput = {
   smtpPass: null,
   smtpFrom: null,
   smtpSecure: false,
-  vipMonthlyPrice: 3000,
-  vipQuarterlyPrice: 8000,
-  vipYearlyPrice: 30000,
+  vipMonthlyPrice: 0,
+  vipQuarterlyPrice: 0,
+  vipYearlyPrice: 0,
   uploadProvider: "local",
   uploadLocalPath: "uploads",
   uploadBaseUrl: null,

@@ -17,12 +17,12 @@ export default async function LevelSystemFaqPage() {
       currentPath="/faq/level-system"
       eyebrow="Level System"
       title="等级系统"
-      description={`等级是社区长期成长体系，核心依据是签到、发帖、回复和获赞。它和 ${settings.pointName} 不是一回事，更多承担“资格门槛”和“成长身份”的作用。`}
+      description={`等级是社区长期成长体系，核心依据是签到、发笺、回复和获赞。它和 ${settings.pointName} 不是一回事，更多承担“资格门槛”和“成长身份”的作用。`}
     >
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[
           { title: "签到天数", description: "签到会累计成长进度，决定长期活跃度。" },
-          { title: "发帖数量", description: "公开发帖数量会计入等级升级条件。" },
+          { title: "发笺数量", description: "公开发笺数量会计入等级升级条件。" },
           { title: "回复数量", description: "参与讨论的回复总数会推动等级成长。" },
           { title: "获赞数量", description: "收到的点赞总数也会参与等级判断。" },
         ].map((item) => (
@@ -47,7 +47,7 @@ export default async function LevelSystemFaqPage() {
                   <th className="px-4 py-3">等级</th>
                   <th className="px-4 py-3">名称</th>
                   <th className="px-4 py-3">签到天数</th>
-                  <th className="px-4 py-3">发帖数</th>
+                  <th className="px-4 py-3">发笺数</th>
                   <th className="px-4 py-3">回复数</th>
                   <th className="px-4 py-3">获赞数</th>
                 </tr>
@@ -91,7 +91,7 @@ export default async function LevelSystemFaqPage() {
           <CardTitle>等级的实际用途</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3 text-sm leading-7 text-muted-foreground md:grid-cols-3">
-          <div className="rounded-xl bg-secondary/40 p-4">节点、分区和帖子可以单独配置最低等级门槛，未达到时将无法浏览或发帖。</div>
+          <div className="rounded-xl bg-secondary/40 p-4">节点、分区和风笺可以单独配置最低等级门槛，未达到时将无法浏览或发笺。</div>
           <div className="rounded-xl bg-secondary/40 p-4">勋章系统可以直接把“等级”作为领取规则之一，成长和身份会互相联动。</div>
           <div className="rounded-xl bg-secondary/40 p-4">等级在用户资料、评论区和系统展示中都会出现，是社区长期活跃度的核心标识。</div>
         </CardContent>

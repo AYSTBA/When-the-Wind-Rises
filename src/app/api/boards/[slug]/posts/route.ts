@@ -89,6 +89,6 @@ export const GET = createRouteHandler(async ({ request, routeContext }) => {
     }),
   })
 }, {
-  errorMessage: "获取节点帖子失败",
+  errorMessage: "获取节点风笺失败",
   logPrefix: "[api/boards/[slug]/posts] unexpected error",
 })

@@ -63,7 +63,7 @@ async function lockAndFindGodCommentActionComment(tx: Prisma.TransactionClient, 
 
   const lockedPost = await lockGodCommentPost(tx, initial.postId)
   if (!lockedPost) {
-    throw new Error("关联帖子不存在")
+    throw new Error("关联风笺不存在")
   }
 
   const comment = await findGodCommentActionComment(tx, commentId)

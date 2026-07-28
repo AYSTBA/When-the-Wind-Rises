@@ -414,7 +414,7 @@ export function SidebarUserCard({ user, createPostHref = "/write", siteName = "�
             )}
             <div>
               <h3 className="text-sm font-semibold">{siteName}</h3>
-              <p className="mt-1 text-[11px] text-muted-foreground">登录后即可签到、查看积分与快捷发帖</p>
+              <p className="mt-1 text-[11px] text-muted-foreground">登录后即可签到、查看风铃与快捷发笺</p>
             </div>
           </div>
         </div>
@@ -435,7 +435,7 @@ export function SidebarUserCard({ user, createPostHref = "/write", siteName = "�
 
   const safeUser = currentUser
   const displayName = safeUser.displayName ?? safeUser.nickname ?? safeUser.username
-  const pointName = safeUser.pointName ?? "积分"
+  const pointName = safeUser.pointName ?? "风铃"
   const vipActive = isVipActive(safeUser)
 
   function upsertCalendarEntry(entry: CheckInCalendarEntry) {
@@ -697,7 +697,7 @@ export function SidebarUserCard({ user, createPostHref = "/write", siteName = "�
             <Link href={createPostHref} className="block col-span-2">
               <Button className="h-9 w-full gap-1.5 rounded-lg text-xs">
                 <Plus className="h-3.5 w-3.5" />
-                创建主题
+                新建风笺
               </Button>
             </Link>
           </div>

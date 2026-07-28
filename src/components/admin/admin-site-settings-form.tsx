@@ -87,8 +87,8 @@ export function AdminSiteSettingsForm({ initialSettings }: AdminSiteSettingsForm
       }}
     >
       <div className="grid gap-4 md:grid-cols-2">
-        <TextField label="站点名称" value={siteName} onChange={(value) => updateDraftField("siteName", value)} placeholder="如 兴趣论坛" />
-        <TextField label="Logo 文案" value={siteLogoText} onChange={(value) => updateDraftField("siteLogoText", value)} placeholder="如 兴趣论坛" />
+        <TextField label="站点名称" value={siteName} onChange={(value) => updateDraftField("siteName", value)} placeholder="如 风广场" />
+        <TextField label="Logo 文案" value={siteLogoText} onChange={(value) => updateDraftField("siteLogoText", value)} placeholder="如 风广场" />
       </div>
       <TextField label="站点 Slogan" value={siteSlogan} onChange={(value) => updateDraftField("siteSlogan", value)} placeholder="如 Waste your time on things you love" />
       <div className="space-y-2">
@@ -106,19 +106,19 @@ export function AdminSiteSettingsForm({ initialSettings }: AdminSiteSettingsForm
         <div>
           <h3 className="text-sm font-semibold">VIP 套餐价格</h3>
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <TextField label="月卡积分价格（VIP1）" value={vipMonthlyPrice} onChange={(value) => updateDraftField("vipMonthlyPrice", value)} placeholder="如 3000" />
-            <TextField label="季卡积分价格（VIP2）" value={vipQuarterlyPrice} onChange={(value) => updateDraftField("vipQuarterlyPrice", value)} placeholder="如 8000" />
-            <TextField label="年卡积分价格（VIP3）" value={vipYearlyPrice} onChange={(value) => updateDraftField("vipYearlyPrice", value)} placeholder="如 30000" />
+            <TextField label="月卡风铃价格（VIP1）" value={vipMonthlyPrice} onChange={(value) => updateDraftField("vipMonthlyPrice", value)} placeholder="如 3000" />
+            <TextField label="季卡风铃价格（VIP2）" value={vipQuarterlyPrice} onChange={(value) => updateDraftField("vipQuarterlyPrice", value)} placeholder="如 8000" />
+            <TextField label="年卡风铃价格（VIP3）" value={vipYearlyPrice} onChange={(value) => updateDraftField("vipYearlyPrice", value)} placeholder="如 30000" />
           </div>
         </div>
         <div>
-          <h3 className="text-sm font-semibold">作者下线帖子价格</h3>
+          <h3 className="text-sm font-semibold">作者下线风笺价格</h3>
           <p className="mt-1 text-xs text-muted-foreground">0 表示免费；普通用户与 VIP1 / VIP2 / VIP3 按当前身份分别结算。</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <TextField label="普通用户积分价格" value={postOfflinePrice} onChange={(value) => updateDraftField("postOfflinePrice", value)} placeholder="如 50" />
-            <TextField label="VIP1 积分价格" value={postOfflineVip1Price} onChange={(value) => updateDraftField("postOfflineVip1Price", value)} placeholder="如 30" />
-            <TextField label="VIP2 积分价格" value={postOfflineVip2Price} onChange={(value) => updateDraftField("postOfflineVip2Price", value)} placeholder="如 20" />
-            <TextField label="VIP3 积分价格" value={postOfflineVip3Price} onChange={(value) => updateDraftField("postOfflineVip3Price", value)} placeholder="如 0" />
+            <TextField label="普通用户风铃价格" value={postOfflinePrice} onChange={(value) => updateDraftField("postOfflinePrice", value)} placeholder="如 50" />
+            <TextField label="VIP1 风铃价格" value={postOfflineVip1Price} onChange={(value) => updateDraftField("postOfflineVip1Price", value)} placeholder="如 30" />
+            <TextField label="VIP2 风铃价格" value={postOfflineVip2Price} onChange={(value) => updateDraftField("postOfflineVip2Price", value)} placeholder="如 20" />
+            <TextField label="VIP3 风铃价格" value={postOfflineVip3Price} onChange={(value) => updateDraftField("postOfflineVip3Price", value)} placeholder="如 0" />
           </div>
         </div>
       </div>

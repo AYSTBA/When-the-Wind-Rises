@@ -38,7 +38,7 @@ export function buildDefaultTaskDefinitionInputs(input: {
       sortOrder: 10,
     },
     {
-      title: "首次发帖",
+      title: "首次发笺",
       description: "发布第一篇公开主题。",
       category: TaskCategory.NEWBIE,
       cycleType: TaskCycleType.PERMANENT,
@@ -150,8 +150,8 @@ export function buildDefaultTaskDefinitionInputs(input: {
       sortOrder: 210,
     },
     {
-      title: "本周发帖两篇",
-      description: "本周公开发帖 2 次。",
+      title: "本周发笺两篇",
+      description: "本周公开发笺 2 次。",
       category: TaskCategory.CHALLENGE,
       cycleType: TaskCycleType.WEEKLY,
       conditionType: TaskConditionType.APPROVED_POST_COUNT,

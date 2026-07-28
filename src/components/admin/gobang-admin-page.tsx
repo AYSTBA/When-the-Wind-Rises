@@ -62,9 +62,9 @@ export function GobangAdminPage({ AppId, config }: GobangAdminPageProps) {
           <TextField label="每日 VIP 免费次数" value={dailyVipFreeGames} onChange={setDailyVipFreeGames} />
           <TextField label="普通用户每日总次数" value={dailyNormalGameLimit} onChange={setDailyNormalGameLimit} />
           <TextField label="VIP 用户每日总次数" value={dailyVipGameLimit} onChange={setDailyVipGameLimit} />
-          <TextField label="超额门票积分" value={ticketCost} onChange={setTicketCost} />
+          <TextField label="超额门票风铃" value={ticketCost} onChange={setTicketCost} />
           <TextField label="AI 难度等级" value={aiLevel} onChange={setAiLevel} />
-          <TextField label="获胜奖励积分" value={winReward} onChange={setWinReward} />
+          <TextField label="获胜奖励风铃" value={winReward} onChange={setWinReward} />
           <TextField label="前台入口名称" value={matchLabel} onChange={setMatchLabel} containerClassName="md:col-span-2 xl:col-span-3" />
         </CardContent>
       </Card>

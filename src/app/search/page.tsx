@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `搜索 - ${settings.siteName}`,
     description: settings.search.enabled
-      ? `按帖子、节点、标签、用户和收藏搜索 ${settings.siteName} 的内容。`
+      ? `按风笺、节点、标签、用户和收藏搜索 ${settings.siteName} 的内容。`
       : `${settings.siteName} 当前关闭了站内搜索，可改用外部搜索引擎继续查找内容。`,
   }
 }
@@ -189,7 +189,7 @@ export default async function SearchPage(props: PageProps<"/search">) {
                   <div className="flex flex-col gap-5 p-4">
                     {!hasKeyword ? (
                       <SearchEmptyPanel>
-                        支持按帖子、节点、标签、用户、收藏分别搜索。切换分类不会混合不同类型的结果。
+                        支持按风笺、节点、标签、用户、收藏分别搜索。切换分类不会混合不同类型的结果。
                       </SearchEmptyPanel>
                     ) : !settings.search.enabled ? (
                       <ExternalSearchOptions keyword={keyword} engines={settings.search.externalEngines} siteHost={siteHost ?? undefined} variant="panel" />
@@ -350,7 +350,7 @@ function BoardSearchResults({ items }: { items: SearchBoardItem[] }) {
             </div>
             <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">{board.description}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-              <span title={`${formatNumber(board.postCount)} 篇帖子`}>{formatCompactNumber(board.postCount)} 篇帖子</span>
+              <span title={`${formatNumber(board.postCount)} 篇风笺`}>{formatCompactNumber(board.postCount)} 篇风笺</span>
               <span title={`${formatNumber(board.followerCount)} 人关注`}>{formatCompactNumber(board.followerCount)} 人关注</span>
               <span>/{board.slug}</span>
             </div>
@@ -374,7 +374,7 @@ function TagSearchResults({ items }: { items: SearchTagItem[] }) {
             <Hash className="size-4 shrink-0 text-muted-foreground" />
           </div>
           <div className="mt-4 flex items-center justify-between gap-3 text-xs text-muted-foreground">
-            <span title={`${formatNumber(tag.postCount)} 篇帖子`}>{formatCompactNumber(tag.postCount)} 篇帖子</span>
+            <span title={`${formatNumber(tag.postCount)} 篇风笺`}>{formatCompactNumber(tag.postCount)} 篇风笺</span>
             <span>{formatRelativeTime(tag.createdAt)}</span>
           </div>
         </Link>
@@ -402,7 +402,7 @@ function UserSearchResults({ items }: { items: SearchUserItem[] }) {
               <p className="mt-1 text-xs text-muted-foreground">@{user.username}</p>
               <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">{user.bio}</p>
               <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-muted-foreground">
-                <span title={`${formatNumber(user.postCount)} 帖子`}>{formatCompactNumber(user.postCount)} 帖子</span>
+                <span title={`${formatNumber(user.postCount)} 风笺`}>{formatCompactNumber(user.postCount)} 风笺</span>
                 <span title={`${formatNumber(user.followerCount)} 粉丝`}>{formatCompactNumber(user.followerCount)} 粉丝</span>
                 <span>{levelLabel}</span>
               </div>

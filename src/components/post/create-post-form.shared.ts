@@ -37,9 +37,9 @@ interface LotteryConditionTypeConfig {
 
 const LOTTERY_CONDITION_TYPE_CONFIG = {
   LIKE_POST: {
-    label: "点赞帖子",
+    label: "点赞风笺",
     category: "INTERACTION",
-    helperText: "参与前需先点赞当前帖子。",
+    helperText: "参与前需先点赞当前风笺。",
     valueMode: "none",
     defaultValue: "1",
     defaultOperator: "EQ",
@@ -47,9 +47,9 @@ const LOTTERY_CONDITION_TYPE_CONFIG = {
     defaultDescription: () => "需点赞本帖",
   },
   FAVORITE_POST: {
-    label: "收藏帖子",
+    label: "收藏风笺",
     category: "INTERACTION",
-    helperText: "参与前需先收藏当前帖子。",
+    helperText: "参与前需先收藏当前风笺。",
     valueMode: "none",
     defaultValue: "1",
     defaultOperator: "EQ",
@@ -57,24 +57,24 @@ const LOTTERY_CONDITION_TYPE_CONFIG = {
     defaultDescription: () => "需收藏本帖",
   },
   REPLY_CONTENT_LENGTH: {
-    label: "回帖字数",
+    label: "回笺字数",
     category: "INTERACTION",
     helperText: "要求回复内容达到指定字数。",
     valueMode: "number",
     defaultValue: "10",
     defaultOperator: "GTE",
-    placeholder: () => "最少回帖字数，如 10",
-    defaultDescription: () => "回帖内容至少 10 字",
+    placeholder: () => "最少回笺字数，如 10",
+    defaultDescription: () => "回笺内容至少 10 字",
   },
   REPLY_KEYWORD: {
-    label: "回帖关键词",
+    label: "回笺关键词",
     category: "INTERACTION",
     helperText: "要求回复中包含指定关键词。",
     valueMode: "text",
     defaultValue: "恭喜发财",
     defaultOperator: "EQ",
-    placeholder: () => "指定回帖内容或关键词",
-    defaultDescription: () => "回帖需包含指定内容",
+    placeholder: () => "指定回笺内容或关键词",
+    defaultDescription: () => "回笺需包含指定内容",
   },
   REGISTER_DAYS: {
     label: "注册天数",
@@ -107,9 +107,9 @@ const LOTTERY_CONDITION_TYPE_CONFIG = {
     defaultDescription: () => "VIP 等级达到要求",
   },
   USER_POINTS: {
-    label: "用户积分",
+    label: "用户风铃",
     category: "THRESHOLD",
-    helperText: "限制账户积分达到指定值。",
+    helperText: "限制账户风铃达到指定值。",
     valueMode: "number",
     defaultValue: "100",
     defaultOperator: "GTE",
@@ -146,11 +146,9 @@ export const LOTTERY_TEXT_CONDITION_TYPES = new Set(
 )
 
 export const POST_TYPE_OPTIONS = [
-  { value: "NORMAL", label: "普通帖", hint: "直接讨论" },
-  { value: "BOUNTY", label: "悬赏帖", hint: "设置积分悬赏" },
-  { value: "POLL", label: "投票帖", hint: "发起投票" },
-  { value: "LOTTERY", label: "抽奖帖", hint: "配置奖项与参与条件" },
-  { value: "AUCTION", label: "拍卖帖", hint: "出售赢家专属内容" },
+  { value: "NORMAL", label: "风笺", hint: "直接讨论" },
+  { value: "BOUNTY", label: "悬赏风笺", hint: "设置风铃悬赏" },
+  { value: "POLL", label: "投票风笺", hint: "发起投票" },
 ] as const satisfies Array<{ value: LocalPostType; label: string; hint: string }>
 
 export interface CreatePostFormBoardItem {
@@ -198,6 +196,7 @@ export interface CreatePostFormInitialValues {
   minViewLevel?: number | null
   minViewVipLevel?: number | null
   tags?: string[]
+  mood?: string
   lotteryConfig?: {
     startsAt?: string | null
     endsAt?: string | null
@@ -494,6 +493,7 @@ export function buildInitialPostDraft(
     redPacketUnitPoints: String(initialValues.redPacketConfig?.unitPoints ?? initialValues.redPacketConfig?.totalPoints ?? 10),
     redPacketTotalPoints: String(initialValues.redPacketConfig?.totalPoints ?? 10),
     redPacketPacketCount: String(initialValues.redPacketConfig?.packetCount ?? 1),
+    mood: initialValues.mood ?? "",
     attachments: Array.isArray(initialValues.attachments)
       ? initialValues.attachments.map((attachment) => ({
           id: attachment.id,
@@ -630,7 +630,7 @@ export function buildSubmitRequest({
     : undefined
 
   const commonPayload = {
-    title: draft.title,
+    title: draft.title || draft.content.split("\n")[0].slice(0, 50) || "无标题",
     content: draft.content,
     isAnonymous: draft.isAnonymous,
     coverPath: draft.coverPath.trim() || undefined,
@@ -649,6 +649,7 @@ export function buildSubmitRequest({
     pollOptions: draft.postType === "POLL" ? normalizedPollOptions : undefined,
     lotteryConfig,
     manualTags: draft.manualTags,
+    mood: draft.mood || undefined,
     attachments: draft.attachments.map((attachment) => ({
       id: attachment.id || undefined,
       sourceType: attachment.sourceType,

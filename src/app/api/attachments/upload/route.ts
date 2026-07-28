@@ -37,7 +37,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
           settings.attachmentMinUploadLevel > 0 ? `Lv.${settings.attachmentMinUploadLevel}` : null,
           settings.attachmentMinUploadVipLevel > 0 ? `VIP${settings.attachmentMinUploadVipLevel}` : null,
         ].filter(Boolean)
-        apiError(403, requirementParts.length > 0 ? `当前账号至少需要达到 ${requirementParts.join("、")} 才能上传帖子附件` : "当前账号暂不具备上传帖子附件的权限")
+        apiError(403, requirementParts.length > 0 ? `当前账号至少需要达到 ${requirementParts.join("、")} 才能上传风笺附件` : "当前账号暂不具备上传风笺附件的权限")
       }
 
       if (!(file instanceof File)) {

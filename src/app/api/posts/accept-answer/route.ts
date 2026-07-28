@@ -27,11 +27,11 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
     })
 
     if (!post || post.status !== PostStatus.NORMAL) {
-      apiError(400, "帖子不存在或尚未通过审核")
+      apiError(400, "风笺不存在或尚未通过审核")
     }
 
     if (post.authorId !== currentUser.id) {
-      apiError(400, "只有发帖人可以采纳答案")
+      apiError(400, "只有发笺人可以采纳答案")
     }
 
     if (post.type !== "BOUNTY") {
@@ -117,7 +117,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
         beforeBalance: answerUser.points,
         prepared: preparedReward,
         pointName: settings.pointName,
-        reason: "悬赏帖答案被采纳，获得积分",
+        reason: "悬赏帖答案被采纳，获得风铃",
         relatedType: "POST",
         relatedId: postId,
       })

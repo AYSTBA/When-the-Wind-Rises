@@ -26,6 +26,7 @@ export interface LocalPostDraft {
   minViewLevel: string
   minViewVipLevel: string
   manualTags: string[]
+  mood: string
   lotteryStartsAt: string
   lotteryEndsAt: string
   lotteryParticipantGoal: string
@@ -113,11 +114,12 @@ export function createEmptyLocalPostDraft(boardSlug = ""): LocalPostDraft {
     minViewLevel: "0",
     minViewVipLevel: "0",
     manualTags: [],
+    mood: "",
     lotteryStartsAt: "",
     lotteryEndsAt: "",
     lotteryParticipantGoal: "",
     lotteryPrizes: [{ title: "一等奖", quantity: "1", description: "填写奖品描述", type: "MANUAL", pointsAmount: "100", vipPlan: "MONTH", redemptionCodes: "" }],
-    lotteryConditions: [{ type: "REPLY_CONTENT_LENGTH", value: "10", operator: "GTE", description: "回帖内容至少 10 字", groupKey: "default" }],
+    lotteryConditions: [{ type: "REPLY_CONTENT_LENGTH", value: "10", operator: "GTE", description: "回笺内容至少 10 字", groupKey: "default" }],
     redPacketEnabled: false,
     redPacketMode: "RED_PACKET",
     redPacketGrantMode: "FIXED",

@@ -300,7 +300,7 @@ export async function notifyPostAuctionFailed(params: {
     relatedType: "POST",
     relatedId: params.postId,
     title: "拍卖已结束但无人出价",
-    content: `你发起的帖子《${params.postTitle}》已结束，本次无人出价，系统已判定为流拍。`,
+    content: `你发起的风笺《${params.postTitle}》已结束，本次无人出价，系统已判定为流拍。`,
   })
 }
 
@@ -318,15 +318,15 @@ export async function notifyPostAuctionSettled(params: {
       userId: params.winnerId,
       relatedType: "POST",
       relatedId: params.postId,
-      title: "你已成功拍下帖子内容",
-      content: `帖子《${params.postTitle}》已结算，成交价为 ${params.finalPrice} ${params.pointName}。你现在可以查看赢家专属内容。`,
+      title: "你已成功拍下风笺内容",
+      content: `风笺《${params.postTitle}》已结算，成交价为 ${params.finalPrice} ${params.pointName}。你现在可以查看赢家专属内容。`,
     }),
     createSystemNotification({
       userId: params.sellerId,
       relatedType: "POST",
       relatedId: params.postId,
       title: "你的拍卖已成交",
-      content: `帖子《${params.postTitle}》已完成结算，赢家为 ${params.winnerName ?? "匿名用户"}，成交价为 ${params.finalPrice} ${params.pointName}。`,
+      content: `风笺《${params.postTitle}》已完成结算，赢家为 ${params.winnerName ?? "匿名用户"}，成交价为 ${params.finalPrice} ${params.pointName}。`,
     }),
   ])
 }

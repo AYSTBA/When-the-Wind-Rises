@@ -35,8 +35,8 @@ export type PointLogEventDataValue = Prisma.JsonValue | null
 
 export const POINT_LOG_EVENT_LABELS: Record<PointLogEventType, string> = {
   GENERIC: "通用变动",
-  BOARD_POST_CHARGE: "发帖积分",
-  BOARD_REPLY_CHARGE: "回帖积分",
+  BOARD_POST_CHARGE: "发笺风铃",
+  BOARD_REPLY_CHARGE: "回笺风铃",
   BOARD_TREASURY_WITHDRAW: "节点金库提取",
   POST_BLOCK_PURCHASE_PAID: "隐藏内容购买支出",
   POST_BLOCK_PURCHASE_SOLD: "隐藏内容购买收入",
@@ -55,8 +55,8 @@ export const POINT_LOG_EVENT_LABELS: Record<PointLogEventType, string> = {
   PAYMENT_APP_RECEIVED: "第三方支付收入",
   LOTTERY_PRIZE_SPONSOR_COST: "抽奖奖品预扣",
   LOTTERY_PRIZE_REFUND: "抽奖奖品退回",
-  LOTTERY_PRIZE_POINTS_AWARD: "抽奖中奖积分",
-  POINTS_TOPUP: "积分充值",
+  LOTTERY_PRIZE_POINTS_AWARD: "抽奖中奖风铃",
+  POINTS_TOPUP: "风铃充值",
   TASK_REWARD: "任务奖励",
   VERIFICATION_APPLICATION: "认证申请",
   ADMIN_POINTS_ADJUST: "后台调整",

@@ -18,7 +18,7 @@ function normalizeOptionalString(value: unknown) {
 function buildPreparedDelta(delta: number, scopeKey: string | null, userId: number) {
   if (scopeKey) {
     if (!isPointEffectScopeKey(scopeKey)) {
-      throw new Error(`未知的积分作用域：${scopeKey}`)
+      throw new Error(`未知的风铃作用域：${scopeKey}`)
     }
 
     return prepareScopedPointDelta({
@@ -50,19 +50,19 @@ export async function adjustAddonPoints(
   const targetUser = await resolveAddonActor({
     userId: input.targetUserId,
     username: input.targetUsername,
-    label: "积分目标账号",
+    label: "风铃目标账号",
   })
   const delta = typeof input.delta === "number" && Number.isFinite(input.delta)
     ? Math.trunc(input.delta)
     : Number.parseInt(String(input.delta ?? ""), 10)
 
   if (!Number.isFinite(delta)) {
-    throw new Error("积分变动值必须是整数")
+    throw new Error("风铃变动值必须是整数")
   }
 
   const reason = normalizeOptionalString(input.reason)
   if (!reason) {
-    throw new Error("积分变动原因不能为空")
+    throw new Error("风铃变动原因不能为空")
   }
 
   const settings = await getSiteSettings()
@@ -82,7 +82,7 @@ export async function adjustAddonPoints(
     })
 
     if (!user) {
-      throw new Error("积分目标账号不存在")
+      throw new Error("风铃目标账号不存在")
     }
 
     const applied = await applyPointDelta({

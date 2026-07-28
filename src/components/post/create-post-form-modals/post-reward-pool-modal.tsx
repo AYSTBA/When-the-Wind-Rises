@@ -70,8 +70,8 @@ export function PostRewardPoolModal({
       open={open}
       onClose={onClose}
       hideHeaderCloseButtonOnMobile
-      title="配置帖子激励池"
-      description="在这里设置帖子红包或聚宝盆。"
+      title="配置风笺激励池"
+      description="在这里设置风笺红包或聚宝盆。"
       size="md"
       footer={(
         <div className="flex items-center justify-end">
@@ -113,7 +113,7 @@ export function PostRewardPoolModal({
                 className={value.mode === "RED_PACKET" ? "rounded-[12px] border border-foreground bg-card px-3 py-2.5 text-left shadow-xs" : redPacketEnabled ? "rounded-[12px] border border-border bg-background px-3 py-2.5 text-left" : "rounded-[12px] border border-dashed border-border bg-secondary/40 px-3 py-2.5 text-left text-muted-foreground"}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs font-semibold">帖子红包</p>
+                  <p className="text-xs font-semibold">风笺红包</p>
                   {value.mode === "RED_PACKET" ? <span className="rounded-full bg-foreground px-2 py-0.5 text-[9px] font-medium text-background">当前</span> : null}
                 </div>
               </button>
@@ -169,9 +169,9 @@ export function PostRewardPoolModal({
                   <div className="space-y-2">
                     <p className="text-xs font-medium">触发行为</p>
                     <select value={value.triggerType} onChange={(event) => onChange.onTriggerTypeChange(event.target.value as "REPLY" | "LIKE" | "FAVORITE")} className="h-9 w-full rounded-[10px] border border-border bg-background px-3 text-xs outline-hidden" disabled={disabled}>
-                      <option value="REPLY">回复帖子</option>
-                      <option value="LIKE">点赞帖子</option>
-                      <option value="FAVORITE">收藏帖子</option>
+                      <option value="REPLY">回复风笺</option>
+                      <option value="LIKE">点赞风笺</option>
+                      <option value="FAVORITE">收藏风笺</option>
                     </select>
                   </div>
                 </div>

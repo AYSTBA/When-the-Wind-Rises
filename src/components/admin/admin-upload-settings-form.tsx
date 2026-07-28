@@ -523,15 +523,15 @@ export function AdminUploadSettingsForm({
                   onVipLevelChange={setAttachmentMinUploadVipLevel}
                   levelLabel="附件添加最低用户等级"
                   vipLevelLabel="附件添加最低 VIP 等级"
-                  levelDescriptionBuilder={(option) => option?.value === "0" ? "不限制用户等级，任何满足发帖权限的用户都可以添加附件。" : `至少达到 ${option?.label ?? "当前等级"} 才能在发帖时添加站内附件或网盘附件。`}
-                  vipLevelDescriptionBuilder={(option) => option?.value === "0" ? "不限制 VIP 等级。" : `至少达到 ${option?.label ?? "当前 VIP"} 才能在发帖时添加站内附件或网盘附件。`}
+                  levelDescriptionBuilder={(option) => option?.value === "0" ? "不限制用户等级，任何满足发笺权限的用户都可以添加附件。" : `至少达到 ${option?.label ?? "当前等级"} 才能在发笺时添加站内附件或网盘附件。`}
+                  vipLevelDescriptionBuilder={(option) => option?.value === "0" ? "不限制 VIP 等级。" : `至少达到 ${option?.label ?? "当前 VIP"} 才能在发笺时添加站内附件或网盘附件。`}
                 />
               </div>
               <SettingsInputField label="允许附件格式" value={attachmentAllowedExtensions} onChange={setAttachmentAllowedExtensions} placeholder="如 zip, rar, 7z, pdf, docx, xlsx" />
               <SettingsInputField label="附件大小上限（MB）" type="number" value={attachmentMaxFileSizeMb} onChange={setAttachmentMaxFileSizeMb} />
             </div>
             <p className="text-xs leading-6 text-muted-foreground">
-              上传型附件会复用现有存储策略写入本地或对象存储；下载时统一走站内接口完成权限校验与下载次数统计。网盘附件不占用站内存储，且不受站内上传/下载开关影响，但仍受各附件自身的等级、积分和回复权限控制。
+              上传型附件会复用现有存储策略写入本地或对象存储；下载时统一走站内接口完成权限校验与下载次数统计。网盘附件不占用站内存储，且不受站内上传/下载开关影响，但仍受各附件自身的等级、风铃和回复权限控制。
             </p>
           </div>
         ) : null}

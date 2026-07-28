@@ -223,7 +223,7 @@ function FavoriteCollectionDialogContent({
           throw new Error(result.message ?? "加入合集失败")
         }
 
-        const message = String(result.message ?? "帖子已加入合集")
+        const message = String(result.message ?? "风笺已加入合集")
         setFeedback({
           tone: "success",
           message,
@@ -326,7 +326,7 @@ function FavoriteCollectionDialogContent({
       closeOnEscape={!isPending}
       size="xl"
       title="加入收藏合集"
-      description="默认收藏保留不变，你可以额外把帖子加入合集里归档。"
+      description="默认收藏保留不变，你可以额外把风笺加入合集里归档。"
       footer={(
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2 lg:hidden">
@@ -382,7 +382,7 @@ function FavoriteCollectionDialogContent({
           <Card>
             <CardHeader className="border-b">
               <CardTitle>选择现有合集</CardTitle>
-              <CardDescription>搜索自己的合集，或把帖子投稿到允许参与的公开合集。</CardDescription>
+              <CardDescription>搜索自己的合集，或把风笺投稿到允许参与的公开合集。</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 py-4">
               <div className="flex flex-col gap-2 sm:flex-row">

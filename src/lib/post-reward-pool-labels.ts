@@ -1,9 +1,9 @@
 import { PostRedPacketClaimOrderMode, PostRedPacketGrantMode, PostRedPacketTriggerType } from "@/db/types"
 
 const RED_PACKET_TRIGGER_LABELS: Record<PostRedPacketTriggerType, string> = {
-  REPLY: "回复帖子",
-  LIKE: "点赞帖子",
-  FAVORITE: "收藏帖子",
+  REPLY: "回复风笺",
+  LIKE: "点赞风笺",
+  FAVORITE: "收藏风笺",
 }
 
 const RED_PACKET_GRANT_MODE_LABELS: Record<PostRedPacketGrantMode, string> = {

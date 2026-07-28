@@ -202,7 +202,7 @@ async function tryClaimPostJackpot(input: {
     const [user, post] = await findJackpotClaimContext(tx, input.postId, input.userId)
 
     if (!user || !post || post.status !== "NORMAL") {
-      return { claimed: false as const, reason: "帖子不存在或暂不可抽奖" }
+      return { claimed: false as const, reason: "风笺不存在或暂不可抽奖" }
     }
 
     if (user.status === "MUTED" || user.status === "BANNED") {
@@ -211,7 +211,7 @@ async function tryClaimPostJackpot(input: {
 
     const rewardConfig = parsePostRewardPoolConfigFromContent(post.content)
     if (!rewardConfig || rewardConfig.mode !== "JACKPOT" || !post.redPacket || post.redPacket.status !== "ACTIVE") {
-      return { claimed: false as const, reason: "当前帖子没有可参与的聚宝盆" }
+      return { claimed: false as const, reason: "当前风笺没有可参与的聚宝盆" }
     }
 
     const packet = post.redPacket
@@ -244,7 +244,7 @@ async function tryClaimPostJackpot(input: {
     })
     const depositedPoolPoints = packet.remainingPoints + preparedIncrement.finalDelta
     if (!Number.isFinite(depositedPoolPoints) || depositedPoolPoints < 0) {
-      return { claimed: false as const, reason: "聚宝盆积分池计算失败" }
+      return { claimed: false as const, reason: "聚宝盆风铃池计算失败" }
     }
 
     const deposited = await depositJackpotPool(tx, packet.id, packet.remainingPoints, depositedPoolPoints)
@@ -422,7 +422,7 @@ export async function getPostRedPacketSummary(postId: string, currentUserId?: nu
     claimOrderMode: rewardConfig.mode === "RED_PACKET" ? packet.claimOrderMode : undefined,
     claimOrderLabel: rewardConfig.mode === "RED_PACKET" ? getPostRedPacketClaimOrderModeLabel(packet.claimOrderMode) : undefined,
     triggerType: packet.triggerType,
-    triggerLabel: rewardConfig.mode === "JACKPOT" ? "回复帖子后概率中奖" : getPostRedPacketTriggerLabel(packet.triggerType),
+    triggerLabel: rewardConfig.mode === "JACKPOT" ? "回复风笺后概率中奖" : getPostRedPacketTriggerLabel(packet.triggerType),
     totalPoints: rewardConfig.mode === "JACKPOT" ? (rewardConfig.initialPoints ?? packet.totalPoints) : packet.totalPoints,
     packetCount: rewardConfig.mode === "JACKPOT" ? packet.claimedCount : packet.packetCount,
     remainingPoints: packet.remainingPoints,

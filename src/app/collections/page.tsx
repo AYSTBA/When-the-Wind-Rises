@@ -76,7 +76,7 @@ export default async function FavoriteCollectionDirectoryPage(props: {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">
                       <h1 className="text-xl font-semibold">收藏合集</h1>
-                      <p className="mt-1 text-sm text-muted-foreground">浏览公开合集，也可以把收藏帖子继续归档到允许投稿的合集里。</p>
+                      <p className="mt-1 text-sm text-muted-foreground">浏览公开合集，也可以把收藏风笺继续归档到允许投稿的合集里。</p>
                     </div>
                     <Link href="/settings?tab=post-management&postTab=collections" className="inline-flex h-9 items-center justify-center rounded-full border border-border bg-background px-3 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
                       我的合集
@@ -99,7 +99,7 @@ export default async function FavoriteCollectionDirectoryPage(props: {
                           {item.description ? <p className="mt-1 line-clamp-2 text-[11px] leading-5 text-muted-foreground">{item.description}</p> : null}
                           <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
                             <span className="truncate">创建者 {item.ownerName}</span>
-                            <span title={`${formatNumber(item.postCount)} 帖`}>帖子 {formatCompactNumber(item.postCount)}</span>
+                            <span title={`${formatNumber(item.postCount)} 帖`}>风笺 {formatCompactNumber(item.postCount)}</span>
                           </div>
                           <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] text-muted-foreground">
                             {item.allowOtherUsersToContribute ? <span>{item.requireContributionApproval ? "允许投稿 / 需审核" : "允许投稿 / 免审核"}</span> : <span>仅创建者维护</span>}

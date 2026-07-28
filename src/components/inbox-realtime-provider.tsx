@@ -149,22 +149,7 @@ function isLeaderLeaseActive(lease: InboxRealtimeLeaderLease | null) {
   return Boolean(lease && lease.expiresAt > Date.now())
 }
 
-function buildAttentionTitle(pathname: string, unreadMessageCount: number, unreadNotificationCount: number) {
-  const visibleUnreadMessageCount = pathname === "/messages" ? 0 : unreadMessageCount
-  const visibleUnreadNotificationCount = pathname === "/notifications" ? 0 : unreadNotificationCount
-
-  if (visibleUnreadMessageCount > 0 && visibleUnreadNotificationCount > 0) {
-    return "有新消息和通知"
-  }
-
-  if (visibleUnreadMessageCount > 0) {
-    return visibleUnreadMessageCount > 1 ? `有新消息（${visibleUnreadMessageCount}）` : "有新消息"
-  }
-
-  if (visibleUnreadNotificationCount > 0) {
-    return visibleUnreadNotificationCount > 1 ? `有新通知（${visibleUnreadNotificationCount}）` : "有新通知"
-  }
-
+function buildAttentionTitle(_pathname: string, _unreadMessageCount: number, _unreadNotificationCount: number) {
   return ""
 }
 

@@ -191,7 +191,7 @@ export function BackgroundWorkerAdminPage({ data, pageQueryEntries = [] }: Backg
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  <TableHead>帖子</TableHead>
+                  <TableHead>风笺</TableHead>
                   <TableHead className="w-[140px]">卖家</TableHead>
                   <TableHead className="w-[220px]">进度</TableHead>
                   <TableHead className="w-[160px]">状态</TableHead>
@@ -326,7 +326,7 @@ export function BackgroundWorkerAdminPage({ data, pageQueryEntries = [] }: Backg
                               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                 <span>{item.auction.status}</span>
                                 <Link href={postHref!} className="inline-flex items-center gap-1 hover:text-foreground">
-                                  前台帖子
+                                  前台风笺
                                   <ExternalLink className="h-3 w-3" />
                                 </Link>
                               </div>

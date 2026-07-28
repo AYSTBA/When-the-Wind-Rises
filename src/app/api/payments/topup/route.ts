@@ -41,7 +41,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
     return apiSuccess(result, "充值订单已创建")
   })
 }, {
-  errorMessage: "创建积分充值订单失败",
+  errorMessage: "创建风铃充值订单失败",
   logPrefix: "[api/payments/topup] unexpected error",
   unauthorizedMessage: "请先登录",
   allowStatuses: ["ACTIVE", "MUTED"],

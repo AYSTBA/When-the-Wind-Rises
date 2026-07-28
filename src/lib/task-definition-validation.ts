@@ -182,7 +182,7 @@ export function validateTaskDefinitionInput(raw: unknown): TaskDefinitionInput {
   }
 
   if (!template.supportsPostTypeFilter && conditionConfig.postTypes.length > 0) {
-    apiError(400, "当前任务模板不支持帖子类型筛选")
+    apiError(400, "当前任务模板不支持风笺类型筛选")
   }
 
   return {

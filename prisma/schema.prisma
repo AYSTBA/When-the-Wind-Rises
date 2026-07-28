@@ -1166,6 +1166,7 @@ model Post {
   lastAppendedAt                DateTime?                      @db.Timestamptz(3)
   lastCommentedAt               DateTime?                      @db.Timestamptz(3)
   activityAt                    DateTime                       @default(now()) @db.Timestamptz(3)
+  mood                          String?
   publishedAt                   DateTime?                      @db.Timestamptz(3)
   createdAt                     DateTime                       @default(now()) @db.Timestamptz(3)
   updatedAt                     DateTime                       @updatedAt @db.Timestamptz(3)

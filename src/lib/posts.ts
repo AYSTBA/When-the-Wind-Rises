@@ -385,7 +385,7 @@ function mapPostDetail(
     } : {
       enabled: false,
       isLoggedIn: false,
-      pointName: "积分",
+      pointName: "风铃",
       currentUserPoints: 0,
       gifts: [],
       giftStats: [],
@@ -420,7 +420,7 @@ export async function getHomepagePosts(page = 1, pageSize = 20): Promise<SitePos
   }, {
     area: "posts",
     action: "getHomepagePosts",
-    message: "首页帖子加载失败",
+    message: "首页风笺加载失败",
     metadata: { page, pageSize },
     fallback: [],
   })
@@ -568,7 +568,7 @@ export async function incrementPostViewCount(postId: string) {
   }, {
     area: "posts",
     action: "incrementPostViewCount",
-    message: "帖子浏览量更新失败",
+    message: "风笺浏览量更新失败",
     metadata: { postId },
     fallback: undefined,
     level: "warn",

@@ -245,7 +245,7 @@ export async function evaluateUserLevelProgress(userId: number, options: Evaluat
       relatedType: "USER",
       relatedId: String(userId),
       title: `等级提升到 ${levelLabel}`,
-      content: `你的社区等级已从 ${previousLabel} 升级为 ${levelLabel}。继续签到、发帖、回复和积累获赞，还能解锁更高等级。`,
+      content: `你的社区等级已从 ${previousLabel} 升级为 ${levelLabel}。继续签到、发笺、回复和积累获赞，还能解锁更高等级。`,
     })
   }
 

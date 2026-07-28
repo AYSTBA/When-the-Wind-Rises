@@ -47,7 +47,7 @@ const TASK_STATUS_CLASS_NAMES = {
 
 const AUTO_CATEGORIZE_SOURCE_LABELS = {
   PREVIEW: "发布页预览",
-  POST_CREATE: "发帖后入队",
+  POST_CREATE: "发笺后入队",
 } as const
 
 const AUTO_CATEGORIZE_RESULT_LABELS = {
@@ -494,7 +494,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
             <TextField label="模型名称" value={model} onChange={setModel} placeholder="gpt-4.1-mini / qwen-max / deepseek-chat" />
             <div className="space-y-2">
               <TextField label="温度" value={temperature} onChange={setTemperature} placeholder="0.7" containerClassName="space-y-0" />
-              <p className="text-xs leading-6 text-muted-foreground">值越低越稳定保守，值越高越发散活跃。论坛助手建议使用 0.4 到 0.7。</p>
+              <p className="text-xs leading-6 text-muted-foreground">值越低越稳定保守，值越高越发散活跃。风广场助手建议使用 0.4 到 0.7。</p>
             </div>
             <TextField label="最大输出 Token" value={maxOutputTokens} onChange={setMaxOutputTokens} placeholder="500" />
             <TextField label="请求超时（毫秒）" value={timeoutMs} onChange={setTimeoutMs} placeholder="30000" />
@@ -556,8 +556,8 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
                   <div className="rounded-xl border border-border p-4">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="font-medium">帖子 @ 回复</p>
-                        <p className="mt-1 text-sm text-muted-foreground">帖子正文 @ 该账号时触发。</p>
+                        <p className="font-medium">风笺 @ 回复</p>
+                        <p className="mt-1 text-sm text-muted-foreground">风笺正文 @ 该账号时触发。</p>
                       </div>
                       <Switch checked={agent.respondToPostMentions} onCheckedChange={(checked) => updateAgent(agent.id, { respondToPostMentions: checked })} />
                     </div>
@@ -639,7 +639,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
 
       <Card>
         <CardHeader className="border-b">
-          <CardTitle>发帖辅助</CardTitle>
+          <CardTitle>发笺辅助</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 py-5">
           <div className="grid gap-4 md:grid-cols-2">
@@ -683,11 +683,11 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
 
       <Card>
         <CardHeader className="border-b">
-          <CardTitle>发帖辅助提示词</CardTitle>
+          <CardTitle>发笺辅助提示词</CardTitle>
         </CardHeader>
         <CardContent className="py-5">
           <LabeledTextarea
-            label="发帖辅助提示词"
+            label="发笺辅助提示词"
             value={autoCategorizePromptTemplate}
             onChange={setAutoCategorizePromptTemplate}
             placeholder="定义 AI 如何从候选节点和标签中做分类。候选列表会在请求时自动拼接。"
@@ -701,7 +701,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
             <div>
               <CardTitle>任务日志</CardTitle>
               <p className="mt-1 text-sm text-muted-foreground">
-                发帖辅助任务和 AI 回复任务统一在这里查看，通过 Tab 切换。
+                发笺辅助任务和 AI 回复任务统一在这里查看，通过 Tab 切换。
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -723,7 +723,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
         <CardContent className="py-5">
           <Tabs value={activeTaskTab} onValueChange={(value) => setActiveTaskTab(value as TaskTabKey)} className="w-full flex-col">
             <TabsList className="self-start">
-              <TabsTrigger value="auto-categorize">发帖辅助任务</TabsTrigger>
+              <TabsTrigger value="auto-categorize">发笺辅助任务</TabsTrigger>
               <TabsTrigger value="ai-reply">最近任务</TabsTrigger>
             </TabsList>
 
@@ -772,7 +772,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
                 </div>
               )) : (
                 <div className="rounded-xl border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
-                  还没有发帖辅助任务。
+                  还没有发笺辅助任务。
                 </div>
               )}
 
@@ -814,7 +814,7 @@ export function AiReplyAdminPage({ initialData }: AiReplyAdminPageProps) {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-medium ${TASK_STATUS_CLASS_NAMES[task.status]}`}>{TASK_STATUS_LABELS[task.status]}</span>
-                      <span className="text-sm font-medium">{task.sourceType === "POST" ? "帖子触发" : "评论触发"}</span>
+                      <span className="text-sm font-medium">{task.sourceType === "POST" ? "风笺触发" : "评论触发"}</span>
                       <span className="text-sm text-muted-foreground">#{task.id.slice(0, 8)}</span>
                     </div>
                     {canDeleteTaskLog(task.status) ? (

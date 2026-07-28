@@ -533,7 +533,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
         <CardContent className="flex flex-wrap items-center justify-between gap-4 py-5">
           <div>
             <h3 className="text-lg font-semibold">勋章系统</h3>
-            <p className="mt-1 text-sm text-muted-foreground">后台自定义勋章、领取条件、积分购买价和佩戴特效，前台用户满足条件后手动领取并可佩戴生效。</p>
+            <p className="mt-1 text-sm text-muted-foreground">后台自定义勋章、领取条件、风铃购买价和佩戴特效，前台用户满足条件后手动领取并可佩戴生效。</p>
           </div>
           <Button className="gap-2 rounded-full" onClick={appendBadge} type="button">
             <Plus className="h-4 w-4" />
@@ -607,7 +607,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h4 className="text-base font-semibold">勋章编辑</h4>
-                  <p className="mt-1 text-sm text-muted-foreground">条件为全部满足后可领取；不配条件即可纯积分购买；佩戴后仅已展示勋章的特效会生效。</p>
+                  <p className="mt-1 text-sm text-muted-foreground">条件为全部满足后可领取；不配条件即可纯风铃购买；佩戴后仅已展示勋章的特效会生效。</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Button type="button" variant="outline" className="gap-2 rounded-full" onClick={() => removeBadge(editingIndex!)}>
@@ -622,10 +622,10 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
               </div>
 
               <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                <Field label="勋章名称" value={editingBadge.name} onChange={(value) => updateBadge(editingIndex!, { name: value })} placeholder="如 论坛先锋" />
+                <Field label="勋章名称" value={editingBadge.name} onChange={(value) => updateBadge(editingIndex!, { name: value })} placeholder="如 风广场先锋" />
                 <Field label="唯一标识" value={editingBadge.code} onChange={(value) => updateBadge(editingIndex!, { code: value.replace(/\s+/g, "_") })} placeholder="如 forum_pioneer" />
                 <Field label="分类" value={editingBadge.category} onChange={(value) => updateBadge(editingIndex!, { category: value })} placeholder="如 社区成就" />
-                <Field label="领取价格（积分）" type="number" value={String(editingBadge.pointsCost)} onChange={(value) => updateBadge(editingIndex!, { pointsCost: Math.max(0, Number(value) || 0) })} placeholder="如 100" />
+                <Field label="领取价格（风铃）" type="number" value={String(editingBadge.pointsCost)} onChange={(value) => updateBadge(editingIndex!, { pointsCost: Math.max(0, Number(value) || 0) })} placeholder="如 100" />
                 <IconPicker
                   label="图标"
                   value={editingBadge.iconText}
@@ -648,7 +648,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
                   />
                 </div>
                 <Field label="排序" type="number" value={String(editingBadge.sortOrder)} onChange={(value) => updateBadge(editingIndex!, { sortOrder: Math.max(0, Number(value) || 0) })} placeholder="0" />
-                <Field className="md:col-span-2 xl:col-span-3" label="描述" value={editingBadge.description} onChange={(value) => updateBadge(editingIndex!, { description: value })} placeholder="如 发帖达到一定数量后可领取" />
+                <Field className="md:col-span-2 xl:col-span-3" label="描述" value={editingBadge.description} onChange={(value) => updateBadge(editingIndex!, { description: value })} placeholder="如 发笺达到一定数量后可领取" />
                 <Field className="md:col-span-2 xl:col-span-3" label="图片地址（可选）" value={editingBadge.imageUrl} onChange={(value) => updateBadge(editingIndex!, { imageUrl: value })} placeholder="https://..." />
               </div>
 
@@ -667,7 +667,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <h5 className="text-sm font-semibold">领取条件</h5>
-                    <p className="mt-1 text-xs text-muted-foreground">按 AND 逻辑判断；可以为空，留空时表示无门槛或仅需积分购买。</p>
+                    <p className="mt-1 text-xs text-muted-foreground">按 AND 逻辑判断；可以为空，留空时表示无门槛或仅需风铃购买。</p>
                   </div>
                   <Button type="button" variant="outline" className="gap-2 rounded-full" onClick={() => appendRule(editingIndex!)}>
                     <Plus className="h-4 w-4" />
@@ -850,7 +850,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
           <div className="space-y-5">
             {functionalEffectSelected ? (
               <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-3 text-sm text-emerald-800">
-                该特效属于功能型特效。用户只要佩戴此勋章，打开首页时就会自动触发一次签到；积分、概率和数值设定都不会参与计算。
+                该特效属于功能型特效。用户只要佩戴此勋章，打开首页时就会自动触发一次签到；风铃、概率和数值设定都不会参与计算。
               </div>
             ) : null}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -860,7 +860,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
                 label="作用目标"
                 hint={(
                   <div className="space-y-1">
-                    <p>决定特效属于积分、概率，还是纯功能触发。</p>
+                    <p>决定特效属于风铃、概率，还是纯功能触发。</p>
                     <p>切换后，生效范围会自动过滤为对应类型。</p>
                   </div>
                 )}
@@ -969,7 +969,7 @@ export function AdminBadgeManager({ initialBadges, initialLevelDefinitions, init
                       align="start"
                       content={(
                         <div className="space-y-1">
-                          <p>“所有积分增减 / 所有概率”和具体子项互斥。</p>
+                          <p>“所有风铃增减 / 所有概率”和具体子项互斥。</p>
                           <p>选了“所有”，就不会再选具体子项。</p>
                           <p>选了任一子项，“所有”会自动取消并禁用。</p>
                         </div>

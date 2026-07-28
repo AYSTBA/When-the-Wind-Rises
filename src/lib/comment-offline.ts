@@ -25,7 +25,7 @@ export async function offlineCommentByPolicy(input: {
     }
 
     if (!isPublicReadablePostStatus(comment.post.status)) {
-      apiError(400, "当前帖子状态不支持下线评论")
+      apiError(400, "当前风笺状态不支持下线评论")
     }
 
     const settings = resolveBoardSettings(comment.post.board.zone, comment.post.board)

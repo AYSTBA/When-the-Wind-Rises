@@ -236,7 +236,7 @@ export async function updateVipSiteSettingsSection(existing: SiteSettingsRecord,
   const appStateWithVipNameColors = mergeVipNameColorSettings(appStateWithVipLevelIcons, vipNameColors)
 
   if (existing.inviteCodePurchaseEnabled && inviteCodePrice < 1) {
-    apiError(400, "开启积分购买邀请码时，普通用户价格必须大于 0")
+    apiError(400, "开启风铃购买邀请码时，普通用户价格必须大于 0")
   }
 
   if (redeemCodeHelpEnabled && !redeemCodeHelpTitle) {
@@ -258,7 +258,7 @@ export async function updateVipSiteSettingsSection(existing: SiteSettingsRecord,
   })
 
   const settings = await updateSiteSettingsRecord(existing.id, {
-    pointName: pointName || "积分",
+    pointName: pointName || "风铃",
     checkInEnabled,
     checkInReward,
     checkInMakeUpCardPrice,
@@ -281,6 +281,6 @@ export async function updateVipSiteSettingsSection(existing: SiteSettingsRecord,
 
   return finalizeSiteSettingsUpdate({
     settings,
-    message: "积分与VIP设置已保存",
+    message: "风铃与VIP设置已保存",
   })
 }

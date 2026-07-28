@@ -67,7 +67,7 @@ export function AdminOverviewDashboard({
           hint={`近 7 天 +${formatNumber(data.overview.newUserCount7d)}`}
         />
         <CompactStatCard
-          title="帖子总数"
+          title="风笺总数"
           value={data.overview.postCount}
           icon={<FileText className="h-4 w-4" />}
           hint={`近 7 天 +${formatNumber(data.overview.newPostCount7d)}`}
@@ -84,7 +84,7 @@ export function AdminOverviewDashboard({
           title="活跃用户"
           value={data.overview.activeUserCount7d}
           icon={<TrendingUp className="h-4 w-4" />}
-          hint="近 7 天登录 / 发帖 / 评论活跃"
+          hint="近 7 天登录 / 发笺 / 评论活跃"
           tone="sky"
         />
         <CompactStatCard
@@ -116,7 +116,7 @@ export function AdminOverviewDashboard({
           description="看新增和产出节奏"
           items={[
             {
-              label: "今日发帖",
+              label: "今日发笺",
               value: data.overview.todayPostCount,
               hint: `近 7 天 +${formatNumber(data.overview.newPostCount7d)}`,
             },
@@ -178,7 +178,7 @@ export function AdminOverviewDashboard({
               tone: "emerald",
             },
             {
-              label: "下线帖子",
+              label: "下线风笺",
               value: data.overview.offlinePostCount,
               tone: "slate",
             },
@@ -217,7 +217,7 @@ export function AdminOverviewDashboard({
         <Card>
           <CardHeader className="border-b">
             <CardTitle>近 7 天增长趋势</CardTitle>
-            <CardDescription>用户、帖子、评论和举报的波峰波谷。</CardDescription>
+            <CardDescription>用户、风笺、评论和举报的波峰波谷。</CardDescription>
             <CardAction>
               <Badge variant="secondary">最近 7 天</Badge>
             </CardAction>
@@ -233,7 +233,7 @@ export function AdminOverviewDashboard({
               colorClassName="bg-sky-500"
             />
             <TrendSummaryItem
-              label="新增帖子峰值"
+              label="新增风笺峰值"
               value={getTrendPeak(data.trends, "postCount")}
               colorClassName="bg-emerald-500"
             />
@@ -311,7 +311,7 @@ export function AdminOverviewDashboard({
             />
             <PendingReviewCard
               href="/admin?tab=posts&status=PENDING"
-              title="待审核帖子"
+              title="待审核风笺"
               value={data.overview.pendingPostCount}
               description="人工复核待发布内容"
               icon={<FileText className="h-3.5 w-3.5" />}
@@ -537,7 +537,7 @@ function MetricHighlightCard({
 function TrendLegend() {
   const items = [
     { label: "用户", colorClassName: "bg-sky-500" },
-    { label: "帖子", colorClassName: "bg-emerald-500" },
+    { label: "风笺", colorClassName: "bg-emerald-500" },
     { label: "评论", colorClassName: "bg-violet-500" },
     { label: "举报", colorClassName: "bg-rose-500" },
   ]
@@ -729,25 +729,25 @@ function RecentPostsCard({
   return (
     <Card className="h-full">
       <CardHeader className="border-b">
-        <CardTitle>最近帖子</CardTitle>
-        <CardDescription>最新进入后台视野的帖子内容。</CardDescription>
+        <CardTitle>最近风笺</CardTitle>
+        <CardDescription>最新进入后台视野的风笺内容。</CardDescription>
         <CardAction>
-          <OverviewSectionActionLink href="/admin?tab=posts" label="帖子管理" />
+          <OverviewSectionActionLink href="/admin?tab=posts" label="风笺管理" />
         </CardAction>
       </CardHeader>
       <CardContent className="px-0 py-0">
         {posts.length === 0 ? (
           <OverviewEmptyState
-            title="还没有最新帖子"
-            description="帖子内容会在这里按最近进入后台的顺序展示。"
+            title="还没有最新风笺"
+            description="风笺内容会在这里按最近进入后台的顺序展示。"
             href="/admin?tab=posts"
-            actionLabel="前往帖子管理"
+            actionLabel="前往风笺管理"
           />
         ) : (
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead>帖子</TableHead>
+                <TableHead>风笺</TableHead>
                 <TableHead className="w-[190px]">状态</TableHead>
                 <TableHead className="w-[96px]">互动</TableHead>
                 <TableHead className="w-[128px] text-right">时间</TableHead>
@@ -871,7 +871,7 @@ function RecentCommentsCard({
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead>评论内容</TableHead>
-                <TableHead>帖子</TableHead>
+                <TableHead>风笺</TableHead>
                 <TableHead className="w-[96px]">状态</TableHead>
                 <TableHead className="w-[128px] text-right">时间</TableHead>
               </TableRow>

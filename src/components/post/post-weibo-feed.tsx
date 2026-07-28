@@ -196,7 +196,7 @@ function PostNoteActions({ item, postPath }: { item: PostStreamDisplayItem; post
         const result = await response.json()
 
         if (!response.ok) {
-          toast.error(result.message ?? (type === "like" ? "点赞失败" : "收藏失败"), type === "like" ? "帖子点赞失败" : "收藏失败")
+          toast.error(result.message ?? (type === "like" ? "点赞失败" : "收藏失败"), type === "like" ? "风笺点赞失败" : "收藏失败")
           return
         }
 
@@ -213,7 +213,7 @@ function PostNoteActions({ item, postPath }: { item: PostStreamDisplayItem; post
         setFavorites((current) => Math.max(0, current + (nextFavored ? 1 : -1)))
         toast.success(result.message ?? (nextFavored ? "收藏成功" : "已取消收藏"), nextFavored ? "收藏成功" : "取消收藏成功")
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : (type === "like" ? "点赞失败，请稍后重试" : "收藏失败，请稍后重试"), type === "like" ? "帖子点赞失败" : "收藏失败")
+        toast.error(error instanceof Error ? error.message : (type === "like" ? "点赞失败，请稍后重试" : "收藏失败，请稍后重试"), type === "like" ? "风笺点赞失败" : "收藏失败")
       }
     })
   }

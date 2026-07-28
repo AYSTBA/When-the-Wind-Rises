@@ -1,4 +1,4 @@
-﻿import { randomUUID } from "node:crypto"
+import { randomUUID } from "node:crypto"
 
 import { increasePostViewCount, increasePostViewCounts } from "@/db/post-queries"
 import { acquireRedisLease } from "@/lib/redis-lease"
@@ -94,7 +94,7 @@ export async function recordPostViewCount(postId: string) {
     logRuntimeError(error, {
       area: "post-view-count",
       action: "record-buffered-view",
-      message: "帖子浏览量写入 Redis 缓冲失败，已回退到数据库自增",
+      message: "风笺浏览量写入 Redis 缓冲失败，已回退到数据库自增",
       level: "warn",
       metadata: { postId: normalizedPostId },
     })
@@ -151,7 +151,7 @@ export async function flushPostViewCounts() {
       logRuntimeError(restoreError, {
         area: "post-view-count",
         action: "restore-buffered-views",
-        message: "帖子浏览量落库失败后恢复 Redis 缓冲失败",
+        message: "风笺浏览量落库失败后恢复 Redis 缓冲失败",
         level: "error",
       })
     }
@@ -180,7 +180,7 @@ export function startPostViewCountFlushLoop() {
       logRuntimeError(error, {
         area: "post-view-count",
         action: "flush-buffered-views",
-        message: "帖子浏览量批量落库失败",
+        message: "风笺浏览量批量落库失败",
         level: "warn",
       })
     } finally {
@@ -204,7 +204,7 @@ export async function stopPostViewCountFlushLoop() {
     logRuntimeError(error, {
       area: "post-view-count",
       action: "flush-buffered-views-on-stop",
-      message: "停止 worker 时帖子浏览量批量落库失败",
+      message: "停止 worker 时风笺浏览量批量落库失败",
       level: "warn",
     })
   })

@@ -9,7 +9,7 @@ import { POINT_LOG_EVENT_TYPES } from "@/lib/point-log-events"
 import { getSiteSettings } from "@/lib/site-settings"
 
 function buildReason(_postId: string, _blockId: string, pointName: string, price: number) {
-  return `购买帖子隐藏内容（${price}${pointName}）`
+  return `购买风笺隐藏内容（${price}${pointName}）`
 }
 
 export async function purchasePostBlock(options: { userId: number; postId: string; blockId: string }) {
@@ -18,7 +18,7 @@ export async function purchasePostBlock(options: { userId: number; postId: strin
   return runPostUnlockTransaction(async (tx) => {
     const post = await findPostUnlockPurchaseContext(options.postId, tx)
     if (!post || !isPublicReadablePostStatus(post.status)) {
-      apiError(404, "帖子不存在或不可购买")
+      apiError(404, "风笺不存在或不可购买")
     }
 
     if (post.authorId === options.userId) {
@@ -97,7 +97,7 @@ export async function purchasePostBlock(options: { userId: number; postId: strin
       beforeBalance: seller.points,
       prepared: sellerPreparedDelta,
       pointName: settings.pointName,
-      reason: "帖子隐藏内容被购买",
+      reason: "风笺隐藏内容被购买",
       eventType: POINT_LOG_EVENT_TYPES.POST_BLOCK_PURCHASE_SOLD,
       eventData: {
         postId: options.postId,

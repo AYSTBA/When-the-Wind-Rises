@@ -66,7 +66,7 @@ const POST_ORDER_BY = [
 export async function findHomeSidebarHotTopics(limit: number) {
   const { start: todayStart } = getBusinessDayRange()
 
-  // 优先取上海业务日内有活动的热门帖子，老帖当天被顶起也会进入今日热帖。
+  // 优先取上海业务日内有活动的热门风笺，老帖当天被顶起也会进入今日热帖。
   const todayPosts = await prisma.post.findMany({
     where: {
       ...buildHomeVisiblePostWhere(),
@@ -82,7 +82,7 @@ export async function findHomeSidebarHotTopics(limit: number) {
     return todayPosts
   }
 
-  // 今日帖子不足，用历史热门补充
+  // 今日风笺不足，用历史热门补充
   const todayIds = todayPosts.map((p) => p.id)
   const remaining = limit - todayPosts.length
 

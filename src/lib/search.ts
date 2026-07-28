@@ -47,7 +47,7 @@ export type SearchScope = (typeof SEARCH_SCOPES)[number]
 export const DEFAULT_SEARCH_SCOPE: SearchScope = "posts"
 
 export const SEARCH_SCOPE_LABELS: Record<SearchScope, string> = {
-  posts: "帖子",
+  posts: "风笺",
   boards: "节点",
   tags: "标签",
   users: "用户",
@@ -55,7 +55,7 @@ export const SEARCH_SCOPE_LABELS: Record<SearchScope, string> = {
 }
 
 export const SEARCH_SCOPE_DESCRIPTIONS: Record<SearchScope, string> = {
-  posts: "搜索帖子标题、摘要与正文内容。",
+  posts: "搜索风笺标题、摘要与正文内容。",
   boards: "搜索节点名称、slug、简介与所属分区。",
   tags: "搜索标签名称与 slug。",
   users: "搜索用户名、昵称与简介。",

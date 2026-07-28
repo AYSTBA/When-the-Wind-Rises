@@ -47,7 +47,7 @@ export function LevelSettingsSection({ data }: { data: SettingsPageData }) {
       </Card>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="累计发帖" value={levelView.snapshot.postCount} hint="公开发帖数量" icon={<Flame className="h-4 w-4" />} />
+        <StatCard title="累计发笺" value={levelView.snapshot.postCount} hint="公开发笺数量" icon={<Flame className="h-4 w-4" />} />
         <StatCard title="累计回复" value={levelView.snapshot.commentCount} hint="公开回复数量" icon={<MessageSquareText className="h-4 w-4" />} />
         <StatCard title="累计获赞" value={levelView.snapshot.likeReceivedCount} hint="收到的点赞总数" icon={<Heart className="h-4 w-4" />} />
         <StatCard title="累计签到" value={levelView.snapshot.checkInDays} hint="已完成签到天数" icon={<CheckCircle2 className="h-4 w-4" />} />
@@ -83,7 +83,7 @@ export function LevelSettingsSection({ data }: { data: SettingsPageData }) {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <ProgressItem title="签到天数" current={levelView.completion?.checkInDays.current ?? 0} required={levelView.completion?.checkInDays.required ?? 0} remaining={levelView.completion?.checkInDays.remaining ?? 0} completed={Boolean(levelView.completion?.checkInDays.completed)} />
-                <ProgressItem title="发帖数量" current={levelView.completion?.postCount.current ?? 0} required={levelView.completion?.postCount.required ?? 0} remaining={levelView.completion?.postCount.remaining ?? 0} completed={Boolean(levelView.completion?.postCount.completed)} />
+                <ProgressItem title="发笺数量" current={levelView.completion?.postCount.current ?? 0} required={levelView.completion?.postCount.required ?? 0} remaining={levelView.completion?.postCount.remaining ?? 0} completed={Boolean(levelView.completion?.postCount.completed)} />
                 <ProgressItem title="回复数量" current={levelView.completion?.commentCount.current ?? 0} required={levelView.completion?.commentCount.required ?? 0} remaining={levelView.completion?.commentCount.remaining ?? 0} completed={Boolean(levelView.completion?.commentCount.completed)} />
                 <ProgressItem title="收到点赞数" current={levelView.completion?.likeReceivedCount.current ?? 0} required={levelView.completion?.likeReceivedCount.required ?? 0} remaining={levelView.completion?.likeReceivedCount.remaining ?? 0} completed={Boolean(levelView.completion?.likeReceivedCount.completed)} />
               </div>
@@ -103,7 +103,7 @@ export function LevelSettingsSection({ data }: { data: SettingsPageData }) {
           <CardTitle>快速入口</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-3">
-          <QuickLink href="/write" title="去发帖" description="发布主题会推动成长进度。" />
+          <QuickLink href="/write" title="去发笺" description="发布主题会推动成长进度。" />
           <QuickLink href={buildSettingsHref(route, { tab: "points" })} title={`查看${settings.pointName}明细`} description={`顺便查看当前 ${settings.pointName} 账户情况。`} />
           <QuickLink href={buildSettingsHref(route, { tab: "badges" })} title="前往勋章中心" description="查看哪些社区勋章已经达成。" />
         </CardContent>

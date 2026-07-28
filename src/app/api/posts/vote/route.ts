@@ -15,11 +15,11 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
     })
 
     if (!post || post.status !== "NORMAL") {
-      apiError(400, "帖子不存在或尚未通过审核")
+      apiError(400, "风笺不存在或尚未通过审核")
     }
 
     if (post.type !== "POLL") {
-      apiError(400, "当前帖子不是投票帖")
+      apiError(400, "当前风笺不是投票帖")
     }
 
     const option = await tx.pollOption.findFirst({

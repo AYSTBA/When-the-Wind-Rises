@@ -77,7 +77,7 @@ export async function updatePostFlow(input: {
   const post = await findPostUpdateContext(input.postId)
 
   if (!post) {
-    apiError(404, "帖子不存在")
+    apiError(404, "风笺不存在")
   }
 
   const adminActor = await resolveAdminActorFromSessionUser(input.currentUser)
@@ -93,7 +93,7 @@ export async function updatePostFlow(input: {
   const existingContentMeta = getPostContentMeta(post.content)
   const canEditFull = canManagePost || input.currentUser.id === post.authorId
   if (!canEditFull) {
-    apiError(403, "没有权限编辑该帖子")
+    apiError(403, "没有权限编辑该风笺")
   }
 
   const boardSettings = resolveBoardSettings(post.board.zone, post.board)
@@ -337,12 +337,12 @@ export async function updatePostFlow(input: {
 
   await runPostUpdateTransaction(async (tx) => {
     if (!await lockPostAppendTarget(tx, input.postId)) {
-      apiError(404, "帖子不存在")
+      apiError(404, "风笺不存在")
     }
 
     const latestAppendState = await findPostAppendState(tx, input.postId)
     if (!latestAppendState) {
-      apiError(404, "帖子不存在")
+      apiError(404, "风笺不存在")
     }
 
     if (!canManagePost && latestAppendState.lastAppendedAt) {

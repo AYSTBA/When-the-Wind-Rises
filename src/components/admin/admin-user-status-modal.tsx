@@ -45,8 +45,8 @@ const banCleanupOptionItems: Array<{
 }> = [
   {
     key: "offlineAllPosts",
-    label: "下线该用户所有帖子",
-    description: "把该用户仍在线或待审核的帖子统一标记为已下线。",
+    label: "下线该用户所有风笺",
+    description: "把该用户仍在线或待审核的风笺统一标记为已下线。",
   },
   {
     key: "offlineAllComments",

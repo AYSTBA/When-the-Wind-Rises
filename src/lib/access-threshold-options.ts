@@ -16,7 +16,7 @@ export function buildUserLevelThresholdOptions(levels: LevelDefinitionItem[]): A
     ...levels.map((level) => ({
       value: String(level.level),
       label: `Lv.${level.level} · ${level.name}`,
-      description: `至少达到 Lv.${level.level} 才能查看帖子正文。`,
+      description: `至少达到 Lv.${level.level} 才能查看风笺正文。`,
     })),
   ]
 }
@@ -34,7 +34,7 @@ export function buildVipLevelThresholdOptions(maxVipLevel = 3): AccessThresholdO
       return {
         value: String(vipLevel),
         label: `VIP${vipLevel}`,
-        description: `至少达到 VIP${vipLevel} 才能查看帖子正文。`,
+        description: `至少达到 VIP${vipLevel} 才能查看风笺正文。`,
       }
     }),
   ]

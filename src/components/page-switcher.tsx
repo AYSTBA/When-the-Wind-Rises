@@ -27,7 +27,7 @@ export function PageSwitcher() {
             : "text-muted-foreground hover:text-foreground"
         }`}
       >
-        论坛
+        风广场
       </Link>
     </div>
   )

@@ -145,7 +145,7 @@ export function PointsTopupCard({
   customMinAmountFen = 0,
   customMaxAmountFen = 0,
   customPointsPerYuan = 0,
-  heading = "积分充值",
+  heading = "风铃充值",
   description = "",
   showStandaloneLink = false,
   standaloneHref = "/topup",
@@ -455,7 +455,7 @@ export function PointsTopupCard({
           </div>
         ) : (
           <div className="rounded-xl border border-dashed border-border bg-card/40 p-4 text-sm text-muted-foreground">
-            当前积分充值已开启，但还没有配置可用支付方式，请联系管理员检查支付通道和路由规则。
+            当前风铃充值已开启，但还没有配置可用支付方式，请联系管理员检查支付通道和路由规则。
           </div>
         )}
 

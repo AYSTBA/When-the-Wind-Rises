@@ -57,7 +57,7 @@ export function UserRecentRepliesList({
           >
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] leading-5 text-muted-foreground sm:text-xs">
               <span className="shrink-0">{formatReplyActivityTime(reply.createdAt, referenceDate)}</span>
-              <span className="shrink-0">评论帖子</span>
+              <span className="shrink-0">评论风笺</span>
               <PostListLink
                 href={commentPath}
                 visitedPath={commentPath}

@@ -72,11 +72,11 @@ interface AdminPostListProps {
 
 const typeFilters = [
   { value: "ALL", label: "全部类型" },
-  { value: "NORMAL", label: "普通帖" },
-  { value: "BOUNTY", label: "悬赏帖" },
-  { value: "POLL", label: "投票帖" },
-  { value: "LOTTERY", label: "抽奖帖" },
-  { value: "AUCTION", label: "拍卖帖" },
+  { value: "NORMAL", label: "风笺" },
+  { value: "BOUNTY", label: "悬赏风笺" },
+  { value: "POLL", label: "投票风笺" },
+  { value: "LOTTERY", label: "抽奖风笺" },
+  { value: "AUCTION", label: "拍卖风笺" },
 ]
 
 const statusFilters = [
@@ -192,7 +192,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
 
   async function confirmBatchAction(action: string, title: string, description: string, confirmText: string, danger = false) {
     if (selectedCount === 0) {
-      toast.warning("请先选择要处理的帖子", "批量操作")
+      toast.warning("请先选择要处理的风笺", "批量操作")
       return
     }
 
@@ -213,7 +213,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
 
   function submitBatchAction(action: string, extra: Record<string, unknown> = {}) {
     if (selectedCount === 0) {
-      toast.warning("请先选择要处理的帖子", "批量操作")
+      toast.warning("请先选择要处理的风笺", "批量操作")
       return
     }
 
@@ -235,7 +235,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
         }
 
         if (result?.data?.failedCount && result.data.failedCount > 0) {
-          toast.warning(result.message ?? "部分帖子处理失败", "批量操作完成")
+          toast.warning(result.message ?? "部分风笺处理失败", "批量操作完成")
         } else {
           toast.success(result?.message ?? "批量操作已完成", "操作成功")
         }
@@ -252,7 +252,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
 
   function openBatchMoveDialog() {
     if (selectedCount === 0) {
-      toast.warning("请先选择要处理的帖子", "批量操作")
+      toast.warning("请先选择要处理的风笺", "批量操作")
       return
     }
 
@@ -273,7 +273,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
   const statCards = useMemo(
     () => [
       {
-        label: "帖子总数",
+        label: "风笺总数",
         value: data.summary.total,
         icon: <FileText className="h-4 w-4" />,
         hint: `当前结果 ${formatNumber(data.pagination.total)} 篇`,
@@ -366,7 +366,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
   return (
     <div className="space-y-4">
       <AdminFilterCard
-        title="帖子筛选"
+        title="风笺筛选"
         description="按节点、状态、推荐置顶和关键词快速收敛待处理内容。"
         badge={<Badge variant="secondary" className="rounded-full">已命中 {formatNumber(data.pagination.total)} 篇</Badge>}
         activeBadges={activeFilterBadges}
@@ -384,7 +384,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
           <input type="hidden" name="postPageSize" value={filters.pageSize} />
 
           <AdminFilterSearchField
-            label="搜索帖子"
+            label="搜索风笺"
             name="keyword"
             value={filters.keyword}
             onChange={(value) => setFilters((current) => ({ ...current, keyword: value }))}
@@ -442,7 +442,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
           />
 
           <AdminFilterActions
-            submitLabel="筛选帖子"
+            submitLabel="筛选风笺"
             resetHref="/admin?tab=posts"
             submitIcon={<Filter className="h-3.5 w-3.5" />}
           />
@@ -453,7 +453,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
 
       <Card>
         <CardHeader className="border-b">
-          <CardTitle>帖子列表</CardTitle>
+          <CardTitle>风笺列表</CardTitle>
           <CardDescription>支持快速预览、移动节点、审核、推荐和上下线操作。</CardDescription>
           <CardAction>
             <OverviewActionLink href="/admin?tab=posts&status=PENDING" label="查看待审核" />
@@ -466,7 +466,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
                 <Checkbox
                   checked={allCurrentPageSelected || someCurrentPageSelected}
                   onCheckedChange={(checked) => toggleSelectCurrentPage(checked === true)}
-                  aria-label="全选本页帖子"
+                  aria-label="全选本页风笺"
                 />
                 <span>全选本页</span>
               </label>
@@ -479,11 +479,11 @@ export function AdminPostList({ data }: AdminPostListProps) {
             </div>
             <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap">
               <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={openBatchMoveDialog}>批量换节点</Button>
-              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.lock", "批量关闭回复", `确认关闭已选中的 ${selectedCount} 篇帖子的回复吗？关闭后帖子仍可查看，但不能继续回复。`, "批量关闭回复")}>批量关闭回复</Button>
-              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.unlock", "批量开放回复", `确认开放已选中的 ${selectedCount} 篇帖子的回复吗？`, "批量开放回复")}>批量开放回复</Button>
-              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.show", "批量上线帖子", `确认上线已选中的 ${selectedCount} 篇帖子吗？`, "批量上线")}>批量上线</Button>
-              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full border-rose-200 px-3 text-xs text-rose-600 hover:bg-rose-50 hover:text-rose-700" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.hide", "批量下线帖子", `确认下线已选中的 ${selectedCount} 篇帖子吗？下线后前台不再公开展示。`, "批量下线", true)}>批量下线</Button>
-              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full border-rose-200 px-3 text-xs text-rose-600 hover:bg-rose-50 hover:text-rose-700" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.delete", "批量删除帖子", `确认删除已选中的 ${selectedCount} 篇帖子吗？此操作不可撤销。`, "批量删除", true)}>批量删除</Button>
+              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.lock", "批量关闭回复", `确认关闭已选中的 ${selectedCount} 篇风笺的回复吗？关闭后风笺仍可查看，但不能继续回复。`, "批量关闭回复")}>批量关闭回复</Button>
+              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.unlock", "批量开放回复", `确认开放已选中的 ${selectedCount} 篇风笺的回复吗？`, "批量开放回复")}>批量开放回复</Button>
+              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full px-3 text-xs" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.show", "批量上线风笺", `确认上线已选中的 ${selectedCount} 篇风笺吗？`, "批量上线")}>批量上线</Button>
+              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full border-rose-200 px-3 text-xs text-rose-600 hover:bg-rose-50 hover:text-rose-700" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.hide", "批量下线风笺", `确认下线已选中的 ${selectedCount} 篇风笺吗？下线后前台不再公开展示。`, "批量下线", true)}>批量下线</Button>
+              <Button type="button" variant="outline" size="sm" className="min-h-9 rounded-full border-rose-200 px-3 text-xs text-rose-600 hover:bg-rose-50 hover:text-rose-700" disabled={selectedCount === 0 || isBatchPending} onClick={() => void confirmBatchAction("post.delete", "批量删除风笺", `确认删除已选中的 ${selectedCount} 篇风笺吗？此操作不可撤销。`, "批量删除", true)}>批量删除</Button>
             </div>
           </div>
         ) : null}
@@ -491,14 +491,14 @@ export function AdminPostList({ data }: AdminPostListProps) {
           <AdminPaginationBar
             pagination={data.pagination}
             buildPageHref={buildPageHref}
-            itemLabel="篇帖子"
+            itemLabel="篇风笺"
             className="border-b border-border px-4 py-3"
           />
         ) : null}
         <CardContent className="px-0 py-0">
           {data.posts.length === 0 ? (
             <div className="flex flex-col items-center gap-3 px-6 py-14 text-center">
-              <p className="text-sm font-medium">当前筛选条件下没有帖子</p>
+              <p className="text-sm font-medium">当前筛选条件下没有风笺</p>
               <p className="max-w-sm text-sm text-muted-foreground">
                 试试放宽节点、状态或关键词，或者重置筛选后重新查看。
               </p>
@@ -526,10 +526,10 @@ export function AdminPostList({ data }: AdminPostListProps) {
                         <Checkbox
                           checked={allCurrentPageSelected || someCurrentPageSelected}
                           onCheckedChange={(checked) => toggleSelectCurrentPage(checked === true)}
-                          aria-label="全选本页帖子"
+                          aria-label="全选本页风笺"
                         />
                       </TableHead>
-                      <TableHead className="min-w-0 px-3">帖子</TableHead>
+                      <TableHead className="min-w-0 px-3">风笺</TableHead>
                       <TableHead className="w-28 px-3">节点</TableHead>
                       <TableHead className="w-28 px-3">作者</TableHead>
                       <TableHead className="w-28 px-3">状态</TableHead>
@@ -548,7 +548,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
                           <Checkbox
                             checked={selectedPostIds.includes(post.id)}
                             onCheckedChange={(checked) => toggleSelectPost(post.id, checked === true)}
-                            aria-label={`选择帖子 ${post.title}`}
+                            aria-label={`选择风笺 ${post.title}`}
                           />
                         </TableCell>
                         <TableCell className="min-w-0 px-3 align-top">
@@ -597,7 +597,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
           <AdminPaginationBar
             pagination={data.pagination}
             buildPageHref={buildPageHref}
-            itemLabel="篇帖子"
+            itemLabel="篇风笺"
             className="w-full"
           />
         </CardFooter>
@@ -607,7 +607,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
         open={batchMoveDialogOpen}
         onClose={() => setBatchMoveDialogOpen(false)}
         title="批量换节点"
-        description={`已选中 ${selectedCount} 篇帖子，确认后将统一移动到目标节点。`}
+        description={`已选中 ${selectedCount} 篇风笺，确认后将统一移动到目标节点。`}
         footer={(
           <div className="flex items-center justify-end gap-2">
             <Button type="button" variant="ghost" className="h-9 px-4 text-sm" onClick={() => setBatchMoveDialogOpen(false)} disabled={isBatchPending}>
@@ -621,7 +621,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
       >
         <div className="flex flex-col gap-4">
           <div className="rounded-[18px] border border-border bg-card/60 p-4 text-sm text-muted-foreground">
-            <p>已选帖子：{selectedCount} 篇</p>
+            <p>已选风笺：{selectedCount} 篇</p>
             <p className="mt-1">目标节点：{batchMoveBoardLabel || "请选择目标节点"}</p>
           </div>
           <BoardSelectField
@@ -630,7 +630,7 @@ export function AdminPostList({ data }: AdminPostListProps) {
             boardOptions={groupedBoardOptions}
             disabled={isBatchPending}
             title="选择目标节点"
-            description="确认后将对已选帖子逐一校验权限并移动节点。"
+            description="确认后将对已选风笺逐一校验权限并移动节点。"
           />
           {batchMoveFeedback ? <p className="text-xs text-destructive">{batchMoveFeedback}</p> : null}
         </div>
@@ -695,7 +695,7 @@ function PostMobileCard({
         <Checkbox
           checked={selected}
           onCheckedChange={(checked) => onSelect(checked === true)}
-          aria-label={`选择帖子 ${post.title}`}
+          aria-label={`选择风笺 ${post.title}`}
           className="mt-1 shrink-0"
         />
         <UserAvatar name={post.authorName} avatarPath={post.authorAvatarPath} size="sm" />
@@ -999,7 +999,7 @@ function PostActionsCell({
             targetId={post.id}
             label="通过"
             modalTitle="确认通过审核"
-            modalDescription={`帖子：${post.title}`}
+            modalDescription={`风笺：${post.title}`}
             placeholder="填写审核备注（可选）"
             confirmText="确认通过"
             className="h-7 rounded-full px-2.5 text-xs"
@@ -1012,8 +1012,8 @@ function PostActionsCell({
             targetId={post.id}
             label="驳回"
             tone="danger"
-            modalTitle="确认驳回帖子"
-            modalDescription={`帖子：${post.title}`}
+            modalTitle="确认驳回风笺"
+            modalDescription={`风笺：${post.title}`}
             placeholder="填写驳回原因"
             confirmText="确认驳回"
             messageRequired
@@ -1027,8 +1027,8 @@ function PostActionsCell({
             targetId={post.id}
             label="删除"
             tone="danger"
-            modalTitle="确认删除帖子"
-            modalDescription={`帖子：${post.title}`}
+            modalTitle="确认删除风笺"
+            modalDescription={`风笺：${post.title}`}
             placeholder="填写删除原因（可选）"
             confirmText="确认删除"
             className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"
@@ -1103,8 +1103,8 @@ function PostActionsCell({
                 action="post.show"
                 targetId={post.id}
                 label="上线"
-                modalTitle="确认上线帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认上线风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写上线说明（可选）"
                 confirmText="确认上线"
                 className="h-7 rounded-full px-2.5 text-xs"
@@ -1117,8 +1117,8 @@ function PostActionsCell({
                 targetId={post.id}
                 label="删除"
                 tone="danger"
-                modalTitle="确认删除帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认删除风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写删除原因（可选）"
                 confirmText="确认删除"
                 className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"
@@ -1134,7 +1134,7 @@ function PostActionsCell({
                 targetId={post.id}
                 label="开放回复"
                 modalTitle="确认开放回复"
-                modalDescription={`帖子：${post.title}`}
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写开放回复说明（可选）"
                 confirmText="确认开放回复"
                 className="h-7 rounded-full px-2.5 text-xs"
@@ -1147,8 +1147,8 @@ function PostActionsCell({
                 targetId={post.id}
                 label="下线"
                 tone="danger"
-                modalTitle="确认下线帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认下线风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写下线原因（可选）"
                 confirmText="确认下线"
                 className="h-7 rounded-full bg-red-600 px-2.5 text-xs text-white hover:bg-red-500"
@@ -1161,8 +1161,8 @@ function PostActionsCell({
                 targetId={post.id}
                 label="删除"
                 tone="danger"
-                modalTitle="确认删除帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认删除风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写删除原因（可选）"
                 confirmText="确认删除"
                 className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"
@@ -1178,7 +1178,7 @@ function PostActionsCell({
                 targetId={post.id}
                 label="关闭回复"
                 modalTitle="确认关闭回复"
-                modalDescription={`帖子：${post.title}`}
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写关闭回复原因（可选）"
                 confirmText="确认关闭回复"
                 className="h-7 rounded-full px-2.5 text-xs"
@@ -1191,8 +1191,8 @@ function PostActionsCell({
                 targetId={post.id}
                 label="下线"
                 tone="danger"
-                modalTitle="确认下线帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认下线风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写下线原因（可选）"
                 confirmText="确认下线"
                 className="h-7 rounded-full bg-red-600 px-2.5 text-xs text-white hover:bg-red-500"
@@ -1205,8 +1205,8 @@ function PostActionsCell({
                 targetId={post.id}
                 label="删除"
                 tone="danger"
-                modalTitle="确认删除帖子"
-                modalDescription={`帖子：${post.title}`}
+                modalTitle="确认删除风笺"
+                modalDescription={`风笺：${post.title}`}
                 placeholder="填写删除原因（可选）"
                 confirmText="确认删除"
                 className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"

@@ -198,7 +198,7 @@ function buildBadgeEligibilityResult(badge: BadgeItem, lookup: BadgeEligibilityL
       : !eligible
         ? failedRules[0] ?? "暂未达成"
         : badge.pointsCost > 0
-          ? `需支付 ${badge.pointsCost} 积分`
+          ? `需支付 ${badge.pointsCost} 风铃`
           : "可领取",
     failedRules,
     pointsCost: badge.pointsCost,

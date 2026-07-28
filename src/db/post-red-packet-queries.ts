@@ -285,7 +285,7 @@ export async function claimPostRedPacketInTransaction(input: {
     ])
 
     if (!user || !post || post.status !== "NORMAL") {
-      return { claimed: false as const, reason: "帖子不存在或暂不可领取" }
+      return { claimed: false as const, reason: "风笺不存在或暂不可领取" }
     }
 
     if (user.status === "MUTED" || user.status === "BANNED") {
@@ -294,7 +294,7 @@ export async function claimPostRedPacketInTransaction(input: {
 
     const packet = post.redPacket
     if (!packet || packet.status !== "ACTIVE") {
-      return { claimed: false as const, reason: "当前帖子没有可领取红包" }
+      return { claimed: false as const, reason: "当前风笺没有可领取红包" }
     }
 
     if (packet.triggerType !== input.triggerType) {

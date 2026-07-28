@@ -65,14 +65,14 @@ function resolveTaskAction(task: TaskDefinition, completed: boolean) {
     case TaskConditionType.APPROVED_POST_COUNT:
       return {
         actionHref: "/write",
-        actionLabel: "去发帖",
+        actionLabel: "去发笺",
         actionHint: "发公开主题后会自动累计进度",
       }
     case TaskConditionType.RECEIVED_LIKE_COUNT:
       return {
         actionHref: "/latest",
         actionLabel: "去创作",
-        actionHint: "发帖和回复被点赞后会自动累计",
+        actionHint: "发笺和回复被点赞后会自动累计",
       }
     case TaskConditionType.GIVEN_LIKE_COUNT:
       return {
@@ -90,13 +90,13 @@ function resolveTaskAction(task: TaskDefinition, completed: boolean) {
       return {
         actionHref: "/latest",
         actionLabel: "去收藏",
-        actionHint: "遇到喜欢的帖子时收藏即可累计",
+        actionHint: "遇到喜欢的风笺时收藏即可累计",
       }
     case TaskConditionType.FOLLOW_BOARD_COUNT:
       return {
         actionHref: "/latest",
         actionLabel: "去逛节点",
-        actionHint: "在节点页或帖子页关注感兴趣的节点",
+        actionHint: "在节点页或风笺页关注感兴趣的节点",
       }
     case TaskConditionType.FOLLOW_USER_COUNT:
       return {
@@ -114,7 +114,7 @@ function resolveTaskAction(task: TaskDefinition, completed: boolean) {
       return {
         actionHref: "/latest",
         actionLabel: "去追贴",
-        actionHint: "关注想持续追踪的帖子即可累计",
+        actionHint: "关注想持续追踪的风笺即可累计",
       }
     case TaskConditionType.APPROVED_COMMENT_COUNT:
     default:

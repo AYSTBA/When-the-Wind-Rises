@@ -468,7 +468,7 @@ export function AdminTaskManager({ initialTasks, boardOptions }: AdminTaskManage
       <Card>
         <CardHeader className="border-b">
           <CardTitle>任务系统</CardTitle>
-          <CardDescription>配置前台 /tasks 任务中心的成长任务。用户完成签到、发帖、回复、点赞、关注等行为后，系统按任务周期和 VIP 等级发放积分奖励。</CardDescription>
+          <CardDescription>配置前台 /tasks 任务中心的成长任务。用户完成签到、发笺、回复、点赞、关注等行为后，系统按任务周期和 VIP 等级发放风铃奖励。</CardDescription>
           <CardAction>
             <Button type="button" className="rounded-full" disabled={isBusy} onClick={openCreate}>
               <Plus className="mr-2 h-4 w-4" />
@@ -562,7 +562,7 @@ export function AdminTaskManager({ initialTasks, boardOptions }: AdminTaskManage
         closeDisabled={isBusy}
         closeOnEscape={!isBusy}
         title={editingId ? "编辑任务" : "新建任务"}
-        description="奖励字段支持固定值 `5` 或随机区间 `5-10`。保存后，任务中心未完成任务会同步展示最新配置；已完成任务保留实际结算积分。"
+        description="奖励字段支持固定值 `5` 或随机区间 `5-10`。保存后，任务中心未完成任务会同步展示最新配置；已完成任务保留实际结算风铃。"
         size="lg"
         onSubmit={submitDraft}
         footer={({ formId }) => (
@@ -676,7 +676,7 @@ export function AdminTaskManager({ initialTasks, boardOptions }: AdminTaskManage
         ) : null}
 
         {conditionTemplate.supportsPostTypeFilter ? (
-          <Field label="限定帖子类型" helper="留空表示所有帖子类型都可以累计；勾选后只统计这些类型。">
+          <Field label="限定风笺类型" helper="留空表示所有风笺类型都可以累计；勾选后只统计这些类型。">
             <div className="grid gap-2 rounded-xl border border-border bg-muted/20 p-3 sm:grid-cols-2 xl:grid-cols-3">
               {TASK_POST_TYPE_OPTIONS.map((option) => {
                 const checked = draft.conditionConfig.postTypes.includes(option.value)

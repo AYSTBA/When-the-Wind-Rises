@@ -52,7 +52,7 @@ export function FollowsSettingsSection({ data }: { data: SettingsPageData }) {
         <CardHeader className="space-y-4">
           <div className="space-y-1">
             <CardTitle>我的关注</CardTitle>
-            <p className="text-sm text-muted-foreground">统一管理你关注的节点、用户、标签和帖子动态。</p>
+            <p className="text-sm text-muted-foreground">统一管理你关注的节点、用户、标签和风笺动态。</p>
           </div>
           <SettingsTabs tabs={followTabs} queryKey="followTab" basePath="/settings?tab=follows" />
         </CardHeader>
@@ -75,7 +75,7 @@ function ReadingHistoryTabPanel() {
       variant="page"
       title="足迹"
       showClearButton
-      emptyDescription="浏览过的帖子会自动保存在当前浏览器本地，最多保留 2000 条。"
+      emptyDescription="浏览过的风笺会自动保存在当前浏览器本地，最多保留 2000 条。"
     />
   )
 }
@@ -226,12 +226,12 @@ function FollowPostsPanel({
   if (!followedPosts) {
     return (
       <Card>
-        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载关注帖子，请稍后刷新重试。</CardContent>
+        <CardContent className="p-6 text-sm text-muted-foreground">暂时无法加载关注风笺，请稍后刷新重试。</CardContent>
       </Card>
     )
   }
 
-  return <PostListPanel route={route} title="关注帖子" emptyText="当前还没有关注任何帖子。" posts={followedPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=follows&followTab=posts" />
+  return <PostListPanel route={route} title="关注风笺" emptyText="当前还没有关注任何风笺。" posts={followedPosts} listDisplayMode={listDisplayMode} paginationBase="/settings?tab=follows&followTab=posts" />
 }
 
 function BlockedUsersPanel({ route, blockedUsers }: { route: SettingsPageData["route"]; blockedUsers: SettingsPageData["blockedUsers"] }) {

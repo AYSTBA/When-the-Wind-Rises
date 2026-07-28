@@ -48,9 +48,9 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
     slug: result.post.slug,
   }, result.mode === "append"
     ? `已追加补充内容${result.contentAdjusted ? "，部分内容已自动替换" : ""}`
-    : `帖子已更新${result.contentAdjusted ? "，部分内容已自动替换" : ""}`)
+    : `风笺已更新${result.contentAdjusted ? "，部分内容已自动替换" : ""}`)
 }, {
-  errorMessage: "修改帖子失败",
+  errorMessage: "修改风笺失败",
   logPrefix: "[api/posts/update] unexpected error",
   unauthorizedMessage: "请先登录",
   allowStatuses: ["ACTIVE", "MUTED"],

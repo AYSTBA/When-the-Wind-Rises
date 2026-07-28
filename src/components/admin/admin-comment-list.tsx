@@ -231,7 +231,7 @@ export function AdminCommentList({ data }: AdminCommentListProps) {
         label: "主评论",
         value: data.summary.root,
         icon: <Sparkles className="h-4 w-4" />,
-        hint: "直接挂在帖子下的楼层评论",
+        hint: "直接挂在风笺下的楼层评论",
         tone: "sky" as const,
       },
       {
@@ -320,7 +320,7 @@ export function AdminCommentList({ data }: AdminCommentListProps) {
             name="keyword"
             value={filters.keyword}
             onChange={(value) => setFilters((current) => ({ ...current, keyword: value }))}
-            placeholder="评论内容 / 帖子 / 作者"
+            placeholder="评论内容 / 风笺 / 作者"
           />
 
           <AdminFilterSelectField
@@ -374,7 +374,7 @@ export function AdminCommentList({ data }: AdminCommentListProps) {
       <Card>
         <CardHeader className="border-b">
           <CardTitle>评论列表</CardTitle>
-          <CardDescription>在同一视图里查看内容、帖子归属、审核状态和处理动作。</CardDescription>
+          <CardDescription>在同一视图里查看内容、风笺归属、审核状态和处理动作。</CardDescription>
           <CardAction>
             <OverviewActionLink href="/admin?tab=comments&status=PENDING" label="查看待审核" />
           </CardAction>
@@ -447,7 +447,7 @@ export function AdminCommentList({ data }: AdminCommentListProps) {
                         />
                       </TableHead>
                       <TableHead>评论</TableHead>
-                      <TableHead className="w-[220px]">帖子</TableHead>
+                      <TableHead className="w-[220px]">风笺</TableHead>
                       <TableHead className="w-[150px]">作者</TableHead>
                       <TableHead className="w-[120px]">状态</TableHead>
                       <TableHead className="w-[200px]">审核</TableHead>
@@ -750,7 +750,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
           targetId={comment.id}
           label={comment.isGodComment ? "取消神评" : "设为神评"}
           modalTitle={comment.isGodComment ? "确认取消神评" : "确认设为神评"}
-          modalDescription={`帖子：${comment.postTitle}`}
+          modalDescription={`风笺：${comment.postTitle}`}
           confirmText={comment.isGodComment ? "确认取消" : "确认设为神评"}
           className="h-7 rounded-full px-2.5 text-xs"
           hideTrigger
@@ -765,7 +765,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             targetId={comment.id}
             label="通过"
             modalTitle="确认通过评论审核"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写审核备注（可选）"
             confirmText="确认通过"
             className="h-7 rounded-full px-2.5 text-xs"
@@ -779,7 +779,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             label="驳回"
             tone="danger"
             modalTitle="确认驳回评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写驳回原因"
             confirmText="确认驳回"
             className="h-7 rounded-full bg-red-600 px-2.5 text-xs text-white hover:bg-red-500"
@@ -793,7 +793,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             label="删除"
             tone="danger"
             modalTitle="确认删除评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写删除原因（可选）"
             confirmText="确认删除"
             className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"
@@ -809,7 +809,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             targetId={comment.id}
             label="恢复"
             modalTitle="确认恢复评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写恢复说明（可选）"
             confirmText="确认恢复"
             className="h-7 rounded-full px-2.5 text-xs"
@@ -823,7 +823,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             label="删除"
             tone="danger"
             modalTitle="确认删除评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写删除原因（可选）"
             confirmText="确认删除"
             className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"
@@ -840,7 +840,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             label="下线"
             tone="danger"
             modalTitle="确认下线评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写下线原因（可选）"
             confirmText="确认下线"
             className="h-7 rounded-full bg-red-600 px-2.5 text-xs text-white hover:bg-red-500"
@@ -854,7 +854,7 @@ function CommentActionsCell({ comment }: { comment: AdminCommentListItem }) {
             label="删除"
             tone="danger"
             modalTitle="确认删除评论"
-            modalDescription={`帖子：${comment.postTitle}`}
+            modalDescription={`风笺：${comment.postTitle}`}
             placeholder="填写删除原因（可选）"
             confirmText="确认删除"
             className="h-7 rounded-full bg-red-700 px-2.5 text-xs text-white hover:bg-red-600"

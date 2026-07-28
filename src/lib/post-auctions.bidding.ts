@@ -143,7 +143,7 @@ export async function placePostAuctionBid(input: {
         prepared: preparedBidFreeze,
         pointName: settings.pointName,
         insufficientMessage: `${settings.pointName}不足，无法完成本次出价`,
-        reason: "[拍卖] 密封竞拍冻结出价积分",
+        reason: "[拍卖] 密封竞拍冻结出价风铃",
         eventType: POINT_LOG_EVENT_TYPES.POST_AUCTION_BID_FREEZE,
         eventData: {
           postId: auction.post.id,
@@ -274,7 +274,7 @@ export async function placePostAuctionBid(input: {
         prepared: preparedBidFreeze,
         pointName: settings.pointName,
         insufficientMessage: `${settings.pointName}不足，无法完成本次出价`,
-        reason: "[拍卖] 公开拍卖冻结出价积分",
+        reason: "[拍卖] 公开拍卖冻结出价风铃",
         eventType: POINT_LOG_EVENT_TYPES.POST_AUCTION_BID_FREEZE,
         eventData: {
           postId: auction.post.id,
@@ -314,7 +314,7 @@ export async function placePostAuctionBid(input: {
             pointName: settings.pointName,
             scopeKey: "POST_AUCTION_OUTBID_REFUND",
             eventType: "POST_AUCTION_OUTBID_REFUND",
-            reason: "[拍卖] 当前领先已被超越，退回冻结积分",
+            reason: "[拍卖] 当前领先已被超越，退回冻结风铃",
           })
 
           await tx.postAuctionEntry.update({

@@ -90,7 +90,7 @@ export const INTERNAL_SETTING_TABS: Record<
     { key: "mentions", label: "@ 推荐" },
     { key: "chat", label: "全站聊天室" },
     { key: "content-limits", label: "内容限制" },
-    { key: "anonymous-post", label: "匿名发帖" },
+    { key: "anonymous-post", label: "匿名发笺" },
     { key: "tipping", label: "打赏送礼" },
     { key: "gates", label: "发布门槛" },
     { key: "reward-pool", label: "红包与聚宝盆" },

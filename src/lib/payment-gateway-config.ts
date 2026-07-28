@@ -390,7 +390,7 @@ function normalizeTopupPackages(
 
     next.push({
       id: typeof item.id === "string" && item.id.trim() ? item.id.trim() : `topup-${randomUUID()}`,
-      title: normalizeOptionalString(item.title, "积分充值", 80) || "积分充值",
+      title: normalizeOptionalString(item.title, "风铃充值", 80) || "风铃充值",
       amountFen,
       points,
       bonusPoints,

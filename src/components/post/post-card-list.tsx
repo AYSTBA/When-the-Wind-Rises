@@ -16,7 +16,7 @@ interface PostCardListProps {
   postLinkDisplayMode?: "SLUG" | "ID"
 }
 
-export function PostCardList({ posts, pointName = "积分", compact = false, showBoard = true, postLinkDisplayMode = "SLUG" }: PostCardListProps) {
+export function PostCardList({ posts, pointName = "风铃", compact = false, showBoard = true, postLinkDisplayMode = "SLUG" }: PostCardListProps) {
 
 
   return (

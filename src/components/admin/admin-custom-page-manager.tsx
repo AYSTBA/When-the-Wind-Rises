@@ -363,7 +363,7 @@ export function AdminCustomPageManager({ initialItems }: AdminCustomPageManagerP
         onClose={() => setCreateOpen(false)}
         onSubmit={submitCreate}
         title="新增自定义页面"
-        description="适合落地单页、活动页、落地页或无帖子依赖的独立内容页。"
+        description="适合落地单页、活动页、落地页或无风笺依赖的独立内容页。"
         size="lg"
         closeDisabled={isPending}
         closeOnEscape={!isPending}

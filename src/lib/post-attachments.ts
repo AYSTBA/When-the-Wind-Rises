@@ -156,14 +156,14 @@ function assertHttpUrl(value: string, message: string) {
 
 function buildAttachmentPermissionDeniedMessage(settings: Pick<SiteSettingsData, "attachmentMinUploadLevel" | "attachmentMinUploadVipLevel">, currentLevel: number, currentVipLevel: number) {
   if (currentVipLevel < settings.attachmentMinUploadVipLevel && settings.attachmentMinUploadVipLevel > 0) {
-    return `当前账号至少需要 VIP${settings.attachmentMinUploadVipLevel} 才能添加帖子附件`
+    return `当前账号至少需要 VIP${settings.attachmentMinUploadVipLevel} 才能添加风笺附件`
   }
 
   if (currentLevel < settings.attachmentMinUploadLevel && settings.attachmentMinUploadLevel > 0) {
-    return `当前账号至少需要达到 Lv.${settings.attachmentMinUploadLevel} 才能添加帖子附件`
+    return `当前账号至少需要达到 Lv.${settings.attachmentMinUploadLevel} 才能添加风笺附件`
   }
 
-  return "当前账号暂不具备添加帖子附件的权限"
+  return "当前账号暂不具备添加风笺附件的权限"
 }
 
 function buildRequirementLabels(params: {
@@ -316,7 +316,7 @@ export async function normalizePostAttachmentInputs(
   }
 
   if (rawAttachments.length > MAX_POST_ATTACHMENTS) {
-    apiError(400, `单个帖子最多添加 ${MAX_POST_ATTACHMENTS} 个附件`)
+    apiError(400, `单个风笺最多添加 ${MAX_POST_ATTACHMENTS} 个附件`)
   }
 
   const settings = resolveAttachmentSettings(options.settings)
@@ -694,7 +694,7 @@ export async function purchasePostAttachment(input: {
     }
 
     if (attachment.pointsCost <= 0) {
-      apiError(400, "当前附件不支持积分购买")
+      apiError(400, "当前附件不支持风铃购买")
     }
 
     if (attachment.post.authorId === input.userId) {
@@ -791,7 +791,7 @@ export async function purchasePostAttachment(input: {
       beforeBalance: seller.points,
       prepared: sellerPreparedDelta,
       pointName: settings.pointName,
-      reason: "帖子附件被购买",
+      reason: "风笺附件被购买",
       eventType: POINT_LOG_EVENT_TYPES.POST_ATTACHMENT_PURCHASE_SOLD,
       eventData: {
         postId: attachment.postId,

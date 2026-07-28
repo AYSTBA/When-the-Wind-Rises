@@ -75,7 +75,7 @@ export const publicWriteGuardPolicies = {
   "posts-ai-categorize": {
     scope: "posts-ai-categorize",
     cooldownMs: 2_000,
-    cooldownMessage: "AI 发帖辅助请求过于频繁，请稍后再试",
+    cooldownMessage: "AI 发笺辅助请求过于频繁，请稍后再试",
     dedupeWindowMs: 10_000,
   },
 } as const

@@ -135,7 +135,7 @@ export async function dispatchNewPostFollowNotifications(postId: string) {
       relatedType: "POST" as const,
       relatedId: context.id,
       title: "你关注的内容有了新动态",
-      content: `${authorName} 发布了新帖子：${compactText(context.title, 96)}${reasonLabel ? `（来源：${reasonLabel}）` : ""}`,
+      content: `${authorName} 发布了新风笺：${compactText(context.title, 96)}${reasonLabel ? `（来源：${reasonLabel}）` : ""}`,
     }
   })
 
@@ -172,7 +172,7 @@ export async function dispatchPostFollowCommentNotifications(params: {
       senderId: context.userId,
       relatedType: "COMMENT" as const,
       relatedId: context.id,
-      title: "你关注的帖子有了新回复",
+      title: "你关注的风笺有了新回复",
       content: `${senderName} 回复了《${compactText(context.post.title, 72)}》：${compactText(context.content)}`,
     }]
   })

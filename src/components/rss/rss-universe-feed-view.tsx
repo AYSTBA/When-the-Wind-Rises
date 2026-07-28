@@ -19,7 +19,7 @@ type RssSupportConfig = RssUniverseFeedPageData["support"]
 const defaultSupportConfig: RssSupportConfig = {
   enabled: false,
   isLoggedIn: false,
-  pointName: "积分",
+  pointName: "风铃",
   currentUserPoints: 0,
   gifts: [],
   allowedAmounts: [],

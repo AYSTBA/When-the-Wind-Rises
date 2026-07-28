@@ -98,14 +98,14 @@ const visibilityLabelMap: Record<UserProfileVisibility, string> = {
 
 function getActivityVisibilityDescription(visibility: UserProfileVisibility) {
   if (visibility === "PUBLIC") {
-    return "任何访问你主页的人都能看到最近帖子与最近回复。"
+    return "任何访问你主页的人都能看到最近风笺与最近回复。"
   }
 
   if (visibility === "MEMBERS") {
-    return "只有登录用户能看到最近帖子与最近回复。"
+    return "只有登录用户能看到最近风笺与最近回复。"
   }
 
-  return "只有你自己能看到最近帖子与最近回复。"
+  return "只有你自己能看到最近风笺与最近回复。"
 }
 
 function getIntroductionVisibilityDescription(visibility: UserProfileVisibility) {
@@ -212,19 +212,19 @@ export function ProfileEditForm({
   const hasSavedAvatar = normalizedSavedAvatarPath.length > 0
   const nicknameHint = nicknameChangePointCost > 0
     ? nicknameChanged
-      ? `本次修改昵称将扣除 ${nicknameChangePointCost} ${pointName}。${nicknameChangePriceDescription ? `${nicknameChangePriceDescription}。` : ""}昵称全站唯一。`
-      : `修改昵称需消耗 ${nicknameChangePointCost} ${pointName}。${nicknameChangePriceDescription ? `${nicknameChangePriceDescription}。` : ""}昵称全站唯一。`
-    : `${nicknameChangePriceDescription ? `${nicknameChangePriceDescription}，` : ""}昵称全站唯一，当前修改免费。`
+      ? `本次修改昵称将扣除 ${nicknameChangePointCost} ${pointName}。昵称全站唯一。`
+      : `修改昵称需消耗 ${nicknameChangePointCost} ${pointName}。昵称全站唯一。`
+    : "昵称全站唯一。"
   const introductionHint = introductionChangePointCost > 0
     ? introductionChanged
-      ? `本次修改介绍将扣除 ${introductionChangePointCost} ${pointName}。${introductionChangePriceDescription ? `${introductionChangePriceDescription}。` : ""}支持 Markdown。`
-      : `修改介绍需消耗 ${introductionChangePointCost} ${pointName}。${introductionChangePriceDescription ? `${introductionChangePriceDescription}。` : ""}支持 Markdown。`
-    : `${introductionChangePriceDescription ? `${introductionChangePriceDescription}，` : ""}当前修改介绍免费，支持 Markdown。`
+      ? `本次修改介绍将扣除 ${introductionChangePointCost} ${pointName}。支持 Markdown。`
+      : `修改介绍需消耗 ${introductionChangePointCost} ${pointName}。支持 Markdown。`
+    : "支持 Markdown。"
   const avatarHint = avatarChangePointCost > 0
     ? !hasSavedAvatar
-      ? `你还没有设置头像，首次设置免费。${avatarChangePriceDescription ? `${avatarChangePriceDescription}。` : ""}`
-      : `更换头像或重置头像将消耗 ${avatarChangePointCost} ${pointName}。${avatarChangePriceDescription ? `${avatarChangePriceDescription}。` : ""}`
-    : `${avatarChangePriceDescription ? `${avatarChangePriceDescription}，` : ""}首次设置、更换头像和重置头像当前都免费。`
+      ? `你还没有设置头像，首次设置免费。`
+      : `更换头像或重置头像将消耗 ${avatarChangePointCost} ${pointName}。`
+    : "首次设置、更换头像和重置头像当前都免费。"
   const avatarRules = [
     avatarChangePointCost > 0
       ? `首次设置头像不需要消耗${pointName}，更换头像或重置头像会消耗 ${avatarChangePointCost} ${pointName}。`
@@ -880,7 +880,7 @@ export function ProfileEditForm({
           <div className="grid gap-4 xl:grid-cols-2">
             <PrivacyVisibilityCard
               title="活动轨迹"
-              description="控制主页里的最近帖子与最近回复。"
+              description="控制主页里的最近风笺与最近回复。"
               value={activityVisibility}
               saving={privacySavingKey === "activity"}
               currentDescription={getActivityVisibilityDescription(activityVisibility)}

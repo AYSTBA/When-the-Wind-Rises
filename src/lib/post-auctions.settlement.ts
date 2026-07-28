@@ -319,7 +319,7 @@ async function processPostAuctionSettlementBatch(
           pointName,
           scopeKey: "POST_AUCTION_LOSE_REFUND",
           eventType: "POST_AUCTION_LOSE_REFUND",
-          reason: "[拍卖] 未中标，退回冻结积分",
+          reason: "[拍卖] 未中标，退回冻结风铃",
         })
       }
 
@@ -439,7 +439,7 @@ async function finalizePostAuctionSettlement(auctionId: string, pointName: strin
     }
 
     if (winnerEntry.frozenAmount !== auction.finalPrice) {
-      apiError(409, "拍卖赢家冻结积分与成交价不一致")
+      apiError(409, "拍卖赢家冻结风铃与成交价不一致")
     }
 
     await resolveSellerIncome(tx, {

@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: `五子棋 - ${settings.siteName}`,
-    description: `在 ${settings.siteName} 体验五子棋人机对战，支持免费与付费挑战、积分奖励与历史战绩回看。`,
-    keywords: buildMetadataKeywords(settings.siteSeoKeywords, ["五子棋", "五子棋小游戏", "gomoku", "Gobang", "人机对战", "积分挑战"]),
+    description: `在 ${settings.siteName} 体验五子棋人机对战，支持免费与付费挑战、风铃奖励与历史战绩回看。`,
+    keywords: buildMetadataKeywords(settings.siteSeoKeywords, ["五子棋", "五子棋小游戏", "gomoku", "Gobang", "人机对战", "风铃挑战"]),
   }
 }
 
@@ -26,7 +26,7 @@ export default async function GobangFunPage() {
   ])
 
   const fallbackSummary: GobangPlayerSummary = {
-    pointName: "积分",
+    pointName: "风铃",
     points: 0,
     freeTotal: 0,
     freeUsed: 0,

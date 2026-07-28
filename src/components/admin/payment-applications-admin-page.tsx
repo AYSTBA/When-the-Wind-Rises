@@ -417,8 +417,8 @@ function PaymentTransactionsAdminCard({
       </CardHeader>
       <CardContent className="flex flex-col gap-4 p-4">
         <div className="grid gap-3 md:grid-cols-4">
-          <OrderMetric label="订单总额" value={`${formatCompactPointValue(data.summary.totalAmount)} 积分`} />
-          <OrderMetric label="平台手续费" value={`${formatCompactPointValue(data.summary.totalPlatformFee)} 积分`} />
+          <OrderMetric label="订单总额" value={`${formatCompactPointValue(data.summary.totalAmount)} 风铃`} />
+          <OrderMetric label="平台手续费" value={`${formatCompactPointValue(data.summary.totalPlatformFee)} 风铃`} />
           <OrderMetric label="已完成" value={`${formatNumber(data.summary.completed)} 单`} />
           <OrderMetric label="待处理" value={`${formatNumber(data.summary.pending + data.summary.processing)} 单`} />
         </div>
@@ -481,8 +481,8 @@ function AdminPaymentTransactionRow({ transaction }: { transaction: PaymentTrans
         {transaction.errorMessage ? <p className="mt-2 text-xs text-muted-foreground">错误信息：{transaction.errorMessage}</p> : null}
       </div>
       <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-        <p className="font-medium text-foreground">{formatCompactPointValue(transaction.amount)} 积分</p>
-        <p>平台手续费：{formatCompactPointValue(transaction.platformFee)} 积分</p>
+        <p className="font-medium text-foreground">{formatCompactPointValue(transaction.amount)} 风铃</p>
+        <p>平台手续费：{formatCompactPointValue(transaction.platformFee)} 风铃</p>
         <p>创建：{formatDateTime(transaction.createdAt)}</p>
         <p>过期：{formatDateTime(transaction.expiresAt)}</p>
         {transaction.paidAt ? <p>支付：{formatDateTime(transaction.paidAt)}</p> : null}

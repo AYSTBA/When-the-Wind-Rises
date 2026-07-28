@@ -65,7 +65,7 @@ function InfiniteForumFeedContent({
       const result = await response.json().catch(() => null) as { data?: FeedApiPayload; message?: string } | null
 
       if (!response.ok || !result?.data) {
-        setError(result?.message || "加载更多帖子失败")
+        setError(result?.message || "加载更多风笺失败")
         return
       }
 
@@ -81,7 +81,7 @@ function InfiniteForumFeedContent({
       hasNextPageRef.current = nextHasNextPage
       setHasNextPage(nextHasNextPage)
     } catch {
-      setError("加载更多帖子失败")
+      setError("加载更多风笺失败")
     } finally {
       isLoadingRef.current = false
       setIsLoading(false)

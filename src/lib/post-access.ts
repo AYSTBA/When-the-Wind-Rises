@@ -31,14 +31,14 @@ export function checkPostAccessPermission(
   if (requirements.minViewVipLevel > 0 && currentVipLevel < requirements.minViewVipLevel) {
     return {
       allowed: false,
-      message: `该帖子要求至少 VIP ${requirements.minViewVipLevel}`,
+      message: `该风笺要求至少 VIP ${requirements.minViewVipLevel}`,
     }
   }
 
   if ((user?.level ?? 0) < requirements.minViewLevel) {
     return {
       allowed: false,
-      message: `该帖子要求用户等级至少达到 Lv.${requirements.minViewLevel}`,
+      message: `该风笺要求用户等级至少达到 Lv.${requirements.minViewLevel}`,
     }
   }
 

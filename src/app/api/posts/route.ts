@@ -5,7 +5,7 @@ export const GET = createRouteHandler(async () => {
   const posts = await getHomepagePosts()
   return apiSuccess(posts, "success")
 }, {
-  errorMessage: "获取帖子列表失败",
+  errorMessage: "获取风笺列表失败",
   logPrefix: "[api/posts] unexpected error",
 })
 

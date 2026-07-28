@@ -117,7 +117,7 @@ export function PostTipPanel({
   loginRedirectTarget,
   endpoint = "/api/posts/tip",
   requestPayload,
-  targetLabel = "帖子",
+  targetLabel = "风笺",
   triggerLabel = "送礼",
   supportTargetLabel = "作者",
   enabled,
@@ -178,7 +178,7 @@ export function PostTipPanel({
   const canTip = enabled && isLoggedIn && effectiveSelectedAmount > 0 && todayUsed < dailyLimit && postUsed < perPostLimit && points >= effectiveSelectedAmount
   const tipHelperText = useMemo(() => {
     if (!enabled) {
-      return "当前未开启积分打赏"
+      return "当前未开启风铃打赏"
     }
     if (!isLoggedIn) {
       return "请登录后参与打赏"
@@ -234,7 +234,7 @@ export function PostTipPanel({
   const totalGiftCount = useMemo(() => giftSummary.reduce((total, item) => total + item.totalCount, 0), [giftSummary])
   const triggerTooltip = tipTotalPoints > 0
     ? `本${targetLabel}已收到 ${totalGiftCount > 0 ? `${formatCompactNumber(totalGiftCount)} 份礼物，` : ""}${formatCompactPointValue(tipTotalPoints)} ${pointName}`
-    : `送礼或积分打赏支持${supportTargetLabel}`
+    : `送礼或风铃打赏支持${supportTargetLabel}`
 
   const clearAnimationTimers = useCallback(() => {
     animationTimersRef.current.forEach((timer) => window.clearTimeout(timer))
@@ -315,7 +315,7 @@ export function PostTipPanel({
 
   function getTipBlockedMessage(amount: number, mode: "gift" | "tip") {
     if (!enabled) {
-      return "当前未开启积分打赏"
+      return "当前未开启风铃打赏"
     }
     if (!isLoggedIn) {
       return mode === "gift" ? "请登录后参与送礼" : "请登录后参与打赏"
@@ -626,7 +626,7 @@ export function PostTipPanel({
           {expanded ? (
             <div className="mt-2.5 space-y-2.5 border-t border-border/70 pt-2.5">
               <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
-                <span>积分打赏</span>
+                <span>风铃打赏</span>
                 <span>{pointName} {formatCompactPointValue(points)} · 累计 {formatCompactPointValue(tipTotalPoints)}</span>
               </div>
               <div className="grid grid-cols-4 gap-1.5">
@@ -659,9 +659,9 @@ export function PostTipPanel({
                     去登录
                   </Link>
                 ) : points <= 0 ? (
-                  <Link href="/topup" className="text-xs text-primary hover:opacity-80">
-                    去充值 / 兑换
-                  </Link>
+                  <span className="text-xs text-muted-foreground">
+                    风铃不足
+                  </span>
                 ) : (
                   <button type="button" className="text-xs text-muted-foreground hover:text-foreground" onClick={closeTipPanel}>
                     关闭
@@ -728,7 +728,7 @@ export function PostTipPanel({
       onClose={() => setPendingGiftConfirmation(null)}
       closeDisabled={isPending}
       title="确认送出礼物"
-      description="送出后会立即扣除对应积分，请确认礼物和价格。"
+      description="送出后会立即扣除对应风铃，请确认礼物和价格。"
       size="md"
       footer={(
         <div className="flex flex-wrap items-center justify-end gap-2">

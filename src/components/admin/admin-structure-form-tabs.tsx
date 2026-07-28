@@ -186,20 +186,20 @@ export function StructurePolicyTab({
   return (
     <div className="space-y-5">
       <div className="rounded-xl border border-border p-5">
-        <h4 className="text-sm font-semibold">积分与频率设置</h4>
+        <h4 className="text-sm font-semibold">风铃与频率设置</h4>
         {isModeratorBoardEdit ? (
           <p className="mt-2 text-xs leading-6 text-muted-foreground">编辑节点时，这四项只能填写留空、0 或负数；留空表示继续继承分区设置。</p>
         ) : null}
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <Field label="发帖积分" help={getStructureNumericFieldHelp({ field: "postPointDelta", isBoard, isModeratorBoardEdit })} value={form.postPointDelta} onChange={(value) => updateField("postPointDelta", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="回复积分" help={getStructureNumericFieldHelp({ field: "replyPointDelta", isBoard, isModeratorBoardEdit })} value={form.replyPointDelta} onChange={(value) => updateField("replyPointDelta", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="发帖间隔(秒)" help={getStructureNumericFieldHelp({ field: "postIntervalSeconds", isBoard, isModeratorBoardEdit })} value={form.postIntervalSeconds} onChange={(value) => updateField("postIntervalSeconds", value)} placeholder={isBoard ? "留空继承分区" : "默认 120"} />
+          <Field label="发笺风铃" help={getStructureNumericFieldHelp({ field: "postPointDelta", isBoard, isModeratorBoardEdit })} value={form.postPointDelta} onChange={(value) => updateField("postPointDelta", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="回复风铃" help={getStructureNumericFieldHelp({ field: "replyPointDelta", isBoard, isModeratorBoardEdit })} value={form.replyPointDelta} onChange={(value) => updateField("replyPointDelta", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="发笺间隔(秒)" help={getStructureNumericFieldHelp({ field: "postIntervalSeconds", isBoard, isModeratorBoardEdit })} value={form.postIntervalSeconds} onChange={(value) => updateField("postIntervalSeconds", value)} placeholder={isBoard ? "留空继承分区" : "默认 120"} />
           <Field label="回复间隔(秒)" help={getStructureNumericFieldHelp({ field: "replyIntervalSeconds", isBoard, isModeratorBoardEdit })} value={form.replyIntervalSeconds} onChange={(value) => updateField("replyIntervalSeconds", value)} placeholder={isBoard ? "留空继承分区" : "默认 3"} />
         </div>
       </div>
 
       <div className="rounded-xl border border-border p-5">
-        <h4 className="text-sm font-semibold">支持的帖子类型</h4>
+        <h4 className="text-sm font-semibold">支持的风笺类型</h4>
         <div className="mt-4 flex flex-wrap gap-3">
           {postTypeOptions.map((item) => (
             <Button key={item.value} type="button" variant={form.allowedPostTypes.includes(item.value) ? "default" : "outline"} className="rounded-full px-4 py-2 text-sm" onClick={() => togglePostType(item.value)} aria-pressed={form.allowedPostTypes.includes(item.value)}>
@@ -210,7 +210,7 @@ export function StructurePolicyTab({
       </div>
 
       <div className="rounded-xl border border-border p-5">
-        <h4 className="text-sm font-semibold">帖子列表</h4>
+        <h4 className="text-sm font-semibold">风笺列表</h4>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <div className="space-y-2">
             <SelectField label="首页展示" value={form.showInHomeFeed} onValueChange={(value) => updateField("showInHomeFeed", value)} options={[
@@ -218,10 +218,10 @@ export function StructurePolicyTab({
               { value: "true", label: "在首页显示" },
               { value: "false", label: "不在首页显示" },
             ]} />
-            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时自动继承分区；显式设置后优先使用节点自己的首页展示规则。" : "关闭后，这个分区下未覆盖显示规则的节点帖子将不进入首页。"}</p>
+            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时自动继承分区；显式设置后优先使用节点自己的首页展示规则。" : "关闭后，这个分区下未覆盖显示规则的节点风笺将不进入首页。"}</p>
           </div>
           <div className="space-y-2">
-            <SelectField label="帖子列表形式" value={form.postListDisplayMode} onValueChange={(value) => updateField("postListDisplayMode", value)} options={[
+            <SelectField label="风笺列表形式" value={form.postListDisplayMode} onValueChange={(value) => updateField("postListDisplayMode", value)} options={[
               { value: "", label: isBoard ? "继承分区" : "默认列表" },
               { value: POST_LIST_DISPLAY_MODE_DEFAULT, label: "普通列表" },
               { value: POST_LIST_DISPLAY_MODE_WEIBO, label: "微博模式" },
@@ -230,7 +230,7 @@ export function StructurePolicyTab({
             <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时自动继承分区；显式设置后优先使用节点自己的列表形式。" : "留空时使用站点默认普通列表；设置后该分区下未覆盖的节点会继承这里。"}</p>
           </div>
           <div className="space-y-2">
-            <SelectField label="帖子加载方式" value={form.postListLoadMode} onValueChange={(value) => updateField("postListLoadMode", value)} options={[
+            <SelectField label="风笺加载方式" value={form.postListLoadMode} onValueChange={(value) => updateField("postListLoadMode", value)} options={[
               ...(isBoard ? [{ value: "", label: "继承分区" }] : []),
               { value: POST_LIST_LOAD_MODE_PAGINATION, label: "分页加载" },
               { value: POST_LIST_LOAD_MODE_INFINITE, label: "无限下拉" },
@@ -319,20 +319,20 @@ export function StructureAccessTab({
         <h4 className="text-sm font-semibold">普通用户操作权限</h4>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
-            <SelectField label="普通用户发帖" value={form.allowUserPost} onValueChange={(value) => updateField("allowUserPost", value)} options={[
+            <SelectField label="普通用户发笺" value={form.allowUserPost} onValueChange={(value) => updateField("allowUserPost", value)} options={[
               ...(isBoard ? [{ value: "", label: "继承分区" }] : []),
-              { value: "true", label: "允许普通用户发帖" },
-              { value: "false", label: "仅管理员和版主可发帖" },
+              { value: "true", label: "允许普通用户发笺" },
+              { value: "false", label: "仅管理员和版主可发笺" },
             ]} />
-            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；关闭后普通用户不能在此节点发帖。" : "关闭后该分区默认只允许管理员和版主发帖，节点仍可单独覆盖。"}</p>
+            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；关闭后普通用户不能在此节点发笺。" : "关闭后该分区默认只允许管理员和版主发笺，节点仍可单独覆盖。"}</p>
           </div>
           <div className="flex flex-col gap-2">
-            <SelectField label="普通用户回帖" value={form.allowUserReply} onValueChange={(value) => updateField("allowUserReply", value)} options={[
+            <SelectField label="普通用户回笺" value={form.allowUserReply} onValueChange={(value) => updateField("allowUserReply", value)} options={[
               ...(isBoard ? [{ value: "", label: "继承分区" }] : []),
-              { value: "true", label: "允许普通用户回帖" },
-              { value: "false", label: "仅管理员和版主可回帖" },
+              { value: "true", label: "允许普通用户回笺" },
+              { value: "false", label: "仅管理员和版主可回笺" },
             ]} />
-            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；关闭后普通用户不能在此节点回帖。" : "关闭后该分区默认只允许管理员和版主回帖，节点仍可单独覆盖。"}</p>
+            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；关闭后普通用户不能在此节点回笺。" : "关闭后该分区默认只允许管理员和版主回笺，节点仍可单独覆盖。"}</p>
           </div>
           <div className="space-y-2">
             <SelectField label="楼主下线用户评论" value={form.allowPostAuthorOfflineComment} onValueChange={(value) => updateField("allowPostAuthorOfflineComment", value)} options={[
@@ -340,7 +340,7 @@ export function StructureAccessTab({
               { value: "true", label: "允许楼主下线用户评论" },
               { value: "false", label: "不允许楼主下线用户评论" },
             ]} />
-            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；开启后，帖子作者可下线本帖内其他用户的评论。" : "开启后，该分区默认允许帖子作者下线自己帖子里的用户评论，节点仍可单独覆盖。"}</p>
+            <p className="text-xs leading-6 text-muted-foreground">{isBoard ? "留空时继承所属分区；开启后，风笺作者可下线本帖内其他用户的评论。" : "开启后，该分区默认允许风笺作者下线自己风笺里的用户评论，节点仍可单独覆盖。"}</p>
           </div>
           <div className="space-y-2">
             <SelectField label="用户下线自己的评论" value={form.allowUserOfflineOwnComment} onValueChange={(value) => updateField("allowUserOfflineOwnComment", value)} options={[
@@ -354,15 +354,15 @@ export function StructureAccessTab({
       </div>
 
       <div className="rounded-xl border border-border p-5">
-        <h4 className="text-sm font-semibold">浏览 / 发帖 / 回复权限</h4>
+        <h4 className="text-sm font-semibold">浏览 / 发笺 / 回复权限</h4>
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <Field label="浏览最低积分" help={getStructureAccessFieldHelp({ field: "minViewPoints", isBoard })} value={form.minViewPoints} onChange={(value) => updateField("minViewPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="浏览最低风铃" help={getStructureAccessFieldHelp({ field: "minViewPoints", isBoard })} value={form.minViewPoints} onChange={(value) => updateField("minViewPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
           <Field label="浏览最低等级" help={getStructureAccessFieldHelp({ field: "minViewLevel", isBoard })} value={form.minViewLevel} onChange={(value) => updateField("minViewLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
           <Field label="浏览最低 VIP 等级" help={getStructureAccessFieldHelp({ field: "minViewVipLevel", isBoard })} value={form.minViewVipLevel} onChange={(value) => updateField("minViewVipLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="发帖最低积分" help={getStructureAccessFieldHelp({ field: "minPostPoints", isBoard })} value={form.minPostPoints} onChange={(value) => updateField("minPostPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="发帖最低等级" help={getStructureAccessFieldHelp({ field: "minPostLevel", isBoard })} value={form.minPostLevel} onChange={(value) => updateField("minPostLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="发帖最低 VIP 等级" help={getStructureAccessFieldHelp({ field: "minPostVipLevel", isBoard })} value={form.minPostVipLevel} onChange={(value) => updateField("minPostVipLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
-          <Field label="回复最低积分" help={getStructureAccessFieldHelp({ field: "minReplyPoints", isBoard })} value={form.minReplyPoints} onChange={(value) => updateField("minReplyPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="发笺最低风铃" help={getStructureAccessFieldHelp({ field: "minPostPoints", isBoard })} value={form.minPostPoints} onChange={(value) => updateField("minPostPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="发笺最低等级" help={getStructureAccessFieldHelp({ field: "minPostLevel", isBoard })} value={form.minPostLevel} onChange={(value) => updateField("minPostLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="发笺最低 VIP 等级" help={getStructureAccessFieldHelp({ field: "minPostVipLevel", isBoard })} value={form.minPostVipLevel} onChange={(value) => updateField("minPostVipLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
+          <Field label="回复最低风铃" help={getStructureAccessFieldHelp({ field: "minReplyPoints", isBoard })} value={form.minReplyPoints} onChange={(value) => updateField("minReplyPoints", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
           <Field label="回复最低等级" help={getStructureAccessFieldHelp({ field: "minReplyLevel", isBoard })} value={form.minReplyLevel} onChange={(value) => updateField("minReplyLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
           <Field label="回复最低 VIP 等级" help={getStructureAccessFieldHelp({ field: "minReplyVipLevel", isBoard })} value={form.minReplyVipLevel} onChange={(value) => updateField("minReplyVipLevel", value)} placeholder={isBoard ? "留空继承分区" : "默认 0"} />
         </div>
@@ -373,7 +373,7 @@ export function StructureAccessTab({
         <p className="mt-2 text-xs leading-6 text-muted-foreground">配置后，普通用户需要命中任一认证或勋章才可执行对应操作；管理员和版主不受此限制。</p>
         <div className="mt-4 grid gap-4 xl:grid-cols-2">
           <IdentityGateEditor
-            title="发帖权限增强"
+            title="发笺权限增强"
             mode={form.postIdentityGateMode}
             isBoard={isBoard}
             onModeChange={(value) => updateField("postIdentityGateMode", value)}
@@ -400,8 +400,8 @@ export function StructureAccessTab({
       </div>
 
       <div className="rounded-xl border border-border p-5">
-        <h4 className="text-sm font-semibold">发帖编辑窗口策略</h4>
-        <p className="mt-2 text-xs leading-6 text-muted-foreground">未命中规则时使用站点设置里的帖子可编辑分钟数；命中多条规则时取最长时间，`-1` 表示不受时间限制。</p>
+        <h4 className="text-sm font-semibold">发笺编辑窗口策略</h4>
+        <p className="mt-2 text-xs leading-6 text-muted-foreground">未命中规则时使用站点设置里的风笺可编辑分钟数；命中多条规则时取最长时间，`-1` 表示不受时间限制。</p>
         <div className="mt-4">
           <PostEditRulesEditor
             mode={form.postEditRuleMode}
@@ -420,8 +420,8 @@ export function StructureAccessTab({
       <div className="rounded-xl border border-border p-5">
         <h4 className="text-sm font-semibold">审核策略</h4>
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <Toggle label="开启发帖审核" checked={form.requirePostReview} onChange={(value) => updateField("requirePostReview", value)} />
-          <Toggle label="开启回帖审核" checked={form.requireCommentReview} onChange={(value) => updateField("requireCommentReview", value)} />
+          <Toggle label="开启发笺审核" checked={form.requirePostReview} onChange={(value) => updateField("requirePostReview", value)} />
+          <Toggle label="开启回笺审核" checked={form.requireCommentReview} onChange={(value) => updateField("requireCommentReview", value)} />
         </div>
       </div>
     </div>

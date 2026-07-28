@@ -89,7 +89,7 @@ function RestrictedPostBlockContent({ type, postId, blockId, text, html, visible
   if (type === "AUTHOR_ONLY") {
     return (
       <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50 px-5 py-4 text-sm text-amber-800">
-        这部分内容仅发帖人和管理员可见。
+        这部分内容仅发笺人和管理员可见。
       </div>
     )
   }

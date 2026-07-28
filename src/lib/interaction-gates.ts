@@ -10,7 +10,7 @@ export interface InteractionGateUserSnapshot {
 }
 
 const INTERACTION_GATE_ACTION_LABELS: Record<InteractionGateAction, string> = {
-  POST_CREATE: "发帖",
+  POST_CREATE: "发笺",
   COMMENT_CREATE: "回复",
 }
 

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { AddonSlotRenderer, AddonSurfaceRenderer } from "@/addons-host"
 import { CreatePostForm } from "@/components/post/create-post-form"
 import { SiteHeader } from "@/components/site-header"
+import { BackButton } from "@/components/back-button"
 import { Button } from "@/components/ui/rbutton"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { buildUserLevelThresholdOptions, buildVipLevelThresholdOptions } from "@/lib/access-threshold-options"
@@ -57,7 +58,7 @@ function mapBoardOption(board: SiteBoardItem): BoardOptionItem {
 
 export async function generateMetadata(props: PageProps<"/write">): Promise<Metadata> {
   const searchParams = await props.searchParams
-  const mode = readSearchParam(searchParams?.mode) === "edit" ? "编辑帖子" : "发布帖子"
+  const mode = readSearchParam(searchParams?.mode) === "edit" ? "编辑风笺" : "发布风笺"
   const settings = await getSiteSettings()
 
   return {
@@ -110,12 +111,12 @@ export default async function WritePage(props: PageProps<"/write">) {
               <CardHeader>
                 <AddonSlotRenderer slot="write.header.before" />
                 <AddonSurfaceRenderer surface="write.header" props={{ mode, settings, user: null }}>
-                  <CardTitle>发布帖子前请先登录</CardTitle>
+                  <CardTitle>发布风笺前请先登录</CardTitle>
                 </AddonSurfaceRenderer>
                 <AddonSlotRenderer slot="write.header.after" />
               </CardHeader>
               <CardContent className="space-y-4 text-sm leading-7 text-muted-foreground">
-                <p>为了确保每篇内容都能追溯到明确作者，当前发帖功能需要先登录后再提交。</p>
+                <p>为了确保每篇内容都能追溯到明确作者，当前发笺功能需要先登录后再提交。</p>
                 <Link href={buildLoginHrefWithRedirect("/write")}>
                   <Button>前往登录</Button>
                 </Link>
@@ -182,20 +183,23 @@ export default async function WritePage(props: PageProps<"/write">) {
         <AddonSurfaceRenderer surface="write.page" props={{ mode, preferredBoardSlug, settings, user }}>
           <Card className="min-[1220px]:overflow-visible">
             <CardHeader>
-              <AddonSlotRenderer slot="write.header.before" />
-              <AddonSurfaceRenderer surface="write.header" props={{ mode, settings, user }}>
-                <CardTitle>{mode === "edit" ? "编辑帖子" : "发布新帖子"}</CardTitle>
-              </AddonSurfaceRenderer>
-              <AddonSlotRenderer slot="write.header.after" />
+              <div className="flex items-center gap-2">
+                <BackButton />
+                <AddonSlotRenderer slot="write.header.before" />
+                <AddonSurfaceRenderer surface="write.header" props={{ mode, settings, user }}>
+                  <CardTitle>{mode === "edit" ? "编辑风笺" : "发布新风笺"}</CardTitle>
+                </AddonSurfaceRenderer>
+                <AddonSlotRenderer slot="write.header.after" />
+              </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {mode === "edit" ? (
                 !editingPost ? (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">未找到要编辑的帖子。</div>
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">未找到要编辑的风笺。</div>
                 ) : !canEditThisPost ? (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">你无权编辑这篇帖子。</div>
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">你无权编辑这篇风笺。</div>
                 ) : !isStillEditable ? (
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">该帖子已超过可编辑窗口（{formatPostEditWindowLabel(editingPostEditWindowMinutes)}），请回到详情页使用附言追加功能。</div>
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">该风笺已超过可编辑窗口（{formatPostEditWindowLabel(editingPostEditWindowMinutes)}），请回到详情页使用附言追加功能。</div>
                 ) : (
                   <CreatePostForm
                     boardOptions={boardOptions}

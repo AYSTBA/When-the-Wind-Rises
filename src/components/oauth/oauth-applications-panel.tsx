@@ -321,7 +321,7 @@ const paymentTransactionStatusOptions = [
 ]
 
 const paymentCreateParameterRows = [
-  { name: "amount", description: "支付金额，单位为站内积分，必须是大于 0 的整数。" },
+  { name: "amount", description: "支付金额，单位为站内风铃，必须是大于 0 的整数。" },
   { name: "description", description: "交易描述，会展示给用户确认。" },
   { name: "order_id", description: "你的业务订单号，同一 Payment 应用下必须唯一。" },
   { name: "signature", description: "HMAC-SHA256 签名，签名参数为 amount、description、order_id。" },
@@ -330,7 +330,7 @@ const paymentCreateParameterRows = [
 const paymentCallbackParameterRows = [
   { name: "transaction_id", description: "本站生成的交易 ID。" },
   { name: "external_reference", description: "你的业务订单号，即发起支付时的 order_id。" },
-  { name: "amount / platform_fee", description: "支付金额和平台手续费，单位为站内积分。" },
+  { name: "amount / platform_fee", description: "支付金额和平台手续费，单位为站内风铃。" },
   { name: "status / paid_at", description: "支付状态和支付完成时间。" },
   { name: "signature", description: "回调签名，商户必须验证后再发货或开通服务。" },
 ]
@@ -910,7 +910,7 @@ function PaymentApplicationsCard({
       <CardHeader className="border-b">
         <div>
           <CardTitle>Payment 应用</CardTitle>
-          <CardDescription>申请第三方支付应用，审核通过后获取可用的 Payment ID 和 Secret Key，用于发起积分支付收款。</CardDescription>
+          <CardDescription>申请第三方支付应用，审核通过后获取可用的 Payment ID 和 Secret Key，用于发起风铃支付收款。</CardDescription>
         </div>
         <CardAction>
           <Button type="button" disabled={!enabled} onClick={onCreate}>
@@ -1021,8 +1021,8 @@ function PaymentTransactionsCard({ data }: { data: PaymentTransactionPageData })
       </CardHeader>
       <CardContent className="flex flex-col gap-4 py-4">
         <div className="grid gap-3 md:grid-cols-4">
-          <PaymentMetric label="订单总额" value={`${formatCompactPointValue(data.summary.totalAmount)} 积分`} />
-          <PaymentMetric label="平台手续费" value={`${formatCompactPointValue(data.summary.totalPlatformFee)} 积分`} />
+          <PaymentMetric label="订单总额" value={`${formatCompactPointValue(data.summary.totalAmount)} 风铃`} />
+          <PaymentMetric label="平台手续费" value={`${formatCompactPointValue(data.summary.totalPlatformFee)} 风铃`} />
           <PaymentMetric label="已完成" value={`${formatNumber(data.summary.completed)} 单`} />
           <PaymentMetric label="待处理" value={`${formatNumber(data.summary.pending + data.summary.processing)} 单`} />
         </div>
@@ -1103,8 +1103,8 @@ function PaymentTransactionRow({ transaction }: { transaction: PaymentTransactio
         {transaction.errorMessage ? <p className="mt-2 text-xs text-muted-foreground">错误信息：{transaction.errorMessage}</p> : null}
       </div>
       <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-        <p className="font-medium text-foreground">{formatCompactPointValue(transaction.amount)} 积分</p>
-        <p>平台手续费：{formatCompactPointValue(transaction.platformFee)} 积分</p>
+        <p className="font-medium text-foreground">{formatCompactPointValue(transaction.amount)} 风铃</p>
+        <p>平台手续费：{formatCompactPointValue(transaction.platformFee)} 风铃</p>
         <p>应用：{transaction.application.name}</p>
         <p className="break-all">Payment ID：<code>{transaction.application.paymentId}</code></p>
       </div>
@@ -1203,7 +1203,7 @@ function OAuthIntegrationDocs() {
         <CardHeader className="border-b bg-muted/20">
           <div>
             <CardTitle>接入文档</CardTitle>
-            <CardDescription>OAuth 负责登录授权，Payment 负责用户确认后的积分支付。密钥只显示一次，请保存到服务端。</CardDescription>
+            <CardDescription>OAuth 负责登录授权，Payment 负责用户确认后的风铃支付。密钥只显示一次，请保存到服务端。</CardDescription>
           </div>
           <CardAction>
             <div className="flex flex-wrap gap-2">
@@ -1235,7 +1235,7 @@ function OAuthIntegrationDocs() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <Badge variant="outline">Payment</Badge>
-                  <h3 className="mt-3 text-base font-semibold">积分支付收款</h3>
+                  <h3 className="mt-3 text-base font-semibold">风铃支付收款</h3>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
                     适合第三方网站创建订单后跳转本站，由用户登录并确认支付。平台手续费由后台统一设置。
                   </p>
@@ -1616,7 +1616,7 @@ function PaymentApplicationFormModal({
       <FormModal
         open
         title={application ? "修改 Payment 应用" : "申请 Payment 应用"}
-        description="Payment 应用用于第三方网站发起积分支付。审核通过后才可调用支付接口；回调地址会在支付成功后通过浏览器 GET 跳转访问。"
+        description="Payment 应用用于第三方网站发起风铃支付。审核通过后才可调用支付接口；回调地址会在支付成功后通过浏览器 GET 跳转访问。"
       size="lg"
       closeDisabled={isPending}
       closeOnEscape={!isPending}

@@ -52,7 +52,7 @@ const initialGameState: GobangViewState = {
   paidTotal: 0,
   paidUsed: 0,
   challengeStatus: "not_started",
-  pointName: "积分",
+  pointName: "风铃",
   points: 0,
   message: "点击“开始游戏”进行对战",
   isLoadingAI: false,
@@ -192,7 +192,7 @@ function PreviousResultModal({ open, match, message, winningLine, canSelectPrevi
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-2 rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
             <span>{formatMatchTime(match.finishedAt || match.updatedAt || match.moves.at(-1)?.createdAt || match.createdAt)}</span>
-            <span>{match.challengeMode === "FREE" ? "免费挑战" : `付费挑战 · ${formatCompactPointValue(match.ticketCost)} 积分`}</span>
+            <span>{match.challengeMode === "FREE" ? "免费挑战" : `付费挑战 · ${formatCompactPointValue(match.ticketCost)} 风铃`}</span>
             <span>{match.firstHand === "PLAYER" ? "你先手" : "AI 先手"}</span>
           </div>
           <div className={cn("rounded-md p-3 font-bold", message.includes("你赢") ? "bg-green-100 text-green-700" : message.includes("平局") ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700")}>{message}</div>
@@ -305,7 +305,7 @@ export function GobangPage({ config, initialMatches, initialSummary }: GobangPag
     const ticketCost = Number(config.ticketCost ?? 50)
     const winReward = Number(config.winReward ?? 50)
     const paidWinTotal = ticketCost + winReward
-    const pointLabel = gameState.pointName || "积分"
+    const pointLabel = gameState.pointName || "风铃"
     return [
       `普通用户每日免费挑战 ${freeGames} 次，VIP 用户额外增加 ${vipFreeGames} 次免费次数。`,
       `普通用户每日总对局上限 ${normalGameLimit} 次，VIP 用户每日总对局上限 ${vipGameLimit} 次。`,

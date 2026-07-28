@@ -46,8 +46,8 @@ export function buildCommentCreationNotifications(params: {
       senderId: params.authorId,
       relatedType: "COMMENT",
       relatedId: params.commentId,
-      title: "你的帖子有了新回复",
-      content: `${params.senderName} 回复了你的帖子：${params.content.slice(0, 80)}`,
+      title: "你的风笺有了新回复",
+      content: `${params.senderName} 回复了你的风笺：${params.content.slice(0, 80)}`,
     })
   }
 

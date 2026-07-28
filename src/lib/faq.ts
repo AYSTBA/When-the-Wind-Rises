@@ -26,18 +26,18 @@ export const FAQ_TABS: FaqTabItem[] = [
   },
   {
     href: "/faq/post-heat",
-    label: "帖子热度",
+    label: "风笺热度",
     description: "说明热度分数、颜色档位和计算方式。",
   },
   {
     href: "/faq/points-system",
-    label: "积分系统",
-    description: "说明积分来源、消耗场景和门槛用途。",
+    label: "风铃系统",
+    description: "说明风铃来源、消耗场景和门槛用途。",
   },
   {
     href: "/faq/red-packet-jackpot",
     label: "红包与聚宝盆",
-    description: "说明帖子红包与聚宝盆的触发方式、限制和当前站点规则。",
+    description: "说明风笺红包与聚宝盆的触发方式、限制和当前站点规则。",
   },
   {
     href: "/faq/verification-system",

@@ -215,13 +215,13 @@ export function YinYangContractPage({ initialData, canPlay }: YinYangContractPag
             <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0">
               <div>
                 <CardTitle className="text-base">我的概览</CardTitle>
-                <p className="mt-1 text-sm text-muted-foreground">查看当前积分、胜负场和盈利情况。</p>
+                <p className="mt-1 text-sm text-muted-foreground">查看当前风铃、胜负场和盈利情况。</p>
               </div>
               <Button type="button" variant="outline" className="rounded-full" onClick={() => setHistoryModalOpen(true)}>我的近期挑战</Button>
             </CardHeader>
             <CardContent className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3">
-                <StatCard label="当前积分" value={`${formatCompactPointValue(data.summary.points)} ${data.summary.pointName}`} />
+                <StatCard label="当前风铃" value={`${formatCompactPointValue(data.summary.points)} ${data.summary.pointName}`} />
                 <StatCard label="胜 / 负" value={`${data.summary.winCount} / ${data.summary.loseCount}`} />
                 <StatCard label="今日盈利" value={formatCompactPointValue(data.summary.todayProfitPoints)} tone="green" />
                 <StatCard label="今日亏损" value={formatCompactPointValue(data.summary.todayLossPoints)} tone="red" />
@@ -230,7 +230,7 @@ export function YinYangContractPage({ initialData, canPlay }: YinYangContractPag
               </div>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <Button type="button" variant="outline" className="rounded-full" onClick={() => setWinnerLeaderboardOpen(true)}>赢家排行榜</Button>
-                <Button type="button" variant="outline" className="rounded-full" onClick={() => setEarnerLeaderboardOpen(true)}>赚积分排行榜</Button>
+                <Button type="button" variant="outline" className="rounded-full" onClick={() => setEarnerLeaderboardOpen(true)}>赚风铃排行榜</Button>
               </div>
             </CardContent>
           </Card>
@@ -341,7 +341,7 @@ function CreateChallengeModal({ open, canPlay, isPending, question, optionA, opt
               <option value="B">答案 B</option>
             </select>
           </Field>
-          <Field label={`积分彩头（${minStakePoints}-${maxStakePoints}）`}>
+          <Field label={`风铃彩头（${minStakePoints}-${maxStakePoints}）`}>
             <input value={stakePoints} onChange={(event) => onStakePointsChange(event.target.value)} className="h-11 w-full rounded-[16px] border border-border bg-background px-4 text-sm outline-hidden" inputMode="numeric" />
           </Field>
         </div>
@@ -464,7 +464,7 @@ function EarnerLeaderboardModalBody({ items, onClose }: { items: YinYangLeaderbo
   }
 
   return (
-    <ModalShell title="赚积分排行榜" description="按今日与历史盈亏维度查看最会赚、最敢赌的玩家。" onClose={onClose} size="lg">
+    <ModalShell title="赚风铃排行榜" description="按今日与历史盈亏维度查看最会赚、最敢赌的玩家。" onClose={onClose} size="lg">
       <div className="space-y-4">
         <div className="flex flex-wrap gap-2">
           {tabConfig.map((tab) => (

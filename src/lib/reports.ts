@@ -82,7 +82,7 @@ function mapPostReportTarget(
 ) {
   return {
     title: post.title,
-    description: `帖子作者：${getUserDisplayName(post.author)}`,
+    description: `风笺作者：${getUserDisplayName(post.author)}`,
     href: getPostPath({ id: post.id, slug: post.slug }, { mode: postLinkDisplayMode }),
     ownerUserId: post.author.id,
     relatedType: RelatedType.POST,

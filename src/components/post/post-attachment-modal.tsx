@@ -193,9 +193,9 @@ export function PostAttachmentModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="配置帖子附件"
+      title="配置风笺附件"
       hideHeaderCloseButtonOnMobile
-      description="附件会统一展示在帖子正文底部，可分别设置等级、VIP、积分购买和回复解锁条件。"
+      description="附件会统一展示在风笺正文底部，可分别设置等级、VIP、风铃购买和回复解锁条件。"
       size="xl"
       footer={(
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -355,7 +355,7 @@ export function PostAttachmentModal({
                 {permissionExpanded ? (
                   <div className="space-y-3 border-t border-border px-4 py-4">
                     <div>
-                      <p className="text-xs leading-6 text-muted-foreground">等级和 VIP 门槛可叠加；如果还设置了积分或回复条件，则用户需要全部满足后才能拿到下载权限。</p>
+                      <p className="text-xs leading-6 text-muted-foreground">等级和 VIP 门槛可叠加；如果还设置了风铃或回复条件，则用户需要全部满足后才能拿到下载权限。</p>
                     </div>
                     <AccessThresholdSelectGroup
                       levelValue={attachment.minDownloadLevel}
@@ -372,7 +372,7 @@ export function PostAttachmentModal({
                     />
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
-                        <p className="text-sm font-medium">积分购买价</p>
+                        <p className="text-sm font-medium">风铃购买价</p>
                         <input
                           type="number"
                           min={0}

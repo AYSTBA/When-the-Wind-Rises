@@ -113,7 +113,6 @@ export function CreatePostForm({
         pointName={pointName}
         viewLevelOptions={viewLevelOptions}
         viewVipLevelOptions={viewVipLevelOptions}
-        postJackpotMaxInitialPoints={postJackpotMaxInitialPoints}
         draftController={draftController}
       />
     </>

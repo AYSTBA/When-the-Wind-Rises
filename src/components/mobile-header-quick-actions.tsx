@@ -225,7 +225,7 @@ export function MobileHeaderQuickActions({
         onClose={() => setNavOpen(false)}
         size="lg"
         title={view === "main" ? "导航" : "切换节点"}
-        description={view === "main" ? "快捷访问发帖、签到、应用入口和节点导航。" : "按分区浏览节点，也可以直接搜索。"}
+        description={view === "main" ? "快捷访问发笺、签到、应用入口和节点导航。" : "按分区浏览节点，也可以直接搜索。"}
         showHeaderCloseButton={false}
         footer={(
           view === "nodes" ? (
@@ -276,9 +276,9 @@ export function MobileHeaderQuickActions({
                 >
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <PenSquare className="h-4 w-4 text-muted-foreground" />
-                    <span>发帖</span>
+                    <span>发笺</span>
                   </div>
-                  <p className="mt-1 text-xs text-muted-foreground">{isLoggedIn ? "发布新的主题内容" : "登录后即可发帖"}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{isLoggedIn ? "发布新的主题内容" : "登录后即可发笺"}</p>
                 </Link>
 
                 <button
@@ -401,7 +401,7 @@ export function MobileHeaderQuickActions({
         size="lg"
         hideHeaderCloseButtonOnMobile
         title={search.enabled ? "搜索" : "外部搜索"}
-        description={search.enabled ? "搜索帖子、节点与作者内容。" : "站内搜索已关闭，输入关键词后可继续使用外部搜索引擎查找本站内容。"}
+        description={search.enabled ? "搜索风笺、节点与作者内容。" : "站内搜索已关闭，输入关键词后可继续使用外部搜索引擎查找本站内容。"}
       >
         <div className="space-y-4">
           <Suspense fallback={<div className="h-12 rounded-2xl border border-border bg-muted/50" aria-hidden="true" />}>

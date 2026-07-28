@@ -112,7 +112,7 @@ export function ReadingHistoryPanel({
 
   const panelTitle = title ?? (showOnlyToday ? "今日访问" : "足迹")
   const resolvedEmptyTitle = emptyTitle ?? (showOnlyToday ? "今天还没有访问记录" : "还没有浏览记录")
-  const resolvedEmptyDescription = emptyDescription ?? "打开帖子后会自动写入本地，用于侧边栏和足迹页展示。"
+  const resolvedEmptyDescription = emptyDescription ?? "打开风笺后会自动写入本地，用于侧边栏和足迹页展示。"
   const panelIcon = showOnlyToday ? Clock3 : History
   const Icon = panelIcon
 
@@ -235,8 +235,8 @@ function HistoryRow({ entry, variant }: { entry: ReadingHistoryEntry; variant: R
               </span>
             </Tooltip>
             {variant === "page" && createdAtText ? (
-              <Tooltip content={`发帖于 ${createdAtText}`}>
-                <span className="truncate">发帖 {createdAtText}</span>
+              <Tooltip content={`发笺于 ${createdAtText}`}>
+                <span className="truncate">发笺 {createdAtText}</span>
               </Tooltip>
             ) : null}
           </div>

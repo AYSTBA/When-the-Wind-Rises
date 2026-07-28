@@ -30,7 +30,7 @@ export default async function PointsLeaderboardPage() {
       currentUserHint={chrome.currentUser ? `你当前还未进入 ${chrome.settings.pointName} 排行榜。` : "登录后可查看你的个人名次。"}
       emptyText={`暂时还没有可展示的 ${chrome.settings.pointName} 排行数据。`}
       primaryHref="/settings?tab=points"
-      primaryLabel="返回积分明细"
+      primaryLabel="返回风铃明细"
       secondaryHref="/"
       secondaryLabel="返回首页"
       scoreColumnLabel={chrome.settings.pointName}

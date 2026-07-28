@@ -27,7 +27,7 @@ interface PostBodyCopyMenuProps {
   children: ReactNode
 }
 
-export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport = false, reportTargetId, reportLabel = "当前帖子", initialFollowed, viewCount, children }: PostBodyCopyMenuProps) {
+export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport = false, reportTargetId, reportLabel = "当前风笺", initialFollowed, viewCount, children }: PostBodyCopyMenuProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const copyPath = useMemo(
@@ -44,7 +44,7 @@ export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport
 
   async function handleCopyLink() {
     if (await copyTextToClipboard(copyLink)) {
-      toast.success("已复制帖子链接", "复制成功")
+      toast.success("已复制风笺链接", "复制成功")
       setIsMenuOpen(false)
       return
     }
@@ -120,8 +120,8 @@ export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport
                 targetType="post"
                 targetId={post.id}
                 initialFollowed={initialFollowed}
-                activeLabel="已关注帖子"
-                inactiveLabel="关注帖子"
+                activeLabel="已关注风笺"
+                inactiveLabel="关注风笺"
                 showLabel
                 variant="ghost"
                 size="sm"
@@ -133,7 +133,7 @@ export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport
                 targetType="POST"
                 targetId={reportTargetId}
                 targetLabel={reportLabel}
-                buttonText="举报帖子"
+                buttonText="举报风笺"
                 icon={<Flag data-icon="inline-start" />}
                 showLabelWithIcon
                 buttonSize="sm"
@@ -147,8 +147,8 @@ export function PostBodyCopyMenu({ post, postLinkDisplayMode = "SLUG", canReport
             type="button"
             variant="ghost"
             size="icon-sm"
-            aria-label="帖子操作"
-            title="帖子操作"
+            aria-label="风笺操作"
+            title="风笺操作"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((current) => !current)}
             className="rounded-full border border-border bg-background/95 text-muted-foreground shadow-sm backdrop-blur-xs hover:text-foreground"

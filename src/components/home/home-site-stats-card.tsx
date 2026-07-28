@@ -9,7 +9,7 @@ interface HomeSiteStatsCardProps {
 
 export function HomeSiteStatsCard({ stats }: HomeSiteStatsCardProps) {
   const items = [
-    { label: "帖子", value: stats.postCount },
+    { label: "风笺", value: stats.postCount },
     { label: "回复", value: stats.replyCount },
     { label: "用户", value: stats.userCount },
   ]

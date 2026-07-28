@@ -180,9 +180,9 @@ function RewardPoolSummary({
       {redPacketMode === "JACKPOT" ? (
         <>
           <p>
-            当前已配置为聚宝盆：发帖时投入{" "}
+            当前已配置为聚宝盆：发笺时投入{" "}
             {formatCompactPointValue(Number(jackpotInitialPoints) || postJackpotMinInitialPoints)} {pointName}{" "}
-            作为初始积分。
+            作为初始风铃。
           </p>
           <p>
             首个有效回复会追加 {formatCompactPointValue(postJackpotReplyIncrementPoints)} {pointName}
@@ -192,7 +192,7 @@ function RewardPoolSummary({
       ) : (
         <>
           <p>
-            当前已配置为帖子红包：
+            当前已配置为风笺红包：
             {redPacketTriggerType === "REPLY"
               ? "回复"
               : redPacketTriggerType === "LIKE"
@@ -203,7 +203,7 @@ function RewardPoolSummary({
           <p>
             {redPacketGrantMode === "FIXED"
               ? `固定红包总计需要 ${formatCompactPointValue(fixedRedPacketTotalPoints ?? 0)} ${pointName}。`
-              : "拼手气红包要求总积分不小于份数。"}
+              : "拼手气红包要求总风铃不小于份数。"}
           </p>
         </>
       )}
@@ -220,12 +220,6 @@ interface PostEnhancementsSectionProps {
     coverUploading: boolean
     coverPath: string
     commentsVisibleToAuthorOnly: boolean
-    loginUnlockContent: string
-    replyUnlockContent: string
-    purchaseUnlockContent: string
-    purchasePrice: string
-    minViewLevel: string
-    minViewVipLevel: string
     redPacketEnabled: boolean
     redPacketMode: "RED_PACKET" | "JACKPOT"
     redPacketGrantMode: "FIXED" | "RANDOM"
@@ -245,14 +239,6 @@ interface PostEnhancementsSectionProps {
     onRemoveManualTag: (tag: string) => void
     onCoverClear: () => void
     onCommentsVisibleToAuthorOnlyChange: (checked: boolean) => void
-    onOpenLoginModal: () => void
-    onClearLoginUnlock: () => void
-    onOpenReplyModal: () => void
-    onClearReplyUnlock: () => void
-    onOpenPurchaseModal: () => void
-    onClearPurchaseUnlock: () => void
-    onOpenViewLevelModal: () => void
-    onClearViewLevel: () => void
     onOpenRewardPoolModal: () => void
     onClearRewardPool: () => void
     onRedPacketEnabledChange: (checked: boolean) => void
@@ -317,12 +303,6 @@ export function PostEnhancementsSection({
     coverUploading,
     coverPath,
     commentsVisibleToAuthorOnly,
-    loginUnlockContent,
-    replyUnlockContent,
-    purchaseUnlockContent,
-    purchasePrice,
-    minViewLevel,
-    minViewVipLevel,
     redPacketEnabled,
     redPacketMode,
     redPacketGrantMode,
@@ -364,28 +344,12 @@ export function PostEnhancementsSection({
     : coverPath.trim()
       ? "已设置"
       : "自动提取"
-  const loginSummary = loginUnlockContent.trim() ? "已配置" : "未配置"
-  const replySummary = replyUnlockContent.trim() ? "已配置" : "未配置"
-  const purchaseSummary = purchaseUnlockContent.trim()
-    ? `${formatCompactPointValue(Number(purchasePrice) || 0)} / ${pointName}`
-    : "未配置"
-  const viewLevelSummary = Number(minViewVipLevel) > 0
-    ? `VIP${Number(minViewVipLevel)}${
-        Number(minViewLevel) > 0 ? ` / Lv.${Number(minViewLevel)}` : ""
-      }`
-    : Number(minViewLevel) > 0
-      ? `Lv.${Number(minViewLevel)}`
-      : "公开可见"
   const configuredCount = [
     finalTags.length > 0,
     redPacketEnabled,
     attachmentCount > 0,
     Boolean(coverPath.trim()),
     commentsVisibleToAuthorOnly,
-    Boolean(loginUnlockContent.trim()),
-    Boolean(replyUnlockContent.trim()),
-    Boolean(purchaseUnlockContent.trim()),
-    Number(minViewLevel) > 0 || Number(minViewVipLevel) > 0,
   ].filter(Boolean).length
   const openMobilePanelAction = (action: () => void) => () => {
     setMobilePanelOpen(false)
@@ -573,7 +537,7 @@ export function PostEnhancementsSection({
                 {rewardPoolEnabled ? (
                   <DesktopActionCard
                     icon={<Sparkles className="h-4 w-4" />}
-                    title="帖子激励池"
+                    title="风笺激励池"
                     summary={rewardPoolDesktopSummary}
                     active={redPacketEnabled}
                     onClick={openMobilePanelAction(actions.onOpenRewardPoolModal)}
@@ -585,7 +549,7 @@ export function PostEnhancementsSection({
                 {showAttachmentEntry ? (
                   <DesktopActionCard
                     icon={<Paperclip className="h-4 w-4" />}
-                    title="帖子附件"
+                    title="风笺附件"
                     summary={attachmentSummary}
                     active={attachmentCount > 0}
                     onClick={openMobilePanelAction(actions.onOpenAttachmentModal)}
@@ -610,42 +574,6 @@ export function PostEnhancementsSection({
                 <DesktopToggleCard
                   checked={commentsVisibleToAuthorOnly}
                   onChange={actions.onCommentsVisibleToAuthorOnlyChange}
-                />
-
-                <DesktopActionCard
-                  icon={<MessageSquareLock className="h-4 w-4" />}
-                  title="登录后可看"
-                  summary={loginSummary}
-                  active={Boolean(loginUnlockContent.trim())}
-                  onClick={openMobilePanelAction(actions.onOpenLoginModal)}
-                  onClear={actions.onClearLoginUnlock}
-                />
-
-                <DesktopActionCard
-                  icon={<MessageSquareLock className="h-4 w-4" />}
-                  title="回复后可看"
-                  summary={replySummary}
-                  active={Boolean(replyUnlockContent.trim())}
-                  onClick={openMobilePanelAction(actions.onOpenReplyModal)}
-                  onClear={actions.onClearReplyUnlock}
-                />
-
-                <DesktopActionCard
-                  icon={<Info className="h-4 w-4" />}
-                  title="购买后可看"
-                  summary={purchaseSummary}
-                  active={Boolean(purchaseUnlockContent.trim())}
-                  onClick={openMobilePanelAction(actions.onOpenPurchaseModal)}
-                  onClear={actions.onClearPurchaseUnlock}
-                />
-
-                <DesktopActionCard
-                  icon={<Info className="h-4 w-4" />}
-                  title="整帖门槛"
-                  summary={viewLevelSummary}
-                  active={Number(minViewLevel) > 0 || Number(minViewVipLevel) > 0}
-                  onClick={openMobilePanelAction(actions.onOpenViewLevelModal)}
-                  onClear={actions.onClearViewLevel}
                 />
               </div>
 
@@ -815,7 +743,7 @@ export function PostEnhancementsSection({
               {rewardPoolEnabled ? (
                 <DesktopActionCard
                   icon={<Sparkles className="h-4 w-4" />}
-                  title="帖子激励池"
+                  title="风笺激励池"
                   summary={rewardPoolDesktopSummary}
                   active={redPacketEnabled}
                   onClick={actions.onOpenRewardPoolModal}
@@ -827,7 +755,7 @@ export function PostEnhancementsSection({
               {showAttachmentEntry ? (
                 <DesktopActionCard
                   icon={<Paperclip className="h-4 w-4" />}
-                  title="帖子附件"
+                  title="风笺附件"
                   summary={attachmentCount > 0 ? `已添加 ${attachmentCount} 项` : "未配置附件"}
                   active={attachmentCount > 0}
                   onClick={actions.onOpenAttachmentModal}
@@ -852,52 +780,6 @@ export function PostEnhancementsSection({
               <DesktopToggleCard
                 checked={commentsVisibleToAuthorOnly}
                 onChange={actions.onCommentsVisibleToAuthorOnlyChange}
-              />
-
-              <DesktopActionCard
-                icon={<MessageSquareLock className="h-4 w-4" />}
-                title="登录后可看"
-                summary={loginUnlockContent.trim() ? "已配置" : "未配置"}
-                active={Boolean(loginUnlockContent.trim())}
-                onClick={actions.onOpenLoginModal}
-                onClear={actions.onClearLoginUnlock}
-              />
-
-              <DesktopActionCard
-                icon={<MessageSquareLock className="h-4 w-4" />}
-                title="回复后可看"
-                summary={replyUnlockContent.trim() ? "已配置" : "未配置"}
-                active={Boolean(replyUnlockContent.trim())}
-                onClick={actions.onOpenReplyModal}
-                onClear={actions.onClearReplyUnlock}
-              />
-
-              <DesktopActionCard
-                icon={<Info className="h-4 w-4" />}
-                title="购买后可看"
-                summary={
-                  purchaseUnlockContent.trim() ? `${formatCompactPointValue(Number(purchasePrice) || 0)} / ${pointName}` : "未配置"
-                }
-                active={Boolean(purchaseUnlockContent.trim())}
-                onClick={actions.onOpenPurchaseModal}
-                onClear={actions.onClearPurchaseUnlock}
-              />
-
-              <DesktopActionCard
-                icon={<Info className="h-4 w-4" />}
-                title="整帖门槛"
-                summary={
-                  Number(minViewVipLevel) > 0
-                    ? `VIP${Number(minViewVipLevel)}${
-                        Number(minViewLevel) > 0 ? ` / Lv.${Number(minViewLevel)}` : ""
-                      }`
-                    : Number(minViewLevel) > 0
-                      ? `Lv.${Number(minViewLevel)}`
-                      : "公开可见"
-                }
-                active={Number(minViewLevel) > 0 || Number(minViewVipLevel) > 0}
-                onClick={actions.onOpenViewLevelModal}
-                onClear={actions.onClearViewLevel}
               />
               </div>
             </div>

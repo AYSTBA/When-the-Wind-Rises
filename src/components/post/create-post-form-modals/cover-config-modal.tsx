@@ -34,7 +34,7 @@ export function CoverConfigModal({
       size="lg"
       footer={(
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground">留空时，帖子列表会自动提取正文中的第一张图片作为封面。</p>
+          <p className="text-xs text-muted-foreground">留空时，风笺列表会自动提取正文中的第一张图片作为封面。</p>
           <div className="flex flex-wrap gap-2">
             <Button type="button" variant="ghost" disabled={!coverPath || coverUploading} onClick={onCoverClear}>清空封面</Button>
             <Button type="button" variant="outline" onClick={onClose}>完成</Button>
@@ -57,7 +57,7 @@ export function CoverConfigModal({
         {coverPath ? (
           <div className="relative overflow-hidden rounded-xl border border-border bg-card">
             <div className="relative aspect-video w-full">
-              <Image src={coverPath} alt="帖子封面预览" fill sizes="(max-width: 1024px) 100vw, 896px" className="object-cover" unoptimized />
+              <Image src={coverPath} alt="风笺封面预览" fill sizes="(max-width: 1024px) 100vw, 896px" className="object-cover" unoptimized />
             </div>
           </div>
         ) : (

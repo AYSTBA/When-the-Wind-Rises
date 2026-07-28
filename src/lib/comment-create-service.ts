@@ -54,10 +54,10 @@ export async function createCommentFlow(input: {
 
   if (!postContext || !dbUser || postContext.post.status !== "NORMAL") {
     if (postContext?.post.status === "LOCKED") {
-      apiError(403, "帖子已关闭回复")
+      apiError(403, "风笺已关闭回复")
     }
 
-    apiError(404, "帖子不存在或暂不可评论")
+    apiError(404, "风笺不存在或暂不可评论")
   }
 
   if (privateRecipientUserId) {
@@ -81,8 +81,8 @@ export async function createCommentFlow(input: {
     await ensureUsersCanInteract({
       actorId: input.currentUser.id,
       targetUserId: postContext.post.authorId,
-      blockedMessage: "你已拉黑该用户，无法在对方帖子下回复",
-      blockedByMessage: "对方已将你拉黑，无法在其帖子下回复",
+      blockedMessage: "你已拉黑该用户，无法在对方风笺下回复",
+      blockedByMessage: "对方已将你拉黑，无法在其风笺下回复",
     })
   }
 
@@ -185,7 +185,7 @@ export async function createCommentFlow(input: {
     : resolvedComment.mentions
   const reviewRequired = Boolean(postContext.settings.requireCommentReview)
   const reviewNote = postContext.settings.requireCommentReview
-    ? "当前节点开启回帖审核，评论已进入审核"
+    ? "当前节点开启回笺审核，评论已进入审核"
     : null
 
   const created = await createCommentWithRelations({

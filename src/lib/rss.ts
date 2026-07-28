@@ -151,7 +151,7 @@ export async function generateZoneRssXml(zone: { slug: string; name: string; des
       channel: {
         title: `${normalizeText(zone.name)} - ${normalizeText(settings.siteName)}`,
         link: await toAbsoluteSiteUrl(`/zones/${encodeURIComponent(zone.slug)}`),
-        description: normalizeText(zone.description || `${zone.name} 分区最新帖子订阅`),
+        description: normalizeText(zone.description || `${zone.name} 分区最新风笺订阅`),
         feedPath: `/zones/${encodeURIComponent(zone.slug)}/rss.xml`,
       },
       posts,
@@ -170,7 +170,7 @@ export async function generateBoardRssXml(board: { slug: string; name: string; d
       channel: {
         title: `${normalizeText(board.name)} - ${normalizeText(settings.siteName)}`,
         link: await toAbsoluteSiteUrl(`/boards/${encodeURIComponent(board.slug)}`),
-        description: normalizeText(board.description || `${board.name} 节点最新帖子订阅`),
+        description: normalizeText(board.description || `${board.name} 节点最新风笺订阅`),
         feedPath: `/boards/${encodeURIComponent(board.slug)}/rss.xml`,
       },
       posts,
@@ -190,7 +190,7 @@ export async function generateUserRssXml(user: { username: string; displayName?:
       channel: {
         title: `${displayName} - ${normalizeText(settings.siteName)}`,
         link: await toAbsoluteSiteUrl(`/users/${encodeURIComponent(user.username)}`),
-        description: normalizeText(user.bio || `${displayName} 发布的最新帖子订阅`),
+        description: normalizeText(user.bio || `${displayName} 发布的最新风笺订阅`),
         feedPath: `/users/${encodeURIComponent(user.username)}/rss.xml`,
       },
       posts,
@@ -209,7 +209,7 @@ export async function generateTagRssXml(tag: { slug: string; name: string; descr
       channel: {
         title: `#${normalizeText(tag.name)} - ${normalizeText(settings.siteName)}`,
         link: await toAbsoluteSiteUrl(`/tags/${encodeURIComponent(tag.slug)}`),
-        description: normalizeText(tag.description || `标签 ${tag.name} 下的最新帖子订阅`),
+        description: normalizeText(tag.description || `标签 ${tag.name} 下的最新风笺订阅`),
         feedPath: `/tags/${encodeURIComponent(tag.slug)}/rss.xml`,
       },
       posts,

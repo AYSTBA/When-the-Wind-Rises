@@ -61,7 +61,7 @@ import { getSiteSettings } from "@/lib/site-settings"
 import { getZones } from "@/lib/zones"
 
 const HOME_FEED_LABELS: Record<HomeFeedSort, string> = {
-  latest: "论坛",
+  latest: "风广场",
   new: "新贴",
   hot: "热门",
   featured: "精华",
@@ -370,9 +370,9 @@ export async function HomeFeedPage({
           const showPagination = isFollowingFeed ? page > 1 || feed.length > 0 : true
           const emptyStateText = isFollowingFeed
             ? currentUser
-              ? "你关注的节点和用户还没有可展示的帖子，或者你还没开始关注。"
-              : "登录后即可查看你关注的节点和用户最近发帖。"
-            : "当前排序下还没有可展示的帖子内容。"
+              ? "你关注的节点和用户还没有可展示的风笺，或者你还没开始关注。"
+              : "登录后即可查看你关注的节点和用户最近发笺。"
+            : "当前排序下还没有可展示的风笺内容。"
 
           return (
             <>

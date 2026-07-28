@@ -108,7 +108,7 @@ function calculateRewardPoints(stakePoints: number, taxRateBps: number) {
   const reward = rewardPoints.toNumber()
   const tax = taxPoints.toNumber()
   if (reward <= 0) {
-    businessRuleError("奖励积分必须大于0")
+    businessRuleError("奖励风铃必须大于0")
   }
 
   return { rewardPoints: reward, taxPoints: tax }
@@ -290,7 +290,7 @@ export async function getYinYangLobbyData(user: CurrentUser | null): Promise<Yin
     listOpenYinYangChallenges(20),
     user ? buildSummary(user) : Promise.resolve({
       userId: null,
-      pointName: "积分",
+      pointName: "风铃",
       points: 0,
       winCount: 0,
 
@@ -361,11 +361,11 @@ export async function createYinYangChallenge(user: CurrentUser, input: CreateCha
     businessRuleError("正确答案不合法")
   }
 
-  const stakePoints = toSafePositiveInteger(input.stakePoints, "积分彩头")
+  const stakePoints = toSafePositiveInteger(input.stakePoints, "风铃彩头")
   const minStakePoints = Number(config.minStakePoints ?? 10)
   const maxStakePoints = Number(config.maxStakePoints ?? 500)
   if (stakePoints < minStakePoints || stakePoints > maxStakePoints) {
-    businessRuleError(`积分彩头必须在${minStakePoints}-${maxStakePoints}之间`)
+    businessRuleError(`风铃彩头必须在${minStakePoints}-${maxStakePoints}之间`)
   }
 
   const { rewardPoints, taxPoints } = calculateRewardPoints(stakePoints, Number(config.taxRateBps ?? 1000))
@@ -407,7 +407,7 @@ export async function createYinYangChallenge(user: CurrentUser, input: CreateCha
       beforeBalance: latestUser.points,
       prepared: preparedStakeDelta,
       pointName,
-      insufficientMessage: "积分不足，无法发起挑战",
+      insufficientMessage: "风铃不足，无法发起挑战",
       reason: "[app:阴阳契] 发起挑战扣除托管本金",
       relatedType: "YINYANG_CHALLENGE",
       relatedId: challengeId,
@@ -475,7 +475,7 @@ export async function acceptYinYangChallenge(user: CurrentUser, input: AcceptCha
       beforeBalance: challenger.points,
       prepared: preparedStakeDelta,
       pointName: rewardPointName,
-      insufficientMessage: "积分不足，无法应战",
+      insufficientMessage: "风铃不足，无法应战",
       reason: "[app:阴阳契] 应战扣除托管本金",
       relatedType: "YINYANG_CHALLENGE",
       relatedId: challenge.id,
@@ -503,7 +503,7 @@ export async function acceptYinYangChallenge(user: CurrentUser, input: AcceptCha
       beforeBalance: winner.points,
       prepared: preparedWinnerSettlement,
       pointName: rewardPointName,
-      insufficientMessage: "积分不足，无法完成阴阳契结算",
+      insufficientMessage: "风铃不足，无法完成阴阳契结算",
       reason: isCorrect ? "[app:阴阳契] 挑战胜利返还本金并发放奖励" : "[app:阴阳契] 守擂成功返还本金并发放奖励",
       relatedType: "YINYANG_CHALLENGE",
       relatedId: challenge.id,

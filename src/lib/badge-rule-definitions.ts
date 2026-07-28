@@ -14,7 +14,7 @@ type BadgeRuleTypeOption = {
 export const BADGE_RULE_TYPE_OPTIONS: BadgeRuleTypeOption[] = [
   { value: BadgeRuleType.REGISTER_DAYS, label: "注册天数", placeholder: "如 30", valueMode: "number" },
   { value: BadgeRuleType.REGISTER_TIME_RANGE, label: "注册时间", placeholder: "选择注册时间", valueMode: "datetime-local" },
-  { value: BadgeRuleType.POST_COUNT, label: "发帖数", placeholder: "如 10", valueMode: "number" },
+  { value: BadgeRuleType.POST_COUNT, label: "发笺数", placeholder: "如 10", valueMode: "number" },
   { value: BadgeRuleType.COMMENT_COUNT, label: "回复数", placeholder: "如 20", valueMode: "number" },
   { value: BadgeRuleType.RECEIVED_LIKE_COUNT, label: "获赞数", placeholder: "如 100", valueMode: "number" },
   { value: BadgeRuleType.GOD_COMMENT_COUNT, label: "神评数", placeholder: "如 3", valueMode: "number" },

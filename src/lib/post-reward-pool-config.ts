@@ -53,7 +53,7 @@ export function isPostRewardPoolMode(value: unknown): value is PostRewardPoolMod
 }
 
 export function getPostRewardPoolModeLabel(mode: PostRewardPoolMode) {
-  return mode === "JACKPOT" ? "聚宝盆" : "帖子红包"
+  return mode === "JACKPOT" ? "聚宝盆" : "风笺红包"
 }
 
 export function parseStoredPostRewardPoolConfig(value: unknown): StoredPostRewardPoolConfig | null {

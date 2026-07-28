@@ -116,7 +116,7 @@ export async function deletePostPermanently(postId: string) {
     })
 
     if (!post) {
-      throw new Error("帖子不存在")
+      throw new Error("风笺不存在")
     }
 
     const commentGroups = await tx.comment.groupBy({

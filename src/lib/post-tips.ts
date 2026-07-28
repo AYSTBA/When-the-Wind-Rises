@@ -81,7 +81,7 @@ function buildTipReason(target: TipTargetContext, amount: number, pointName: str
     return `赠送礼物（${gift.name} / ${amount}${pointName}）`
   }
 
-  return `打赏${target.type === "comment" ? "评论" : "帖子"}（${amount}${pointName}）`
+  return `打赏${target.type === "comment" ? "评论" : "风笺"}（${amount}${pointName}）`
 }
 
 function getTodayRange() {
@@ -154,7 +154,7 @@ function validateSupportContext(params: {
   }
 
   if (target.recipientId === senderId) {
-    postTipError(400, `不能给自己的${target.type === "comment" ? "评论" : "帖子"}打赏`)
+    postTipError(400, `不能给自己的${target.type === "comment" ? "评论" : "风笺"}打赏`)
   }
 
   if (sender.status === "MUTED" || sender.status === "BANNED") {
@@ -217,7 +217,7 @@ async function createPostSupportBaseTransaction(params: {
             type: "post",
             post: targetRecord as PostTipSupportPostRecord,
             recipientId: (targetRecord as PostTipSupportPostRecord).authorId,
-            label: "帖子",
+            label: "风笺",
             relatedType: "POST",
             relatedId: (targetRecord as PostTipSupportPostRecord).id,
           }
@@ -226,7 +226,7 @@ async function createPostSupportBaseTransaction(params: {
     if (params.commentId && target && target.post.id !== params.postId) {
       // The route carries both IDs; never let a public comment ID silently select
       // a target from a different post and invalidate/categorize the wrong resource.
-      postTipError(404, "评论不属于指定帖子")
+      postTipError(404, "评论不属于指定风笺")
     }
 
     validateSupportContext({
@@ -279,7 +279,7 @@ async function createPostSupportBaseTransaction(params: {
       ? buildPreparedPointDeltaFromFinalInteger(recipientPreparedDelta, taxSplit.net)
       : recipientPreparedDelta
     const recipientBaseReason = params.gift
-      ? `帖子收到礼物 ${params.gift.name}`
+      ? `风笺收到礼物 ${params.gift.name}`
       : `${activeTarget.label}被打赏`
 
     if (activeTarget.type === "comment") {
@@ -374,10 +374,10 @@ async function createPostSupportBaseTransaction(params: {
       relatedId: activeTarget.relatedId,
       title: `你的${activeTarget.label}收到了打赏`,
       content: params.gift
-        ? `${sender.username} 送出了 ${params.gift.name} 给你的帖子《${post.title}》，你已收到 ${Math.abs(recipientAppliedPreparedDelta.finalDelta)} ${params.pointName}。`
+        ? `${sender.username} 送出了 ${params.gift.name} 给你的风笺《${post.title}》，你已收到 ${Math.abs(recipientAppliedPreparedDelta.finalDelta)} ${params.pointName}。`
         : activeTarget.type === "comment"
           ? `${sender.username} 打赏了你在《${post.title}》下的评论，你已收到 ${Math.abs(recipientAppliedPreparedDelta.finalDelta)} ${params.pointName}。`
-          : `${sender.username} 打赏了你的帖子《${post.title}》，你已收到 ${Math.abs(recipientAppliedPreparedDelta.finalDelta)} ${params.pointName}。`,
+          : `${sender.username} 打赏了你的风笺《${post.title}》，你已收到 ${Math.abs(recipientAppliedPreparedDelta.finalDelta)} ${params.pointName}。`,
     })
 
     return {
@@ -637,7 +637,7 @@ export async function tipPost(input: { postId: string; senderId: number; amount:
     : null
 
   if (!settings.tippingEnabled) {
-    postTipError(403, "当前未开启帖子打赏")
+    postTipError(403, "当前未开启风笺打赏")
   }
 
   if (input.giftId && !matchedGift) {

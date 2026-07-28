@@ -192,7 +192,7 @@ export function SearchForm({
               value={keyword}
               onChange={(event) => handleKeywordChange(event.target.value)}
               className={`h-9 w-full rounded-full border border-border bg-muted/50 py-2 pr-4 text-sm focus:outline-hidden focus:ring-primary ${hasDesktopApps ? "pl-16" : "pl-10"}`}
-              placeholder={searchEnabled ? "搜索帖子、用户、节点、标签..." : "输入关键词后选择 Google 或 Bing"}
+              placeholder={searchEnabled ? "搜索风笺、用户、节点、标签..." : "输入关键词后选择 Google 或 Bing"}
               maxLength={50}
               type="search"
             />
@@ -205,7 +205,7 @@ export function SearchForm({
               value={keyword}
               onChange={(event) => handleKeywordChange(event.target.value)}
               className="w-full bg-transparent text-sm text-foreground outline-hidden placeholder:text-muted-foreground"
-              placeholder={searchEnabled ? "搜索帖子、用户、节点、标签" : "输入关键词后选择 Google 或 Bing"}
+              placeholder={searchEnabled ? "搜索风笺、用户、节点、标签" : "输入关键词后选择 Google 或 Bing"}
               maxLength={50}
               type="search"
             />

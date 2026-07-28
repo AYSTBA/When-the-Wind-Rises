@@ -224,7 +224,7 @@ export async function getUserPointLogs(
   }, {
     area: "points",
     action: "getUserPointLogs",
-    message: "积分日志加载失败",
+    message: "风铃日志加载失败",
     metadata: { userId, after: options.after ?? null, before: options.before ?? null, changeType, eventType },
     fallback: {
       items: [],
@@ -340,7 +340,7 @@ export async function getUserPointsDashboard(input: {
   }, {
     area: "points",
     action: "getUserPointsDashboard",
-    message: "积分概览加载失败",
+    message: "风铃概览加载失败",
     metadata: {
       userId: input.userId,
       month,

@@ -57,7 +57,7 @@ interface BadgeCenterProps {
 
 const MAX_DISPLAYED_BADGES = 3
 
-export function BadgeCenter({ badges, isLoggedIn, pointName = "积分" }: BadgeCenterProps) {
+export function BadgeCenter({ badges, isLoggedIn, pointName = "风铃" }: BadgeCenterProps) {
   const [items, setItems] = useState(badges)
   const [activeCategory, setActiveCategory] = useState<string>("全部")
   const [feedback, setFeedback] = useState("")
@@ -169,7 +169,7 @@ export function BadgeCenter({ badges, isLoggedIn, pointName = "积分" }: BadgeC
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Badge Center</p>
             <h1 className="mt-2 text-3xl font-semibold">社区勋章中心</h1>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">满足条件后由你自己手动领取。已领取的勋章可以选择佩戴在帖子用户名右侧，最多佩戴{MAX_DISPLAYED_BADGES} 个。</p>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">满足条件后由你自己手动领取。已领取的勋章可以选择佩戴在用户名右侧，最多佩戴{MAX_DISPLAYED_BADGES} 个。</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (

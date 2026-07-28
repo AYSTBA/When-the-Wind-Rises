@@ -212,11 +212,11 @@ export async function updateInteractionSiteSettingsSection(existing: SiteSetting
     const heatStageColors = normalizeHeatColors(body.heatStageColors)
 
     if (tippingEnabled && tippingAmounts.length === 0) {
-      apiError(400, "开启打赏后，至少配置一个积分打赏档位")
+      apiError(400, "开启打赏后，至少配置一个风铃打赏档位")
     }
 
     if (postRedPacketEnabled && postRedPacketDailyLimit < postRedPacketMaxPoints) {
-      apiError(400, "每日发红包积分上限不能小于单个红包上限")
+      apiError(400, "每日发红包风铃上限不能小于单个红包上限")
     }
 
     const appStateWithCommentAccess = mergeCommentAccessSettings(existing.appStateJson, {
@@ -299,11 +299,11 @@ export async function updateInteractionSiteSettingsSection(existing: SiteSetting
     })
 
     if (heatStageThresholds.length !== 9) {
-      apiError(400, "帖子热度阈值必须配置 9 段数值")
+      apiError(400, "风笺热度阈值必须配置 9 段数值")
     }
 
     if (heatStageColors.length !== 9) {
-      apiError(400, "帖子热度颜色必须配置 9 段颜色")
+      apiError(400, "风笺热度颜色必须配置 9 段颜色")
     }
 
     const settings = await updateSiteSettingsRecordWithGiftDefinitions(existing.id, {

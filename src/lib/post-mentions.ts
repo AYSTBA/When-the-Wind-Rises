@@ -79,8 +79,8 @@ export async function createPostMentionNotifications(params: {
       senderId: params.senderId,
       relatedType: "POST" as const,
       relatedId: params.postId,
-      title: "你在帖子中被提及了",
-      content: `${params.senderName} 在帖子中提到了你：${summary || "查看帖子详情"}`,
+      title: "你在风笺中被提及了",
+      content: `${params.senderName} 在风笺中提到了你：${summary || "查看风笺详情"}`,
     })),
   })
 

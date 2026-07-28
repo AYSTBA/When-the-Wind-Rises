@@ -139,9 +139,9 @@ export async function getAdminPosts(query: AdminPostQuery = {}): Promise<AdminPo
   const currentUser = await requireAdminActor()
 
   if (!currentUser) {
-    apiError(403, "无权限访问帖子管理")
+    apiError(403, "无权限访问风笺管理")
   }
-  await ensureAdminActorPermission(currentUser, "admin.content.manage", "无权限访问帖子管理")
+  await ensureAdminActorPermission(currentUser, "admin.content.manage", "无权限访问风笺管理")
 
   const normalizedQuery = normalizeAdminPostQuery(query)
   const where = buildAdminPostWhere(currentUser, normalizedQuery)

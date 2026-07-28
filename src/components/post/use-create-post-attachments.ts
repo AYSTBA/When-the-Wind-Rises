@@ -42,7 +42,7 @@ export function useCreatePostAttachments({
     }
 
     if (draft.attachments.length >= MAX_POST_ATTACHMENTS) {
-      toast.info(`单个帖子最多添加 ${MAX_POST_ATTACHMENTS} 个附件`, "附件数量已满")
+      toast.info(`单个风笺最多添加 ${MAX_POST_ATTACHMENTS} 个附件`, "附件数量已满")
       return
     }
 
@@ -189,7 +189,7 @@ export function useCreatePostAttachments({
 
     const remainingSlots = MAX_POST_ATTACHMENTS - draft.attachments.length
     if (remainingSlots <= 0) {
-      toast.info(`单个帖子最多添加 ${MAX_POST_ATTACHMENTS} 个附件`, "附件数量已满")
+      toast.info(`单个风笺最多添加 ${MAX_POST_ATTACHMENTS} 个附件`, "附件数量已满")
       return
     }
 
@@ -267,8 +267,8 @@ export function useCreatePostAttachments({
         })
         toast.success(
           uploadedDraftAttachments.length === 1
-            ? "附件已上传并加入帖子草稿"
-            : `${uploadedDraftAttachments.length} 个附件已上传并加入帖子草稿`,
+            ? "附件已上传并加入风笺草稿"
+            : `${uploadedDraftAttachments.length} 个附件已上传并加入风笺草稿`,
           "附件上传成功",
         )
       }

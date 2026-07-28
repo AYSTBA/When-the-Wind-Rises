@@ -128,8 +128,8 @@ async function applyPostLikeMutationEffects(input: {
       senderId: input.actor.id,
       relatedType: "POST",
       relatedId: input.postId,
-      title: "你的帖子收到了赞",
-      content: `${input.actor.nickname ?? input.actor.username} 赞了你的帖子：${input.result.postTitle}`,
+      title: "你的风笺收到了赞",
+      content: `${input.actor.nickname ?? input.actor.username} 赞了你的风笺：${input.result.postTitle}`,
     })
   }
 
@@ -316,7 +316,7 @@ export async function ensurePostLiked(input: {
     ])
 
     if (!post) {
-      throw new Error("帖子不存在或暂不可点赞")
+      throw new Error("风笺不存在或暂不可点赞")
     }
 
     if (existingLike) {
@@ -348,7 +348,7 @@ export async function ensurePostLiked(input: {
     })
 
     if (!result.liked) {
-      throw new Error("帖子点赞失败")
+      throw new Error("风笺点赞失败")
     }
 
     await applyPostLikeMutationEffects({

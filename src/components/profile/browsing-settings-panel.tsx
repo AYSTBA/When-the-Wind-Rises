@@ -49,21 +49,21 @@ export function BrowsingSettingsPanel() {
           <PreferenceRow
             icon={EyeOff}
             title="已读链接标识"
-            description="开启后，已访问的帖子标题会变暗，仅对帖子列表标题生效。"
+            description="开启后，已访问的风笺标题会变暗，仅对风笺列表标题生效。"
             checked={preferences.dimReadPostTitles}
             onChange={(checked) => updateBrowsingPreferences({ dimReadPostTitles: checked })}
           />
           <PreferenceRow
             icon={ExternalLink}
-            title="新标签页打开帖子"
-            description="若开启，点击帖子链接时，将在新标签页中打开帖子页面。"
+            title="新标签页打开风笺"
+            description="若开启，点击风笺链接时，将在新标签页中打开风笺页面。"
             checked={preferences.openPostLinksInNewTab}
             onChange={(checked) => updateBrowsingPreferences({ openPostLinksInNewTab: checked })}
           />
           <ChoiceRow
             icon={MessageSquareText}
             title="评论区视图"
-            description="控制帖子详情页评论区默认以树形嵌套还是平铺展开显示。"
+            description="控制风笺详情页评论区默认以树形嵌套还是平铺展开显示。"
             value={preferences.commentThreadDisplayMode}
             options={[
               { value: "tree", label: "树形" },
@@ -74,7 +74,7 @@ export function BrowsingSettingsPanel() {
           <ChoiceRow
             icon={ArrowDownUp}
             title="评论排序"
-            description="控制帖子详情页评论区默认按发布时间正序或倒序显示。"
+            description="控制风笺详情页评论区默认按发布时间正序或倒序显示。"
             value={preferences.commentThreadSort}
             options={[
               { value: "oldest", label: "最早" },
@@ -85,7 +85,7 @@ export function BrowsingSettingsPanel() {
           <ChoiceRow
             icon={Sparkles}
             title="红包 / 聚宝盆动画"
-            description="控制帖子详情页首屏奖励池入场动画的播放策略。"
+            description="控制风笺详情页首屏奖励池入场动画的播放策略。"
             value={preferences.rewardPoolIntroAnimationMode}
             options={[
               { value: "always", label: "每次播放" },

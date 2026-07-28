@@ -251,7 +251,7 @@ export const adminModerationActionHandlers: Record<string, AdminActionDefinition
       revalidatePaths: [`/posts/${comment.post.slug}`, "/admin"],
     }
   }),
-  "board.togglePosting": defineAdminAction({ targetType: "BOARD", revalidatePaths: ["/", "/admin"], buildDetail: () => "管理员切换版块发帖权限" }, async (context) => {
+  "board.togglePosting": defineAdminAction({ targetType: "BOARD", revalidatePaths: ["/", "/admin"], buildDetail: () => "管理员切换版块发笺权限" }, async (context) => {
     ensureReviewerCanUseCommentAction(context.actor, "board.togglePosting")
     await ensureCanEditBoard(context.actor, context.targetId)
     const board = await findBoardPostingState(context.targetId)
@@ -260,7 +260,7 @@ export const adminModerationActionHandlers: Record<string, AdminActionDefinition
     revalidateContentListCaches()
     expireTaxonomyCacheImmediately()
     await writeAdminActionLog(context, adminModerationActionHandlers["board.togglePosting"].metadata)
-    return { message: board.allowPost ? "已关闭发帖" : "已开放发帖" }
+    return { message: board.allowPost ? "已关闭发笺" : "已开放发笺" }
   }),
   "board.hide": defineAdminAction({ targetType: "BOARD", revalidatePaths: ["/", "/admin"], buildDetail: () => "管理员切换版块显示状态" }, async (context) => {
     ensureReviewerCanUseCommentAction(context.actor, "board.hide")

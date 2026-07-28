@@ -92,7 +92,7 @@ export const POST = createUserRouteHandler<unknown>(async ({ request, currentUse
       affectedPostIds: created.affectedPostIds,
     })
     return apiSuccess(created, body.postId
-      ? (created.contentAdjusted ? "合集已创建，帖子已加入，部分内容已自动替换" : "合集已创建，帖子已加入")
+      ? (created.contentAdjusted ? "合集已创建，风笺已加入，部分内容已自动替换" : "合集已创建，风笺已加入")
       : (created.contentAdjusted ? "合集已创建，部分内容已自动替换" : "合集已创建"))
   }
 
@@ -147,7 +147,7 @@ export const POST = createUserRouteHandler<unknown>(async ({ request, currentUse
       postId: result.postId,
       affectedPostIds: result.affectedPostIds,
     })
-    return apiSuccess(result, "帖子已移出合集")
+    return apiSuccess(result, "风笺已移出合集")
   }
 
   if (action === "review-submission") {

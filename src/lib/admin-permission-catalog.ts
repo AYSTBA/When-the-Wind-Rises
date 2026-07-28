@@ -17,8 +17,8 @@ export const ADMIN_PERMISSION_CATALOG = [
   },
   {
     key: "admin.content.manage",
-    label: "管理帖子",
-    description: "审核、下线、锁定、置顶和推荐帖子。",
+    label: "管理风笺",
+    description: "审核、下线、锁定、置顶和推荐风笺。",
     group: "content",
   },
   {
@@ -61,7 +61,7 @@ export const ADMIN_PERMISSION_CATALOG = [
   {
     key: "admin.users.manage",
     label: "管理用户",
-    description: "编辑用户资料、状态、积分、VIP 和通知。",
+    description: "编辑用户资料、状态、风铃、VIP 和通知。",
     group: "users",
   },
   {
@@ -99,8 +99,8 @@ export const ADMIN_PERMISSION_CATALOG = [
   },
   {
     key: "admin.forumCore.manage",
-    label: "论坛核心",
-    description: "修改论坛核心配置。",
+    label: "风广场核心",
+    description: "修改风广场核心配置。",
     group: "system",
     highRisk: true,
   },
@@ -128,7 +128,7 @@ export const ADMIN_PERMISSION_CATALOG = [
   {
     key: "admin.logs.view",
     label: "查看日志",
-    description: "查看后台操作、登录、积分和上传日志。",
+    description: "查看后台操作、登录、风铃和上传日志。",
     group: "operations",
   },
   {

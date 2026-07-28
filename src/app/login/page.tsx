@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: `登录 - ${settings.siteName}`,
-    description: `使用邮箱或用户名登录 ${settings.siteName}，继续浏览帖子、参与讨论并管理你的账户。`,
+    description: `使用邮箱或用户名登录 ${settings.siteName}，继续浏览风笺、参与讨论并管理你的账户。`,
   }
 }
 

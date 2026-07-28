@@ -3,10 +3,10 @@ import { PointEffectDirection, PointEffectRuleKind, PointEffectTargetType } from
 export const BADGE_EFFECT_SCOPE_HOME_AUTO_CHECK_IN = "HOME_AUTO_CHECK_IN"
 
 export const POINT_EFFECT_SCOPE_OPTIONS = [
-  { value: "ALL_POINT_CHANGES", label: "所有积分增减", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: false },
+  { value: "ALL_POINT_CHANGES", label: "所有风铃增减", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: false },
   { value: "ALL_PROBABILITIES", label: "所有概率", targetTypes: [PointEffectTargetType.PROBABILITY], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: false },
-  { value: "POST_CREATE", label: "发帖积分", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
-  { value: "COMMENT_CREATE", label: "回帖积分", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
+  { value: "POST_CREATE", label: "发笺风铃", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
+  { value: "COMMENT_CREATE", label: "回笺风铃", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: "CHECK_IN_REWARD", label: "签到奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: "CHECK_IN_MAKE_UP_COST", label: "补签消耗", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: BADGE_EFFECT_SCOPE_HOME_AUTO_CHECK_IN, label: "首页自动签到", targetTypes: [PointEffectTargetType.FUNCTION], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: false },
@@ -18,9 +18,9 @@ export const POINT_EFFECT_SCOPE_OPTIONS = [
   { value: "RED_PACKET_RANDOM_CLAIM_PROBABILITY", label: "红包随机领取概率", targetTypes: [PointEffectTargetType.PROBABILITY], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: "RED_PACKET_CLAIM", label: "领取红包", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: "JACKPOT_PUBLISH", label: "发布聚宝盆", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
-  { value: "JACKPOT_REPLY_INCREMENT", label: "聚宝盆回帖加池", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
+  { value: "JACKPOT_REPLY_INCREMENT", label: "聚宝盆回笺加池", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "JACKPOT_HIT_PROBABILITY", label: "聚宝盆中奖概率", targetTypes: [PointEffectTargetType.PROBABILITY], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
-  { value: "JACKPOT_CLAIM", label: "聚宝盆中奖积分", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
+  { value: "JACKPOT_CLAIM", label: "聚宝盆中奖风铃", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: true, badgeEffectRuntimeMatchable: true },
   { value: "BADGE_PURCHASE", label: "勋章购买", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "NICKNAME_CHANGE", label: "修改昵称", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "INTRODUCTION_CHANGE", label: "修改介绍", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
@@ -29,11 +29,11 @@ export const POINT_EFFECT_SCOPE_OPTIONS = [
   { value: "INVITE_REWARD_INVITER", label: "邀请人奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "INVITE_REWARD_INVITEE", label: "被邀请人奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "REGISTER_INITIAL_REWARD", label: "注册初始奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
-  { value: "POINTS_TOPUP", label: "积分充值", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
+  { value: "POINTS_TOPUP", label: "风铃充值", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "TASK_REWARD", label: "任务奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "VIP_PURCHASE", label: "VIP 购买", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "VERIFICATION_APPLICATION", label: "认证申请", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
-  { value: "POST_OFFLINE_PURCHASE", label: "帖子下线消耗", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
+  { value: "POST_OFFLINE_PURCHASE", label: "风笺下线消耗", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "POST_UNLOCK_OUTGOING", label: "付费内容购买支出", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "POST_UNLOCK_INCOMING", label: "付费内容购买收入", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "PAYMENT_APP_OUTGOING", label: "第三方支付支出", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
@@ -44,10 +44,10 @@ export const POINT_EFFECT_SCOPE_OPTIONS = [
   { value: "POST_AUCTION_WIN_SETTLEMENT", label: "拍卖赢家结算", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "POST_AUCTION_SELLER_INCOME", label: "拍卖卖家收入", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "BOUNTY_ACCEPT_REWARD", label: "悬赏采纳奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
-  { value: "BOUNTY_POST_FREEZE", label: "悬赏发帖冻结", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
+  { value: "BOUNTY_POST_FREEZE", label: "悬赏发笺冻结", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "LOTTERY_PRIZE_SPONSOR_COST", label: "抽奖奖品预扣", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "LOTTERY_PRIZE_REFUND", label: "抽奖奖品退回", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
-  { value: "LOTTERY_PRIZE_POINTS_AWARD", label: "抽奖中奖积分", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
+  { value: "LOTTERY_PRIZE_POINTS_AWARD", label: "抽奖中奖风铃", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "REDEEM_CODE_REWARD", label: "兑换码奖励", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "YINYANG_STAKE_OUTGOING", label: "阴阳赌注支出", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
   { value: "YINYANG_SETTLEMENT_INCOMING", label: "阴阳结算收入", targetTypes: [PointEffectTargetType.POINTS], badgeEffectEnabled: false, badgeEffectRuntimeMatchable: false },
@@ -62,7 +62,7 @@ export type PointEffectScopeKey = (typeof POINT_EFFECT_SCOPE_OPTIONS)[number]["v
 const POINT_EFFECT_SCOPE_VALUE_SET = new Set<string>(POINT_EFFECT_SCOPE_OPTIONS.map((item) => item.value))
 
 export const POINT_EFFECT_TARGET_OPTIONS = [
-  { value: PointEffectTargetType.POINTS, label: "积分" },
+  { value: PointEffectTargetType.POINTS, label: "风铃" },
   { value: PointEffectTargetType.PROBABILITY, label: "概率" },
   { value: PointEffectTargetType.FUNCTION, label: "功能" },
 ] as const

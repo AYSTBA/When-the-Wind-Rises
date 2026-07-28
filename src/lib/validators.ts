@@ -316,11 +316,11 @@ export function validatePostPayload(body: unknown, options: PostPayloadValidatio
   }
 
   if (!Number.isInteger(rawMinViewLevel) || rawMinViewLevel < 0 || rawMinViewLevel > 999) {
-    return { success: false, message: "帖子最低浏览等级需为 0-999 的整数" }
+    return { success: false, message: "风笺最低浏览等级需为 0-999 的整数" }
   }
 
   if (!Number.isInteger(rawMinViewVipLevel) || rawMinViewVipLevel < 0 || rawMinViewVipLevel > 999) {
-    return { success: false, message: "帖子最低 VIP 浏览等级需为 0-999 的整数" }
+    return { success: false, message: "风笺最低 VIP 浏览等级需为 0-999 的整数" }
   }
 
   if (postType === "BOUNTY") {

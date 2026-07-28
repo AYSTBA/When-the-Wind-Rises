@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Gem, LayoutDashboard, LogOut, Medal, MessageSquareMore, Settings, TrendingUp, User, Wallet } from "lucide-react"
+import { LayoutDashboard, LogOut, Medal, MessageSquareMore, Settings, TrendingUp, User, Wallet } from "lucide-react"
 
 import { useInboxRealtime } from "@/components/inbox-realtime-provider"
 import { useCurrentUser, type CurrentUserClient } from "@/components/current-user-provider"
@@ -127,7 +127,7 @@ function UserMenuContent({
 
         <DropdownMenuItem render={<Link href={resolveSettingsHref("points")} />}>
           <Wallet />
-          积分明细
+          风铃明细
           <DropdownMenuShortcut>账单</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuGroup>
@@ -137,12 +137,6 @@ function UserMenuContent({
           <Settings />
           设置
         </DropdownMenuItem>
-        {includeVip ? (
-          <DropdownMenuItem render={<Link href="/vip" />}>
-            <Gem />
-            VIP
-          </DropdownMenuItem>
-        ) : null}
         <DropdownMenuItem render={<Link href={resolveSettingsHref("badges")} />}>
           <Medal />
           勋章

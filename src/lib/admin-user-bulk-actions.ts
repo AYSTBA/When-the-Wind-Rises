@@ -356,7 +356,7 @@ async function runDeleteBulkAction(actor: AdminActor, users: BulkUserRecord[], s
     }
 
     if (user.postCount > 0 || user.commentCount > 0) {
-      pushSkipped(skippedReasons, "用户已有发帖或评论，未执行物理删除")
+      pushSkipped(skippedReasons, "用户已有发笺或评论，未执行物理删除")
       continue
     }
 

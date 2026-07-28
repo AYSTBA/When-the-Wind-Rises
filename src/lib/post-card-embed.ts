@@ -549,7 +549,7 @@ export function replacePostCardEmbedTokensForSummary(content: string) {
     }
 
     if (!isInlinePostCardEmbedTokenLine(line)) {
-      lines.push(`站内帖子：${snapshot.title}`)
+      lines.push(`站内风笺：${snapshot.title}`)
     }
   }
 

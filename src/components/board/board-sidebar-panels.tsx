@@ -40,7 +40,7 @@ interface BoardSidebarPanelsProps {
 }
 
 const DEFAULT_BOARD_RULES_MARKDOWN = [
-  "1. 请围绕当前节点主题发帖与回复",
+  "1. 请围绕当前节点主题发笺与回复",
   "2. 禁止广告、灌水、引战、人身攻击与违法内容",
   "3. 尊重作者与社友，引用外部内容请注明来源",
   "4. 节点版主会根据站点规范与节点规则处理违规内容",

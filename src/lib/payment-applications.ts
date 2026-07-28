@@ -787,7 +787,7 @@ export async function reviewPaymentApplication(input: {
         ? "你的 Payment 应用未通过审核"
         : "你的 Payment 应用已被禁用",
     content: input.action === "approve"
-      ? `你提交的 Payment 应用“${updated.name}”已通过审核，现在可以用于第三方积分支付收款。`
+      ? `你提交的 Payment 应用“${updated.name}”已通过审核，现在可以用于第三方风铃支付收款。`
       : input.action === "reject"
         ? `你提交的 Payment 应用“${updated.name}”未通过审核。${reviewNote ? `审核备注：${reviewNote}` : "请修改后重新提交。"}`
         : `你的 Payment 应用“${updated.name}”已被管理员禁用。${reviewNote ? `原因：${reviewNote}` : ""}`,

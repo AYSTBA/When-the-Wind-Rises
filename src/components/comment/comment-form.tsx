@@ -79,7 +79,7 @@ function CommentFormContent({ postId, commentId, initialContent = "", mode = "cr
   const helperMessage = privateReplyRecipient
     ? `本次回复仅 ${privateReplyRecipient.displayName} 和你本人可见。`
     : commentsVisibleToAuthorOnly
-    ? "当前帖子开启了评论仅楼主可见，你的评论仅楼主、管理员和你自己可见。"
+    ? "当前风笺开启了评论仅楼主可见，你的评论仅楼主、管理员和你自己可见。"
     : "可使用 @昵称/用户名 提及他人。"
   const primaryShortcutKey = shortcutPlatform === "mac" ? "Cmd" : "Ctrl"
   const formClassName = compact

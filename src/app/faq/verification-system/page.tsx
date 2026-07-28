@@ -20,7 +20,7 @@ export default async function VerificationSystemFaqPage() {
       currentPath="/faq/verification-system"
       eyebrow="Verification System"
       title="认证系统"
-      description="认证系统用于给账号附加可核验身份。提交申请并审核通过后，帖子和评论作者名前会显示对应认证图标。当前 FAQ 只说明已经上线的真实申请与审核机制。"
+      description="认证系统用于给账号附加可核验身份。提交申请并审核通过后，风笺和评论作者名前会显示对应认证图标。当前 FAQ 只说明已经上线的真实申请与审核机制。"
     >
       <section className="grid gap-4 md:grid-cols-3">
         <Card>
@@ -109,7 +109,7 @@ export default async function VerificationSystemFaqPage() {
         <CardContent className="space-y-3 text-sm leading-7 text-muted-foreground">
           <div className="rounded-xl border border-border px-4 py-4">同一账号如果已经通过了某个认证，不能再直接申请其它认证，除非先解除当前认证绑定。</div>
           <div className="rounded-xl border border-border px-4 py-4">如果某个认证类型配置了表单字段，前台会按字段生成申请表，而不是只填一段自由说明。</div>
-          <div className="rounded-xl border border-border px-4 py-4">认证通过后，显示逻辑会跟随账号走，不是只在某篇帖子里临时生效。</div>
+          <div className="rounded-xl border border-border px-4 py-4">认证通过后，显示逻辑会跟随账号走，不是只在某篇风笺里临时生效。</div>
         </CardContent>
       </Card>
     </FaqPageFrame>

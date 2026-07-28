@@ -20,7 +20,7 @@ import { PostDetailHeader } from "@/components/post/post-detail-header"
 import { PostAdminPanel } from "@/components/admin/post-admin-panel"
 import { PostEditPanel } from "@/components/post/post-edit-panel"
 import { PostEngagementBar } from "@/components/post/post-engagement-bar"
-import { PostRewardPoolHighlightBar } from "@/components/post/post-reward-pool-highlight-bar"
+
 import { PostReadingHistoryRecorder } from "@/components/post/post-reading-history-recorder"
 import { PostSidebarPanels } from "@/components/post/post-sidebar-panels"
 import { RestrictedPostBlock } from "@/components/post/restricted-post-block"
@@ -109,7 +109,7 @@ export async function generateMetadata(props: PageProps<"/posts/[slug]">): Promi
 
   if (!post) {
     return {
-      title: `帖子不存在 - ${settings.siteName}`,
+      title: `风笺不存在 - ${settings.siteName}`,
     }
   }
 
@@ -118,7 +118,7 @@ export async function generateMetadata(props: PageProps<"/posts/[slug]">): Promi
   return {
     title: `${post.title} - ${settings.siteName}`,
     description: post.description,
-    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [post.title, post.slug, post.description, "帖子", "论坛帖子"]),
+    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [post.title, post.slug, post.description, "风笺", "风广场风笺"]),
     alternates: {
       canonical: canonicalPath,
     },
@@ -546,18 +546,18 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
             <article className="mt-6 mb-4 space-y-6">
             {displayPost.status === "PENDING" ? (
               <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
-                当前帖子处于<strong>待审核</strong>状态，仅作者和管理员可查看。{displayPost.reviewNote ? `审核备注：${displayPost.reviewNote}` : "管理员审核通过后才会对其他用户可见。"}
+                当前风笺处于<strong>待审核</strong>状态，仅作者和管理员可查看。{displayPost.reviewNote ? `审核备注：${displayPost.reviewNote}` : "管理员审核通过后才会对其他用户可见。"}
               </div>
             ) : null}
 
             {displayPost.status === "OFFLINE" ? (
               <div className="rounded-xl border border-slate-300 bg-slate-50 px-5 py-4 text-sm text-slate-700 dark:border-slate-600 dark:bg-slate-900/60 dark:text-slate-100">
-                当前帖子已<strong>下线</strong>，仅作者和管理员可查看。{displayPost.reviewNote ? `下线原因：${displayPost.reviewNote}` : "暂未填写下线原因。"}
+                当前风笺已<strong>下线</strong>，仅作者和管理员可查看。{displayPost.reviewNote ? `下线原因：${displayPost.reviewNote}` : "暂未填写下线原因。"}
               </div>
             ) : null}
 
             {!canViewRestrictedPost && canViewPublicPost ? (
-              <AccessDeniedCard title="当前帖子暂不可查看" description="该帖子所在节点、分区或帖子本身设置了浏览门槛，未满足条件的用户无法查看帖子正文与互动内容。" reason={mergedViewPermission.message || "当前没有访问权限"} isLoggedIn={Boolean(currentUser)} redirectTarget={`/posts/${params.slug}`} />
+              <AccessDeniedCard title="当前风笺暂不可查看" description="该风笺所在节点、分区或风笺本身设置了浏览门槛，未满足条件的用户无法查看风笺正文与互动内容。" reason={mergedViewPermission.message || "当前没有访问权限"} isLoggedIn={Boolean(currentUser)} redirectTarget={`/posts/${params.slug}`} />
             ) : (
 
               <>
@@ -670,8 +670,6 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
                         favoriteCount={displayPost.stats.favorites}
                         initialLiked={displayPost.viewerState?.liked}
                         initialFavored={displayPost.viewerState?.favored}
-                        redPacket={displayPost.redPacket}
-                        tipping={displayPost.tipping}
                       />
                       </CardContent>
                       
@@ -681,9 +679,6 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
                   </PostBodyCopyMenu>
 
 
-
-
-                  <PostRewardPoolHighlightBar summary={displayPost.redPacket} attachedTop attachedBottom={hasAppendices} />
 
                   {hasAppendices ? (
                     <PostAppendixTimeline appendices={normalizedRenderedAppendices} markdownEmojiMap={settings.markdownEmojiMap} />
@@ -748,9 +743,9 @@ export default async function PostPage(props: PageProps<"/posts/[slug]">) {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {displayPost.status === "LOCKED" ? (
-                      <p className="text-sm text-muted-foreground">帖子已关闭回复，可以继续查看已有讨论。</p>
+                      <p className="text-sm text-muted-foreground">风笺已关闭回复，可以继续查看已有讨论。</p>
                     ) : displayPost.status !== "NORMAL" ? (
-                      <p className="text-sm text-muted-foreground">帖子当前不开放公开回复。</p>
+                      <p className="text-sm text-muted-foreground">风笺当前不开放公开回复。</p>
                     ) : !currentUser && !canViewComments ? (
                       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-secondary/30 px-4 py-3">
                         <p className="text-sm text-muted-foreground">当前站点已关闭游客查看评论，登录后可查看评论并参与回复讨论。</p>

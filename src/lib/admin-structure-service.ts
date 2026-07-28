@@ -209,9 +209,9 @@ function buildBoardAdvancedPayload(body: Record<string, unknown>, currentConfig?
 
 function ensureModeratorBoardAdvancedLimits(payload: ReturnType<typeof buildBoardAdvancedPayload>) {
   const limitedFields = [
-    { label: "发帖积分", value: payload.postPointDelta },
-    { label: "回复积分", value: payload.replyPointDelta },
-    { label: "发帖间隔", value: payload.postIntervalSeconds },
+    { label: "发笺风铃", value: payload.postPointDelta },
+    { label: "回复风铃", value: payload.replyPointDelta },
+    { label: "发笺间隔", value: payload.postIntervalSeconds },
     { label: "回复间隔", value: payload.replyIntervalSeconds },
   ]
 
@@ -482,7 +482,7 @@ export async function deleteStructureItem(params: {
     const postCount = await countPostsByBoard(id)
 
     if (postCount > 0) {
-      apiError(400, "该节点下仍有帖子，不能直接删除")
+      apiError(400, "该节点下仍有风笺，不能直接删除")
     }
 
     await deleteBoard(id)

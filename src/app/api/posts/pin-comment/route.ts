@@ -25,7 +25,7 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   })
 
   if (!post) {
-    apiError(404, "帖子不存在")
+    apiError(404, "风笺不存在")
   }
 
   const adminActor = await resolveAdminActorFromSessionUser(currentUser)

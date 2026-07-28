@@ -89,6 +89,6 @@ export const GET = createRouteHandler(async ({ request, routeContext }) => {
     }),
   })
 }, {
-  errorMessage: "获取分区帖子失败",
+  errorMessage: "获取分区风笺失败",
   logPrefix: "[api/zones/[slug]/posts] unexpected error",
 })

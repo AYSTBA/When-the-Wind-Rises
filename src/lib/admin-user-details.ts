@@ -168,11 +168,11 @@ export async function getAdminUserDetail(userId: number): Promise<AdminUserDetai
     },
     {
       key: "points",
-      title: "积分日志",
+      title: "风铃日志",
       description: "运营操作、签到和业务奖励都会沉淀到这里",
       total: pointTotal,
       href: buildAdminUserLogHref("points", user.username),
-      emptyText: "暂无积分日志",
+      emptyText: "暂无风铃日志",
       items: pointLogs.map<AdminUserDetailLogItem>((log) => {
         const parsed = resolvePointLogAuditPresentation(log.reason, log.eventData)
         const effectSummary = buildPointEffectSummaryText(parsed.pointEffect)
@@ -193,7 +193,7 @@ export async function getAdminUserDetail(userId: number): Promise<AdminUserDetai
     {
       key: "uploads",
       title: "上传日志",
-      description: "头像、帖子资源等用户上传轨迹",
+      description: "头像、风笺资源等用户上传轨迹",
       total: uploadTotal,
       href: buildAdminUserLogHref("uploads", user.username),
       emptyText: "暂无上传日志",

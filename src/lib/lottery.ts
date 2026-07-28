@@ -203,9 +203,9 @@ function normalizeInteger(value: unknown, fallback = 0) {
 function buildConditionDescription(type: LotteryConditionTypeValue, operator: LotteryConditionOperatorValue, value: string) {
   switch (type) {
     case "REPLY_CONTENT_LENGTH":
-      return `回帖内容至少 ${value} 字`
+      return `回笺内容至少 ${value} 字`
     case "REPLY_KEYWORD":
-      return `回帖内容需包含：${value}`
+      return `回笺内容需包含：${value}`
     case "LIKE_POST":
       return "需点赞本帖"
     case "FAVORITE_POST":
@@ -217,7 +217,7 @@ function buildConditionDescription(type: LotteryConditionTypeValue, operator: Lo
     case "VIP_LEVEL":
       return `VIP 等级至少 ${value}`
     case "USER_POINTS":
-      return `积分至少 ${value}`
+      return `风铃至少 ${value}`
     default:
       return `${type} ${operator} ${value}`
   }
@@ -309,7 +309,7 @@ export function normalizeLotteryConfig(raw: unknown): { success: boolean; messag
   for (const prize of prizes) {
     if (prize.type === "POINTS") {
       if (!Number.isInteger(prize.pointsAmount) || (prize.pointsAmount ?? 0) < 1 || (prize.pointsAmount ?? 0) > 100000) {
-        return { success: false, message: "积分奖品额度需为 1-100000 的整数" }
+        return { success: false, message: "风铃奖品额度需为 1-100000 的整数" }
       }
       continue
     }
@@ -532,7 +532,7 @@ export async function enrollUserInLotteryPool(input: { postId: string; userId: n
   const [post, user, replyComment] = await findLotteryEnrollmentContext(input)
 
   if (!post || !user) {
-    return { joined: false, reason: "帖子或用户不存在" }
+    return { joined: false, reason: "风笺或用户不存在" }
   }
 
   const eligibility = await checkLotteryEligibility({ post, user, replyComment })
@@ -635,8 +635,8 @@ async function sendLotteryWinnerEmails(input: {
       .map((winner) => sendUserNotificationEmail({
         to: winner.email,
         subject: `${settings.siteName} 抽奖中奖通知`,
-        text: `${winner.nickname ?? winner.username}，恭喜你在帖子《${input.postTitle}》中获得 ${winner.prizeTitle}。请尽快前往站内查看开奖结果：${postUrl}`,
-        html: `<div style="font-family:Arial,sans-serif;line-height:1.7;color:#111"><h2>恭喜中奖</h2><p>${winner.nickname ?? winner.username}，你在帖子《${input.postTitle}》中获得了 <strong>${winner.prizeTitle}</strong>。</p><p>请尽快登录站内查看开奖结果与领奖说明。</p><p>帖子地址：${postUrl}</p></div>`,
+        text: `${winner.nickname ?? winner.username}，恭喜你在风笺《${input.postTitle}》中获得 ${winner.prizeTitle}。请尽快前往站内查看开奖结果：${postUrl}`,
+        html: `<div style="font-family:Arial,sans-serif;line-height:1.7;color:#111"><h2>恭喜中奖</h2><p>${winner.nickname ?? winner.username}，你在风笺《${input.postTitle}》中获得了 <strong>${winner.prizeTitle}</strong>。</p><p>请尽快登录站内查看开奖结果与领奖说明。</p><p>风笺地址：${postUrl}</p></div>`,
         businessKey: "lotteryWinner",
       })),
   )

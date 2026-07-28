@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger } from "@/components/ui/sidebar"
+import { AdminSidebarShell } from "@/components/admin/admin-sidebar-shell"
 import {
   adminNavigation,
   getAdminNavigationGroups,
@@ -91,67 +92,19 @@ export async function AdminShell({
       className="min-h-svh bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,0.12),transparent_26%),linear-gradient(180deg,#fffdf8_0%,#f6efe5_100%)] text-foreground dark:bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,0.14),transparent_24%),linear-gradient(180deg,#111318_0%,#171b22_100%)]"
     >
       <Sidebar variant="inset" collapsible="icon">
-        <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                size="lg"
-                tooltip="后台管理"
-                render={<Link href="/admin" />}
-              >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shadow-xs">
-                  <Sparkles className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">后台管理</span>
-                  <span className="truncate text-xs text-sidebar-foreground/70">
-                    Rhex BBS
-                  </span>
-                </div>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarHeader>
-
-        <SidebarContent>
-          {navigationGroups.map((group) => (
-            <SidebarGroup key={group.key}>
-              <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {group.items.map((item) => {
-                    const Icon = item.icon
-
-                    return (
-                      <SidebarMenuItem key={item.key}>
-                        <SidebarMenuButton
-                          tooltip={item.label}
-                          isActive={item.key === currentKey}
-                          render={<Link href={item.href} />}
-                        >
-                          <Icon />
-                          <span>{item.label}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    )
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          ))}
-        </SidebarContent>
-
-        <SidebarFooter>
-          <SidebarSeparator />
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton render={<Link href="/" />} tooltip="返回前台">
-                <ArrowUpRight />
-                <span>返回前台</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
+        <AdminSidebarShell
+          groups={navigationGroups.map((group) => ({
+            key: group.key,
+            label: group.label,
+            items: group.items.map((item) => ({
+              key: item.key,
+              href: item.href,
+              label: item.label,
+              isActive: item.key === currentKey,
+            })),
+          }))}
+          currentKey={currentKey}
+        />
         <SidebarRail />
       </Sidebar>
 

@@ -113,7 +113,7 @@ export function TopupResultPage({ merchantOrderNo, pointName, initialStatus }: T
       ? (status.lastErrorMessage || "订单未完成，请返回充值页重新发起。")
       : waitingPayment
         ? "如果你刚刚完成支付，请稍等几秒，系统会自动刷新订单状态。"
-        : "支付已经确认，系统正在处理积分到账，请不要重复付款。"
+        : "支付已经确认，系统正在处理风铃到账，请不要重复付款。"
 
   useEffect(() => {
     if (!succeeded) {
@@ -172,11 +172,8 @@ export function TopupResultPage({ merchantOrderNo, pointName, initialStatus }: T
       </section>
 
       <div className="flex flex-wrap gap-3">
-        <Link href="/topup">
-          <Button type="button">继续充值</Button>
-        </Link>
         <Link href="/settings?tab=points">
-          <Button type="button" variant="outline">查看积分明细</Button>
+          <Button type="button" variant="outline">查看风铃明细</Button>
         </Link>
       </div>
     </div>

@@ -101,7 +101,7 @@ interface AdminVipSettingsFormProps {
 }
 
 const VIP_TABS = [
-  { key: "points-vip", label: "积分与VIP" },
+  { key: "points-vip", label: "风铃与VIP" },
   { key: "tasks", label: "任务系统" },
   { key: "redeem-codes", label: "兑换码管理" },
 ] as const
@@ -271,11 +271,11 @@ export function AdminVipSettingsForm({
           }}
         >
           <SettingsSection
-            title="积分基础配置"
-            description="统一配置积分名称、签到奖励、补签开关、补签范围与修改昵称扣费规则。签到奖励支持填固定值 `5` 或随机区间 `5-10`；0 是免费；补签最旧历史限制填 0 表示不限制。"
+            title="风铃基础配置"
+            description="统一配置风铃名称、签到奖励、补签开关、补签范围与修改昵称扣费规则。签到奖励支持填固定值 `5` 或随机区间 `5-10`；0 是免费；补签最旧历史限制填 0 表示不限制。"
           >
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <SettingsInputField label="积分名称" value={pointName} onChange={setPointName} placeholder="如 积分 / 金币 / 钻石" />
+              <SettingsInputField label="风铃名称" value={pointName} onChange={setPointName} placeholder="如 风铃 / 金币 / 钻石" />
               <AdminBooleanSelectField label="签到开关" checked={checkInEnabled} onChange={setCheckInEnabled} />
               <AdminBooleanSelectField label="补签开关" checked={checkInMakeUpEnabled} onChange={setCheckInMakeUpEnabled} />
               <AdminBooleanSelectField label="补签计入连续签到" checked={checkInMakeUpCountsTowardStreak} onChange={setCheckInMakeUpCountsTowardStreak} />
@@ -289,22 +289,22 @@ export function AdminVipSettingsForm({
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <SettingsInputField label="普通用户改昵称积分" value={nicknameChangePointCost} onChange={setNicknameChangePointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP1 改昵称积分" value={nicknameChangeVip1PointCost} onChange={setNicknameChangeVip1PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP2 改昵称积分" value={nicknameChangeVip2PointCost} onChange={setNicknameChangeVip2PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP3 改昵称积分" value={nicknameChangeVip3PointCost} onChange={setNicknameChangeVip3PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="普通用户改昵称风铃" value={nicknameChangePointCost} onChange={setNicknameChangePointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP1 改昵称风铃" value={nicknameChangeVip1PointCost} onChange={setNicknameChangeVip1PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP2 改昵称风铃" value={nicknameChangeVip2PointCost} onChange={setNicknameChangeVip2PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP3 改昵称风铃" value={nicknameChangeVip3PointCost} onChange={setNicknameChangeVip3PointCost} placeholder="0 表示免费" />
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <SettingsInputField label="普通用户改介绍积分" value={introductionChangePointCost} onChange={setIntroductionChangePointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP1 改介绍积分" value={introductionChangeVip1PointCost} onChange={setIntroductionChangeVip1PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP2 改介绍积分" value={introductionChangeVip2PointCost} onChange={setIntroductionChangeVip2PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP3 改介绍积分" value={introductionChangeVip3PointCost} onChange={setIntroductionChangeVip3PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="普通用户改介绍风铃" value={introductionChangePointCost} onChange={setIntroductionChangePointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP1 改介绍风铃" value={introductionChangeVip1PointCost} onChange={setIntroductionChangeVip1PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP2 改介绍风铃" value={introductionChangeVip2PointCost} onChange={setIntroductionChangeVip2PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP3 改介绍风铃" value={introductionChangeVip3PointCost} onChange={setIntroductionChangeVip3PointCost} placeholder="0 表示免费" />
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <SettingsInputField label="普通用户改头像积分" value={avatarChangePointCost} onChange={setAvatarChangePointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP1 改头像积分" value={avatarChangeVip1PointCost} onChange={setAvatarChangeVip1PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP2 改头像积分" value={avatarChangeVip2PointCost} onChange={setAvatarChangeVip2PointCost} placeholder="0 表示免费" />
-              <SettingsInputField label="VIP3 改头像积分" value={avatarChangeVip3PointCost} onChange={setAvatarChangeVip3PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="普通用户改头像风铃" value={avatarChangePointCost} onChange={setAvatarChangePointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP1 改头像风铃" value={avatarChangeVip1PointCost} onChange={setAvatarChangeVip1PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP2 改头像风铃" value={avatarChangeVip2PointCost} onChange={setAvatarChangeVip2PointCost} placeholder="0 表示免费" />
+              <SettingsInputField label="VIP3 改头像风铃" value={avatarChangeVip3PointCost} onChange={setAvatarChangeVip3PointCost} placeholder="0 表示免费" />
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <SettingsInputField label="普通用户签到奖励" value={checkInReward} onChange={setCheckInReward} placeholder="如 5 或 5-10" />
@@ -328,12 +328,12 @@ export function AdminVipSettingsForm({
 
           <SettingsSection
             title="VIP 套餐配置"
-            description="统一配置前台可售 VIP 套餐对应的积分价格与头像角标图标。"
+            description="统一配置前台可售 VIP 套餐对应的风铃价格与头像角标图标。"
           >
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <SettingsInputField label="月卡积分价格（VIP1）" value={vipMonthlyPrice} onChange={setVipMonthlyPrice} placeholder="如 3000" />
-              <SettingsInputField label="季卡积分价格（VIP2）" value={vipQuarterlyPrice} onChange={setVipQuarterlyPrice} placeholder="如 8000" />
-              <SettingsInputField label="年卡积分价格（VIP3）" value={vipYearlyPrice} onChange={setVipYearlyPrice} placeholder="如 30000" />
+              <SettingsInputField label="月卡风铃价格（VIP1）" value={vipMonthlyPrice} onChange={setVipMonthlyPrice} placeholder="如 3000" />
+              <SettingsInputField label="季卡风铃价格（VIP2）" value={vipQuarterlyPrice} onChange={setVipQuarterlyPrice} placeholder="如 8000" />
+              <SettingsInputField label="年卡风铃价格（VIP3）" value={vipYearlyPrice} onChange={setVipYearlyPrice} placeholder="如 30000" />
             </div>
             <div className="grid gap-4 xl:grid-cols-3">
               <IconPicker label="VIP1 头像角标" value={vipLevelIconVip1} onChange={setVipLevelIconVip1} previewColor="#7c3aed" popoverTitle="选择 VIP1 头像角标" description="支持 emoji、符号或完整 SVG，前台会显示在用户头像右下角。" />
@@ -351,17 +351,17 @@ export function AdminVipSettingsForm({
               <ColorPicker label="VIP3 昵称颜色" value={vipNameColorVip3} onChange={setVipNameColorVip3} presets={VIP_NAME_COLOR_PRESETS} fallbackColor={VIP_NAME_COLOR_FALLBACKS.vip3} placeholder="留空使用默认颜色" allowClear />
             </div>
             <div>
-              <h3 className="text-sm font-semibold">作者下线帖子价格</h3>
-              <p className="mt-1 text-xs text-muted-foreground">0 表示免费；普通用户与 VIP1 / VIP2 / VIP3 按当前身份分别扣除积分。</p>
+              <h3 className="text-sm font-semibold">作者下线风笺价格</h3>
+              <p className="mt-1 text-xs text-muted-foreground">0 表示免费；普通用户与 VIP1 / VIP2 / VIP3 按当前身份分别扣除风铃。</p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <SettingsInputField label="普通用户积分价格" value={postOfflinePrice} onChange={setPostOfflinePrice} placeholder="如 50" />
-              <SettingsInputField label="VIP1 积分价格" value={postOfflineVip1Price} onChange={setPostOfflineVip1Price} placeholder="如 30" />
-              <SettingsInputField label="VIP2 积分价格" value={postOfflineVip2Price} onChange={setPostOfflineVip2Price} placeholder="如 20" />
-              <SettingsInputField label="VIP3 积分价格" value={postOfflineVip3Price} onChange={setPostOfflineVip3Price} placeholder="如 0" />
+              <SettingsInputField label="普通用户风铃价格" value={postOfflinePrice} onChange={setPostOfflinePrice} placeholder="如 50" />
+              <SettingsInputField label="VIP1 风铃价格" value={postOfflineVip1Price} onChange={setPostOfflineVip1Price} placeholder="如 30" />
+              <SettingsInputField label="VIP2 风铃价格" value={postOfflineVip2Price} onChange={setPostOfflineVip2Price} placeholder="如 20" />
+              <SettingsInputField label="VIP3 风铃价格" value={postOfflineVip3Price} onChange={setPostOfflineVip3Price} placeholder="如 0" />
             </div>
             <div className="flex items-center gap-3 pt-2">
-              <Button type="submit" disabled={isPending} size="lg" className="rounded-full px-4 text-xs">{isPending ? "保存中..." : "保存积分与VIP设置"}</Button>
+              <Button type="submit" disabled={isPending} size="lg" className="rounded-full px-4 text-xs">{isPending ? "保存中..." : "保存风铃与VIP设置"}</Button>
               {feedback ? <span className="text-sm text-muted-foreground">{feedback}</span> : null}
             </div>
           </SettingsSection>

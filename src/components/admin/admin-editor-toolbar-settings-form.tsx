@@ -158,7 +158,7 @@ export function AdminEditorToolbarSettingsForm({
     >
       <SettingsSection
         title="编辑器工具栏"
-        description="配置发帖、评论等 Markdown 编辑器的内置工具按钮排序和显示状态。插件注册的额外工具会继续显示在内置工具之后。"
+        description="配置发笺、评论等 Markdown 编辑器的内置工具按钮排序和显示状态。插件注册的额外工具会继续显示在内置工具之后。"
         action={<Badge variant="outline">{visibleCount}/{settings.order.length} 显示</Badge>}
       >
         <div className="flex flex-col gap-3">

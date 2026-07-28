@@ -139,7 +139,7 @@ type BoardPermissionUser = {
 }
 
 function resolvePointName(pointName?: string | null) {
-  return typeof pointName === "string" && pointName.trim() ? pointName.trim() : "积分"
+  return typeof pointName === "string" && pointName.trim() ? pointName.trim() : "风铃"
 }
 
 function isStaffUser(user: Pick<BoardPermissionUser, "role"> | null) {
@@ -148,7 +148,7 @@ function isStaffUser(user: Pick<BoardPermissionUser, "role"> | null) {
 
 export function canUserAccess(user: BoardPermissionUser | null, settings: EffectiveBoardSettings, action: "view" | "post" | "reply", pointName?: string | null) {
   if (action === "post" && !settings.allowUserPost && !isStaffUser(user)) {
-    return { allowed: false, message: "当前仅管理员和版主可发帖" }
+    return { allowed: false, message: "当前仅管理员和版主可发笺" }
   }
 
   if (action === "reply" && !settings.allowUserReply && !isStaffUser(user)) {
@@ -187,7 +187,7 @@ export function canUserAccess(user: BoardPermissionUser | null, settings: Effect
       const hasRequiredBadge = requiredBadgeIds.some((id) => userBadgeIds.has(id))
 
       if (!hasRequiredVerification && !hasRequiredBadge) {
-        return { allowed: false, message: action === "post" ? "当前需要指定认证或勋章才可发帖" : "当前需要指定认证或勋章才可回复" }
+        return { allowed: false, message: action === "post" ? "当前需要指定认证或勋章才可发笺" : "当前需要指定认证或勋章才可回复" }
       }
     }
   }

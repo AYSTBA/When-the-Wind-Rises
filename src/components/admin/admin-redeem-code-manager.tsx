@@ -48,7 +48,7 @@ export function AdminRedeemCodeManager({ initialRedeemCodes }: AdminRedeemCodeMa
   }), [redeemCodes])
 
   const pendingRedeemCodes = useMemo(() => redeemCodes.filter((item) => !item.redeemedAt), [redeemCodes])
-  const exportText = useMemo(() => pendingRedeemCodes.map((item) => [item.code, `${item.points}积分`, `分类:${item.codeCategory}`, item.categoryUserLimit === null ? "分类限额:不限" : `分类限额:${item.categoryUserLimit}`, item.expiresAt ? `过期:${formatDateTime(item.expiresAt)}` : "不过期", item.note ?? ""].filter(Boolean).join("\t")).join("\n"), [pendingRedeemCodes])
+  const exportText = useMemo(() => pendingRedeemCodes.map((item) => [item.code, `${item.points}风铃`, `分类:${item.codeCategory}`, item.categoryUserLimit === null ? "分类限额:不限" : `分类限额:${item.categoryUserLimit}`, item.expiresAt ? `过期:${formatDateTime(item.expiresAt)}` : "不过期", item.note ?? ""].filter(Boolean).join("\t")).join("\n"), [pendingRedeemCodes])
 
   async function reloadRedeemCodes() {
     const listResponse = await fetch("/api/admin/redeem-codes", { cache: "no-store" })
@@ -165,11 +165,11 @@ export function AdminRedeemCodeManager({ initialRedeemCodes }: AdminRedeemCodeMa
       >
         <div>
           <h3 className="text-sm font-semibold">兑换码批量生成</h3>
-          <p className="mt-1 text-xs text-muted-foreground">积分活动、补偿发放与运营投放统一从这里生成和导出，并支持按分类控制单个用户可兑换次数。</p>
+          <p className="mt-1 text-xs text-muted-foreground">风铃活动、补偿发放与运营投放统一从这里生成和导出，并支持按分类控制单个用户可兑换次数。</p>
         </div>
         <div className="grid gap-3 xl:grid-cols-[100px_120px_140px_160px_minmax(0,1fr)_200px_auto]">
           <TextField label="数量" value={count} onChange={setCount} placeholder="1-100" inputClassName="h-10" />
-          <TextField label="积分" value={points} onChange={setPoints} placeholder="如 100" inputClassName="h-10" />
+          <TextField label="风铃" value={points} onChange={setPoints} placeholder="如 100" inputClassName="h-10" />
           <TextField label="分类" value={codeCategory} onChange={setCodeCategory} placeholder="如 a / b / c" inputClassName="h-10" />
           <TextField label="分类限额" value={categoryUserLimit} onChange={setCategoryUserLimit} placeholder="留空=不限" inputClassName="h-10" />
           <TextField label="备注" value={note} onChange={setNote} placeholder="如 活动发放 / 补偿" inputClassName="h-10" />
@@ -197,7 +197,7 @@ export function AdminRedeemCodeManager({ initialRedeemCodes }: AdminRedeemCodeMa
       <div className="overflow-hidden rounded-xl border border-border bg-card">
         <div className="grid items-center gap-3 border-b border-border bg-secondary/40 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground lg:grid-cols-[minmax(0,1fr)_90px_180px_160px_180px_minmax(0,1fr)_72px]">
           <span>兑换码</span>
-          <span>积分</span>
+          <span>风铃</span>
           <span>分类策略</span>
           <span>状态</span>
           <span>过期时间</span>

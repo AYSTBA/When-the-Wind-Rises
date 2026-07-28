@@ -166,7 +166,7 @@ export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
   revalidatePostDetailCache({ postId, slug: post?.slug })
   expireTaxonomyCacheImmediately()
 
-  return apiSuccess({ id, status: "APPROVED" }, "已采纳该建议并应用到帖子")
+  return apiSuccess({ id, status: "APPROVED" }, "已采纳该建议并应用到风笺")
 }, {
   errorMessage: "处理审核建议失败",
   logPrefix: "[api/admin/apps/ai-reply/moderation/decide:POST] unexpected error",

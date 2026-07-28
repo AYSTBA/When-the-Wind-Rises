@@ -4,7 +4,7 @@ import { buildFaqMetadata } from "@/lib/faq"
 import { getSiteSettings } from "@/lib/site-settings"
 
 export async function generateMetadata() {
-  return buildFaqMetadata("积分系统", "查看积分系统的来源、用途、价格和与权限的关系。")
+  return buildFaqMetadata("风铃系统", "查看风铃系统的来源、用途、价格和与权限的关系。")
 }
 
 export default async function PointsSystemFaqPage() {
@@ -16,7 +16,7 @@ export default async function PointsSystemFaqPage() {
     { label: "普通 / VIP1 / VIP2 / VIP3 改昵称", value: `${settings.nicknameChangePointCost} / ${settings.nicknameChangeVip1PointCost} / ${settings.nicknameChangeVip2PointCost} / ${settings.nicknameChangeVip3PointCost}` },
     { label: "普通 / VIP1 / VIP2 / VIP3 改头像", value: `${settings.avatarChangePointCost} / ${settings.avatarChangeVip1PointCost} / ${settings.avatarChangeVip2PointCost} / ${settings.avatarChangeVip3PointCost}` },
     { label: "普通 / VIP1 / VIP2 / VIP3 邀请码", value: `${settings.inviteCodePrice} / ${settings.inviteCodeVip1Price} / ${settings.inviteCodeVip2Price} / ${settings.inviteCodeVip3Price}` },
-    { label: "普通 / VIP1 / VIP2 / VIP3 下线帖子", value: `${settings.postOfflinePrice} / ${settings.postOfflineVip1Price} / ${settings.postOfflineVip2Price} / ${settings.postOfflineVip3Price}` },
+    { label: "普通 / VIP1 / VIP2 / VIP3 下线风笺", value: `${settings.postOfflinePrice} / ${settings.postOfflineVip1Price} / ${settings.postOfflineVip2Price} / ${settings.postOfflineVip3Price}` },
   ]
 
   return (
@@ -24,25 +24,25 @@ export default async function PointsSystemFaqPage() {
       currentPath="/faq/points-system"
       eyebrow="Points System"
       title={`${settings.pointName}系统`}
-      description={`${settings.pointName} 是站内通用结算与门槛单位。它既可以决定你能不能看、能不能发，也会参与购买 VIP、邀请码、补签、改昵称、改头像、作者下线帖子等功能。`}
+      description={`${settings.pointName} 是站内通用结算与门槛单位。它既可以决定你能不能看、能不能发，也会参与购买 VIP、邀请码、补签、改昵称、改头像、作者下线风笺等功能。`}
     >
       <section className="grid gap-4 lg:grid-cols-3">
         <Card>
           <CardContent className="p-5">
             <p className="font-semibold">它能决定什么</p>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">节点、分区和帖子都可以配置最低浏览或发帖积分门槛，不满足时无法继续访问或互动。</p>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">节点、分区和风笺都可以配置最低浏览或发笺风铃门槛，不满足时无法继续访问或互动。</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="font-semibold">它能购买什么</p>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">VIP、邀请码、补签、改昵称、改头像、作者下线帖子、付费隐藏内容，都可以直接用 {settings.pointName} 结算。</p>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">VIP、邀请码、补签、改昵称、改头像、作者下线风笺、付费隐藏内容，都可以直接用 {settings.pointName} 结算。</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="font-semibold">它能参与什么</p>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground">悬赏帖会冻结 {settings.pointName}，打赏、红包、付费内容购买等功能也会产生日志变动。</p>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">风铃门槛、VIP 购买、邀请码、补签、改昵称、改头像、付费隐藏内容等功能都会产生风铃变动。</p>
           </CardContent>
         </Card>
       </section>
@@ -54,8 +54,8 @@ export default async function PointsSystemFaqPage() {
         <CardContent className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">每日签到会直接发放奖励，VIP 用户按自己的 VIP 档位拿更高奖励。</div>
           <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">邀请注册成功后，邀请人和被邀请人都可以拿到后台配置的注册奖励。</div>
-          <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">节点和分区可以独立配置“发帖积分”和“回复积分”，既可以奖励，也可以扣除。</div>
-          <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">帖子被打赏、隐藏内容被购买、红包被触发时，也会产生对应的积分收入。</div>
+          <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">节点和分区可以独立配置“发笺风铃”和“回复风铃”，既可以奖励，也可以扣除。</div>
+          <div className="rounded-xl bg-secondary/40 p-4 text-sm leading-7 text-muted-foreground">隐藏内容被购买时，也会产生对应的风铃收入。</div>
         </CardContent>
       </Card>
 

@@ -151,6 +151,6 @@ export async function verifyCreatePostCaptchaWithAddonProviders(input: {
       continue
     }
 
-    assertValidationPassed(item.provider, "发帖", output)
+    assertValidationPassed(item.provider, "发笺", output)
   }
 }

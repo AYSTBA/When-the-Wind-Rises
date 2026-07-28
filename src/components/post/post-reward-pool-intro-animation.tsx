@@ -87,7 +87,7 @@ export function PostRewardPoolIntroAnimation({ postId, summary }: PostRewardPool
       return {
         title: "聚宝盆已开启",
         value: `${formatCompactPointValue(summary.remainingPoints)} ${summary.pointName}`,
-        description: "盆里当前积分",
+        description: "盆里当前风铃",
       }
     }
 

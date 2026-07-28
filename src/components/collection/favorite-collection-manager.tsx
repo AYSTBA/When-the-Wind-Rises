@@ -163,7 +163,7 @@ export function FavoriteCollectionManager({ initialData }: { initialData: Favori
   async function deleteCollection(collectionId: string) {
     const confirmed = await showConfirm({
       title: "删除合集",
-      description: "删除后合集和其中的收录关系会一起移除，但不会影响帖子本身和普通收藏记录。确认继续吗？",
+      description: "删除后合集和其中的收录关系会一起移除，但不会影响风笺本身和普通收藏记录。确认继续吗？",
       confirmText: "删除合集",
       cancelText: "取消",
       variant: "danger",
@@ -248,7 +248,7 @@ export function FavoriteCollectionManager({ initialData }: { initialData: Favori
 
           <div className="space-y-3">
             {data.collections.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border bg-card px-4 py-6 text-sm text-muted-foreground">你还没有创建任何合集。创建后，收藏帖子时就能直接加入这些合集。</div>
+              <div className="rounded-xl border border-dashed border-border bg-card px-4 py-6 text-sm text-muted-foreground">你还没有创建任何合集。创建后，收藏风笺时就能直接加入这些合集。</div>
             ) : data.collections.map((item) => (
               <div key={item.id} className="rounded-xl border border-border bg-card px-4 py-3">
                 <div className="flex flex-wrap items-start justify-between gap-3">
@@ -261,7 +261,7 @@ export function FavoriteCollectionManager({ initialData }: { initialData: Favori
                     </div>
                     {item.description ? <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">{item.description}</p> : null}
                     <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
-                      <span title={`${formatNumber(item.postCount)} 帖`}>帖子 {formatCompactNumber(item.postCount)}</span>
+                      <span title={`${formatNumber(item.postCount)} 帖`}>风笺 {formatCompactNumber(item.postCount)}</span>
                       <span>更新于 {new Date(item.updatedAt).toLocaleString()}</span>
                     </div>
                   </div>

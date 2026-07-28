@@ -31,7 +31,7 @@ function resolveHashHeadingId(items: MarkdownHeadingItem[]) {
   return items.some((item) => item.id === decodedHash) ? decodedHash : null
 }
 
-export function PostTableOfContents({ items, title = "目录", ariaLabel = "帖子目录" }: PostTableOfContentsProps) {
+export function PostTableOfContents({ items, title = "目录", ariaLabel = "风笺目录" }: PostTableOfContentsProps) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? "")
   const navRef = useRef<HTMLElement | null>(null)
   const itemRefs = useRef(new Map<string, HTMLAnchorElement>())

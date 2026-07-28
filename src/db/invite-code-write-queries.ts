@@ -47,7 +47,7 @@ export async function purchaseInviteCodeTransaction(params: {
       data: {
         code,
         createdById: latestUser.id,
-        note: "积分购买",
+        note: "风铃购买",
       },
     })))
 

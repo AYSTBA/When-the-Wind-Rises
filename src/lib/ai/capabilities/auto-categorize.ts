@@ -332,8 +332,8 @@ function buildSuggestionPrompt(params: {
     : "（暂无预定义 tag，可返回 tags: []）"
 
   return [
-    `帖子标题：${params.title}`,
-    `帖子正文：\n${params.content || "（无正文）"}`,
+    `风笺标题：${params.title}`,
+    `风笺正文：\n${params.content || "（无正文）"}`,
     params.allowBoardSuggestion
       ? `候选板块（slug: 名称）：\n${boardList}`
       : "本次无需选择板块，board 字段固定输出空字符串。",
@@ -589,7 +589,7 @@ async function syncSuggestedTagsOnPost(
 
 async function applyPostCreateSuggestion(task: NonNullable<AutoCategorizeTaskWorkerRecord>, result: Extract<AutoCategorizeSuggestionResult, { status: "ok" }>) {
   if (!task.postId || !task.post) {
-    throw new AutoCategorizeTaskCancelledError("源帖子已不存在，任务已取消")
+    throw new AutoCategorizeTaskCancelledError("源风笺已不存在，任务已取消")
   }
 
   const suggestedBoardId = result.data.board?.id ?? null
@@ -642,7 +642,7 @@ async function processAutoCategorizeTask(taskId: string) {
 
   try {
     if (task.sourceType === AutoCategorizeTaskSourceType.POST_CREATE && (!task.postId || !task.post)) {
-      throw new AutoCategorizeTaskCancelledError("源帖子已不存在，任务已取消")
+      throw new AutoCategorizeTaskCancelledError("源风笺已不存在，任务已取消")
     }
 
     const content = task.sourceType === AutoCategorizeTaskSourceType.POST_CREATE
@@ -825,7 +825,7 @@ async function upsertAutoCategorizeTask(params: {
         },
         data: {
           status: AiReplyTaskStatus.CANCELLED,
-          errorMessage: "已被更新的发帖辅助请求替代",
+          errorMessage: "已被更新的发笺辅助请求替代",
           finishedAt: now,
         },
       })
@@ -865,11 +865,11 @@ async function buildTaskPollResult(task: {
   }
 
   if (task.status === AiReplyTaskStatus.CANCELLED) {
-    throw new AutoCategorizeTaskCancelledError(task.errorMessage ?? "发帖辅助任务已取消")
+    throw new AutoCategorizeTaskCancelledError(task.errorMessage ?? "发笺辅助任务已取消")
   }
 
   if (task.status === AiReplyTaskStatus.FAILED) {
-    throw new Error(task.errorMessage ?? "发帖辅助任务执行失败")
+    throw new Error(task.errorMessage ?? "发笺辅助任务执行失败")
   }
 
   const tags = parseSuggestedTagsJson(task.resultTagsJson)

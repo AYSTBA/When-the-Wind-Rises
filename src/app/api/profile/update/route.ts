@@ -194,7 +194,7 @@ export const POST = createUserRouteHandler<ProfileUpdateResponse>(async ({ reque
           })
         : { scopeKey: "AVATAR_CHANGE" as const, baseDelta: 0, finalDelta: 0, appliedRules: [] }
       const avatarPointCost = Math.max(0, -avatarCostDelta.finalDelta)
-      const pointName = settings.pointName?.trim() || "积分"
+      const pointName = settings.pointName?.trim() || "风铃"
 
       if (avatarPointCost > 0 && dbUser.points < avatarPointCost) {
         apiError(400, `保存头像需要 ${avatarPointCost} ${pointName}，当前余额不足`)
@@ -518,7 +518,7 @@ export const POST = createUserRouteHandler<ProfileUpdateResponse>(async ({ reque
     vip2: settings.avatarChangeVip2PointCost,
     vip3: settings.avatarChangeVip3PointCost,
   }))
-  const pointName = settings.pointName?.trim() || "积分"
+  const pointName = settings.pointName?.trim() || "风铃"
   const nicknameCostDelta = nicknameChanged
     ? await prepareScopedPointDelta({
         scopeKey: "NICKNAME_CHANGE",

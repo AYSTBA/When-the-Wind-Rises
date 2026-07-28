@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { Crown, Flag, MessageCircleMore, ShieldCheck } from "lucide-react"
+import { Crown, Flag, ListChecks, MessageCircleMore, ShieldCheck } from "lucide-react"
 import type { CSSProperties } from "react"
 
 import { AddonSlotRenderer, AddonSurfaceRenderer } from "@/addons-host"
@@ -412,15 +412,15 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
       : []),
     {
       key: "posts",
-      label: "帖子",
+      label: "风笺",
       count: canViewRecentActivity ? user.postCount : 0,
       content: !canViewRecentActivity ? (
         <div className="rounded-xl border border-dashed  px-4 py-12 text-center text-sm text-muted-foreground dark:border-white/10 dark:bg-white/2">
-          {user.activityVisibility === "MEMBERS" ? "该用户将最近帖子设置为登录后可见。" : "该用户未公开最近帖子。"}
+          {user.activityVisibility === "MEMBERS" ? "该用户将最近风笺设置为登录后可见。" : "该用户未公开最近风笺。"}
         </div>
       ) : postsPageData.items.length === 0 ? (
         <div className="rounded-xl border border-dashed  px-4 py-12 text-center text-sm text-muted-foreground dark:border-white/10 dark:bg-white/2">
-          最近还没有发布帖子。
+          最近还没有发布风笺。
         </div>
       ) : (
         <div className="space-y-4">
@@ -571,8 +571,8 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
                   )}
                   sidePanel={desktopRadarPanel}
                   mobileSidePanel={mobileRadarPanel}
-                  mobileSidePanelTitle="论坛画像"
-                  mobileSidePanelButtonLabel="查看论坛画像"
+                  mobileSidePanelTitle="风广场画像"
+                  mobileSidePanelButtonLabel="查看风广场画像"
                   identityRow={identityRow}
                   metaRow={(
                     <>
@@ -660,6 +660,24 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
                       <div className="p-6">
                         <UserActiveBoardsPanel boards={activeBoards} emptyText={activeBoardsEmptyText} />
                       </div>
+                      {currentUser && currentUser.id === user.id ? (
+                        <div className="p-6">
+                          <div className="flex flex-col gap-3">
+                            <h2 className="text-sm font-semibold text-foreground">风铃居</h2>
+                            <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5">
+                              <span className="text-xs text-muted-foreground">{settings.pointName}余额</span>
+                              <span className="text-sm font-semibold text-amber-600 dark:text-amber-400">{formatCompactPointValue(user.points)} {settings.pointName}</span>
+                            </div>
+                            <Link
+                              href="/tasks"
+                              className="flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                            >
+                              <ListChecks className="h-3.5 w-3.5" />
+                              任务中心
+                            </Link>
+                          </div>
+                        </div>
+                      ) : null}
                       <div className="p-6">
                         <div className="flex flex-col gap-3">
                         <div>

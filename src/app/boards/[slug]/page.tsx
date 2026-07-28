@@ -89,7 +89,7 @@ export async function generateMetadata(props: PageProps<"/boards/[slug]">): Prom
   return {
     title: `${board.name} - ${settings.siteName}`,
     description: board.description,
-    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [board.name, board.slug, board.description, "节点", "论坛节点"]),
+    keywords: buildMetadataKeywords(settings.siteSeoKeywords, [board.name, board.slug, board.description, "节点", "风广场节点"]),
     alternates: {
       canonical: `/boards/${board.slug}`,
     },

@@ -63,21 +63,21 @@ function normalizeText(value: unknown, maxLength: number) {
 async function loadTaskResultOrThrow(taskId: string, requesterUserId: number) {
   const result = await getAutoCategorizeTaskResultForUser({ taskId, requesterUserId })
   if (!result) {
-    apiError(404, "发帖辅助任务不存在")
+    apiError(404, "发笺辅助任务不存在")
   }
 
   return result
 }
 
 export const GET = createUserRouteHandler<AiCategorizeRouteResponse>(async ({ currentUser, request }) => {
-  const taskId = requireSearchParam(request, "taskId", "缺少发帖辅助任务 ID")
+  const taskId = requireSearchParam(request, "taskId", "缺少发笺辅助任务 ID")
 
   return apiSuccess(await loadTaskResultOrThrow(taskId, currentUser.id))
 
 }, {
-  errorMessage: "读取 AI 发帖辅助任务失败",
+  errorMessage: "读取 AI 发笺辅助任务失败",
   logPrefix: "[api/posts/ai-categorize:GET] unexpected error",
-  unauthorizedMessage: "请先登录后再使用 AI 发帖辅助",
+  unauthorizedMessage: "请先登录后再使用 AI 发笺辅助",
 })
 
 export const POST = createUserRouteHandler<AiCategorizeRouteResponse>(async ({ currentUser, request }) => {
@@ -134,5 +134,5 @@ export const POST = createUserRouteHandler<AiCategorizeRouteResponse>(async ({ c
 }, {
   errorMessage: "AI 建议生成失败",
   logPrefix: "[api/posts/ai-categorize:POST] unexpected error",
-  unauthorizedMessage: "请先登录后再使用 AI 发帖辅助",
+  unauthorizedMessage: "请先登录后再使用 AI 发笺辅助",
 })

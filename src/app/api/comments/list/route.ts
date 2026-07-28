@@ -27,7 +27,7 @@ export const GET = createRouteHandler(async ({ request }) => {
   const postId = requestUrl.searchParams.get("postId")?.trim() ?? ""
 
   if (!postId) {
-    apiError(400, "缺少帖子参数")
+    apiError(400, "缺少风笺参数")
   }
 
   const [currentUser, settings, boardAccessContext] = await Promise.all([
@@ -37,7 +37,7 @@ export const GET = createRouteHandler(async ({ request }) => {
   ])
 
   if (!boardAccessContext) {
-    apiError(404, "帖子不存在")
+    apiError(404, "风笺不存在")
   }
 
   const adminActor = await resolveAdminActorFromSessionUser(currentUser)
@@ -63,7 +63,7 @@ export const GET = createRouteHandler(async ({ request }) => {
   const isOwnerOrManager = Boolean(isPostOwner || canManageThisPost)
 
   if (!isPublicReadablePostStatus(boardAccessContext.post.status) && !isOwnerOrManager) {
-    apiError(404, "帖子不存在")
+    apiError(404, "风笺不存在")
   }
 
   const canViewComments = Boolean(currentUser) || settings.guestCanViewComments

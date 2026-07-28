@@ -55,7 +55,7 @@ function normalizeBody(body: Record<string, unknown>): InternalRevalidationBody 
     const postId = asString(body.postId)
     const postSlug = asString(body.postSlug)
     const authorId = asSafeNumber(body.authorId)
-    if (!postId || !postSlug || !authorId) apiError(400, "缺少帖子刷新参数")
+    if (!postId || !postSlug || !authorId) apiError(400, "缺少风笺刷新参数")
     return {
       type: "approved-post",
       postId,

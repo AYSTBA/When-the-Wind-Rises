@@ -38,7 +38,7 @@ export interface SiteHeaderAppLinkItem {
 export const DEFAULT_SITE_HEADER_APP_LINKS: SiteHeaderAppLinkItem[] = [
   { id: "home", name: "首页", href: "/", icon: "🏠" },
   { id: "boards", name: "节点", href: "/boards", icon: "🧭" },
-  { id: "write", name: "发帖", href: "/write", icon: "✍️" },
+  { id: "write", name: "发笺", href: "/write", icon: "✍️" },
   { id: "messages", name: "消息", href: "/messages", icon: "💬" },
 ]
 

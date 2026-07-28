@@ -36,9 +36,9 @@ export const boardStatusOptions = [
 ]
 
 export const postingOptions = [
-  { value: "ALL", label: "全部发帖权限" },
-  { value: "on", label: "允许发帖" },
-  { value: "off", label: "暂停发帖" },
+  { value: "ALL", label: "全部发笺权限" },
+  { value: "on", label: "允许发笺" },
+  { value: "off", label: "暂停发笺" },
 ]
 
 const EMPTY_SELECT_VALUE = "__empty__"
@@ -313,8 +313,8 @@ export function getStructureNumericFieldHelp({
   const isPointsField = field === "postPointDelta" || field === "replyPointDelta"
   const inheritText = isBoard ? "留空：继承所属分区的设置。" : "分区建议直接填写明确数值；留空时会回落到系统默认值。"
   const zeroText = isPointsField ? "填写 0：不加分也不扣分。" : "填写 0：不限制操作频率。"
-  const negativeText = isPointsField ? "填写负数：执行操作时扣除对应积分。" : "填写负数：系统会按“无频率限制”处理。"
-  const positiveText = isPointsField ? "填写正数：执行成功后奖励对应积分。" : "填写正数：要求用户等待这么多秒后才能再次操作。"
+  const negativeText = isPointsField ? "填写负数：执行操作时扣除对应风铃。" : "填写负数：系统会按“无频率限制”处理。"
+  const positiveText = isPointsField ? "填写正数：执行成功后奖励对应风铃。" : "填写正数：要求用户等待这么多秒后才能再次操作。"
 
   return (
     <div className="space-y-1.5 text-[12px] leading-5">
@@ -345,12 +345,12 @@ export function getStructureAccessFieldHelp({
   const inheritText = isBoard ? "留空：继承所属分区的限制。" : "分区建议直接填写明确数值；留空时会回落到系统默认值。"
   const isVipField = field === "minViewVipLevel" || field === "minPostVipLevel" || field === "minReplyVipLevel"
   const isLevelField = field === "minViewLevel" || field === "minPostLevel" || field === "minReplyLevel"
-  const actionText = field.startsWith("minView") ? "浏览" : field.startsWith("minPost") ? "发帖" : "回复"
+  const actionText = field.startsWith("minView") ? "浏览" : field.startsWith("minPost") ? "发笺" : "回复"
   const thresholdText = isVipField
     ? `填写数值：只有 VIP 等级大于等于该值的用户才能${actionText}。`
     : isLevelField
       ? `填写数值：只有等级大于等于该值的用户才能${actionText}。`
-      : `填写数值：只有积分大于等于该值的用户才能${actionText}。`
+      : `填写数值：只有风铃大于等于该值的用户才能${actionText}。`
   const zeroText = "填写 0：不额外限制这项权限。"
 
   return (

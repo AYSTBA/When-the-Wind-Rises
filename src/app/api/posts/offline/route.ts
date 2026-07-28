@@ -5,7 +5,7 @@ import { offlineOwnPost } from "@/lib/post-offline"
 
 export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
   const body = await readJsonBody(request)
-  const postId = requireStringField(body, "postId", "缺少帖子标识")
+  const postId = requireStringField(body, "postId", "缺少风笺标识")
   const reason = String(body.reason ?? "").trim()
 
   const result = await offlineOwnPost({ postId, reason, actorId: currentUser.id })
@@ -21,15 +21,15 @@ export const POST = createUserRouteHandler(async ({ request, currentUser }) => {
 
   return apiSuccess(
     result,
-    result.price.amount > 0 ? `帖子已下线，扣除 ${result.price.amount} ${result.pointName}` : "帖子已下线",
+    result.price.amount > 0 ? `风笺已下线，扣除 ${result.price.amount} ${result.pointName}` : "风笺已下线",
   )
 }, {
-  errorMessage: "帖子下线失败",
+  errorMessage: "风笺下线失败",
   logPrefix: "[api/posts/offline] unexpected error",
-  unauthorizedMessage: "请先登录后再下线帖子",
+  unauthorizedMessage: "请先登录后再下线风笺",
   allowStatuses: ["ACTIVE", "MUTED"],
   forbiddenMessages: {
-    BANNED: "账号已被拉黑，无法下线帖子",
+    BANNED: "账号已被拉黑，无法下线风笺",
   },
 })
 

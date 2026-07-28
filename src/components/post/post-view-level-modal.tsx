@@ -58,7 +58,7 @@ function PostViewLevelModalBody({ open, initialValue, levelOptions, vipLevelOpti
       onClose={onClose}
       size="md"
       title="设置整帖浏览门槛"
-      description="这里控制整篇帖子的正文访问。"
+      description="这里控制整篇风笺的正文访问。"
       footer={(
         <div className="flex items-center justify-end gap-3">
           <Button type="button" variant="ghost" onClick={onClose}>取消</Button>

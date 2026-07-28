@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useMemo, useState } from "react"
 
@@ -234,7 +234,7 @@ export function useCreatePostAiAssist({
     }
 
     if (!data.taskId) {
-      throw new Error("AI 发帖辅助任务创建失败")
+      throw new Error("AI 发笺辅助任务创建失败")
     }
     const taskId = data.taskId
 

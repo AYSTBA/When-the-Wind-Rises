@@ -60,7 +60,7 @@ export async function offlineOwnPost(input: { postId: string; actorId: number; r
 
   const result = await runPostOfflineTransaction(async (tx) => {
     if (!await lockPostOfflineTarget(tx, input.postId)) {
-      apiError(404, "帖子不存在")
+      apiError(404, "风笺不存在")
     }
 
     const latestUser = await findPostOfflineUser(input.actorId, tx)
@@ -72,11 +72,11 @@ export async function offlineOwnPost(input: { postId: string; actorId: number; r
     const post = await findPostOfflineTarget(input.postId, tx)
 
     if (!post || post.authorId !== latestUser.id) {
-      apiError(403, "只能下线自己发布的帖子")
+      apiError(403, "只能下线自己发布的风笺")
     }
 
     if (post.status !== PostStatus.NORMAL) {
-      apiError(409, "当前帖子状态不支持下线")
+      apiError(409, "当前风笺状态不支持下线")
     }
 
     if (latestUser.points < latestPrice.amount) {
@@ -97,7 +97,7 @@ export async function offlineOwnPost(input: { postId: string; actorId: number; r
         prepared: preparedPrice,
         pointName: settings.pointName,
         insufficientMessage: `当前${settings.pointName}不足`,
-        reason: "作者下线帖子",
+        reason: "作者下线风笺",
         relatedType: "POST",
         relatedId: post.id,
       })

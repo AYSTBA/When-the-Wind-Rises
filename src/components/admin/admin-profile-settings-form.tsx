@@ -320,14 +320,14 @@ export function AdminProfileSettingsForm({
                   label="站点名称"
                   value={draft.siteName}
                   onChange={(value) => updateDraftField("siteName", value)}
-                  placeholder="如 兴趣论坛"
+                  placeholder="如 风广场"
                   description="显示在浏览器标题、分享卡片、后台标题和系统邮件中。"
                 />
                 <TextField
                   label="Logo 文案"
                   value={draft.siteLogoText}
                   onChange={(value) => updateDraftField("siteLogoText", value)}
-                  placeholder="如 兴趣论坛"
+                  placeholder="如 风广场"
                   description="未上传图片 Logo 时，站点头部会优先使用这段文案。"
                 />
               </div>
@@ -432,13 +432,13 @@ export function AdminProfileSettingsForm({
           <div className="grid gap-4 xl:grid-cols-2">
             <SettingsSection
               title="访问路径与 Feed 布局"
-              description="统一控制帖子 URL 结构、首页帖子列表样式与加载方式。"
+              description="统一控制风笺 URL 结构、首页风笺列表样式与加载方式。"
               action={<Badge variant="outline">内容分发</Badge>}
               className="h-full"
             >
               <div className="grid gap-4 md:grid-cols-2">
                 <SettingsSelectField
-                  label="帖子链接显示模式"
+                  label="风笺链接显示模式"
                   value={draft.postLinkDisplayMode}
                   onChange={(value) =>
                     updateDraftField("postLinkDisplayMode", value as "SLUG" | "ID")}
@@ -446,7 +446,7 @@ export function AdminProfileSettingsForm({
                   description="slug 模式更利于可读性和 SEO；id 模式更短更稳定。"
                 />
                 <SettingsSelectField
-                  label="帖子 slug 生成规则"
+                  label="风笺 slug 生成规则"
                   value={draft.postSlugGenerationMode}
                   onChange={(value) =>
                     updateDraftField(
@@ -457,7 +457,7 @@ export function AdminProfileSettingsForm({
                   description="仅在 slug 模式下生效，决定新帖 URL 的可读性和唯一性。"
                 />
                 <SettingsSelectField
-                  label="首页帖子列表形式"
+                  label="首页风笺列表形式"
                   value={draft.homeFeedPostListDisplayMode}
                   onChange={(value) =>
                     updateDraftField(
@@ -465,10 +465,10 @@ export function AdminProfileSettingsForm({
                       resolveHomeFeedPostListDisplayMode(value),
                     )}
                   options={[...PROFILE_HOME_FEED_DISPLAY_MODE_OPTIONS]}
-                  description="只影响首页 feed 的普通帖子列表；置顶帖仍保持原来的普通列表样式。"
+                  description="只影响首页 feed 的普通风笺列表；置顶帖仍保持原来的普通列表样式。"
                 />
                 <SettingsSelectField
-                  label="首页帖子加载方式"
+                  label="首页风笺加载方式"
                   value={draft.homeFeedPostListLoadMode}
                   onChange={(value) =>
                     updateDraftField(
@@ -548,7 +548,7 @@ export function AdminProfileSettingsForm({
                   checked={draft.homeSidebarStatsCardEnabled}
                   onChange={(value) =>
                     updateDraftField("homeSidebarStatsCardEnabled", value)}
-                  description="展示站点用户、帖子、节点等总体概况。"
+                  description="展示站点用户、风笺、节点等总体概况。"
                 />
                 <SettingsToggleField
                   label="首页右侧站点公告"
@@ -588,29 +588,29 @@ export function AdminProfileSettingsForm({
           >
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               <TextField
-                label="首页帖子显示数量"
+                label="首页风笺显示数量"
                 value={draft.homeFeedPostPageSize}
                 onChange={(value) =>
                   updateDraftField("homeFeedPostPageSize", value)}
                 placeholder="如 35"
                 type="number"
-                description="首页主 feed 单次展示的普通帖子数量。"
+                description="首页主 feed 单次展示的普通风笺数量。"
               />
               <TextField
-                label="分区帖子显示数量"
+                label="分区风笺显示数量"
                 value={draft.zonePostPageSize}
                 onChange={(value) => updateDraftField("zonePostPageSize", value)}
                 placeholder="如 20"
                 type="number"
-                description="`/zones/[slug]` 页面每页帖子数量。"
+                description="`/zones/[slug]` 页面每页风笺数量。"
               />
               <TextField
-                label="节点帖子显示数量"
+                label="节点风笺显示数量"
                 value={draft.boardPostPageSize}
                 onChange={(value) => updateDraftField("boardPostPageSize", value)}
                 placeholder="如 20"
                 type="number"
-                description="节点详情页中帖子列表的分页大小。"
+                description="节点详情页中风笺列表的分页大小。"
               />
               <TextField
                 label="今日热帖显示数量"
@@ -622,13 +622,13 @@ export function AdminProfileSettingsForm({
                 description="首页右侧热帖模块一次显示的主题数量。"
               />
               <TextField
-                label="帖子相关主题显示数量"
+                label="风笺相关主题显示数量"
                 value={draft.postSidebarRelatedTopicsCount}
                 onChange={(value) =>
                   updateDraftField("postSidebarRelatedTopicsCount", value)}
                 placeholder="如 5"
                 type="number"
-                description="帖子详情页相关主题推荐数量。"
+                description="风笺详情页相关主题推荐数量。"
               />
             </div>
           </SettingsSection>
@@ -683,7 +683,7 @@ export function AdminProfileSettingsForm({
                 value={draft.footerCopyrightText}
                 onChange={(value) =>
                   updateDraftField("footerCopyrightText", value)}
-                placeholder={'如 兴趣论坛 2026 · <a href="https://beian.miit.gov.cn/">ICP备案号</a>'}
+                placeholder={'如 风广场 2026 · <a href="https://beian.miit.gov.cn/">ICP备案号</a>'}
                 description="例如公司名、品牌名、备案提示或年度版权说明；支持安全的 a 标签超链接。"
               />
               <SettingsToggleField

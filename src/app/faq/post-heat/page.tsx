@@ -5,7 +5,7 @@ import { calculatePostHeatScore, resolvePostHeatStyle } from "@/lib/post-heat"
 import { getSiteSettings } from "@/lib/site-settings"
 
 export async function generateMetadata() {
-  return buildFaqMetadata("帖子热度", "查看帖子热度颜色算法、权重、阈值和颜色阶段说明。")
+  return buildFaqMetadata("风笺热度", "查看风笺热度颜色算法、权重、阈值和颜色阶段说明。")
 }
 
 function Metric({ label, value }: { label: string; value: number }) {
@@ -33,8 +33,8 @@ export default async function PostHeatFaqPage() {
     <FaqPageFrame
       currentPath="/faq/post-heat"
       eyebrow="Heat Score"
-      title="帖子热度"
-      description="帖子列表里回复数颜色不是随机的，而是由一套热度分数规则驱动。这个页面集中说明热度如何计算，以及颜色档位如何对应。"
+      title="风笺热度"
+      description="风笺列表里回复数颜色不是随机的，而是由一套热度分数规则驱动。这个页面集中说明热度如何计算，以及颜色档位如何对应。"
     >
       <Card>
         <CardHeader>
@@ -42,14 +42,14 @@ export default async function PostHeatFaqPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="rounded-xl bg-secondary/40 px-4 py-4 text-sm leading-7">
-            热度分数 = 浏览数 × 浏览权重 + 回复数 × 回复权重 + 点赞数 × 点赞权重 + 打赏次数 × 打赏次数权重 + 打赏积分 × 打赏积分权重
+            热度分数 = 浏览数 × 浏览权重 + 回复数 × 回复权重 + 点赞数 × 点赞权重 + 打赏次数 × 打赏次数权重 + 打赏风铃 × 打赏风铃权重
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <Metric label="浏览权重" value={settings.heatViewWeight} />
             <Metric label="回复权重" value={settings.heatCommentWeight} />
             <Metric label="点赞权重" value={settings.heatLikeWeight} />
             <Metric label="打赏次数权重" value={settings.heatTipCountWeight} />
-            <Metric label="打赏积分权重" value={settings.heatTipPointsWeight} />
+            <Metric label="打赏风铃权重" value={settings.heatTipPointsWeight} />
           </div>
         </CardContent>
       </Card>
@@ -93,7 +93,7 @@ export default async function PostHeatFaqPage() {
             </div>
           </div>
           <div className="rounded-xl bg-secondary/40 px-4 py-4 text-sm leading-7 text-muted-foreground">
-            示例输入：浏览 {sampleInput.views}、回复 {sampleInput.comments}、点赞 {sampleInput.likes}、打赏次数 {sampleInput.tipCount}、打赏积分 {sampleInput.tipPoints}
+            示例输入：浏览 {sampleInput.views}、回复 {sampleInput.comments}、点赞 {sampleInput.likes}、打赏次数 {sampleInput.tipCount}、打赏风铃 {sampleInput.tipPoints}
           </div>
         </CardContent>
       </Card>

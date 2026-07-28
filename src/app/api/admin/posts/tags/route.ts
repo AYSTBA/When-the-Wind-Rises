@@ -8,7 +8,7 @@ import { ensureCanManagePost } from "@/lib/moderator-permissions"
 
 export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
   const body = await readJsonBody(request)
-  const postId = requireStringField(body, "postId", "缺少帖子标识")
+  const postId = requireStringField(body, "postId", "缺少风笺标识")
   const rawTags = body.tags
 
   if (!Array.isArray(rawTags) || rawTags.some((item) => typeof item !== "string")) {
@@ -16,11 +16,11 @@ export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
   }
 
   if (adminUser.role === "ADMIN" && !await canAdminWithPermissionOverrides(adminUser, "admin.content.manage")) {
-    apiError(403, "无权更新帖子标签")
+    apiError(403, "无权更新风笺标签")
   }
 
   if (getAdminManagementTier(adminUser) === "REVIEWER") {
-    apiError(403, "审核员不能修改帖子标签")
+    apiError(403, "审核员不能修改风笺标签")
   }
 
   const post = await ensureCanManagePost(adminUser, postId)
@@ -32,7 +32,7 @@ export const POST = createAdminRouteHandler(async ({ request, adminUser }) => {
     "post.tags.update",
     "POST",
     post.id,
-    `更新帖子标签：${result.tags.map((tag) => tag.name).join("、") || "清空标签"}`,
+    `更新风笺标签：${result.tags.map((tag) => tag.name).join("、") || "清空标签"}`,
     requestIp,
   )
 

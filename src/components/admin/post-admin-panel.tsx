@@ -131,7 +131,7 @@ export function PostAdminPanel({
     }
 
     if (moveBoardSlug === currentBoardSlug) {
-      setFeedback("帖子已在当前节点，无需移动")
+      setFeedback("风笺已在当前节点，无需移动")
       setMoveDialogOpen(false)
       return
     }
@@ -206,10 +206,10 @@ export function PostAdminPanel({
         {
           action: "post.reject",
           targetId: postId,
-          label: "驳回帖子",
+          label: "驳回风笺",
           tone: "danger",
-          modalTitle: "驳回帖子审核",
-          modalDescription: "帖子会转为已下线状态，仅作者和管理员可见。驳回原因会展示给作者。",
+          modalTitle: "驳回风笺审核",
+          modalDescription: "风笺会转为已下线状态，仅作者和管理员可见。驳回原因会展示给作者。",
           placeholder: "填写驳回原因，例如：内容不符合当前节点规则。",
           confirmText: "确认驳回",
           messageRequired: true,
@@ -218,7 +218,7 @@ export function PostAdminPanel({
     : []
 
   const postStatusActions: AdminQuickAction[] = postStatus === "OFFLINE"
-    ? [{ action: "post.show", targetId: postId, label: "上线帖子" }]
+    ? [{ action: "post.show", targetId: postId, label: "上线风笺" }]
     : postStatus === "PENDING"
       ? []
     : [
@@ -228,10 +228,10 @@ export function PostAdminPanel({
         {
           action: "post.hide",
           targetId: postId,
-          label: "下线帖子",
+          label: "下线风笺",
           tone: "danger" as const,
-          modalTitle: "下线帖子",
-          modalDescription: "帖子下线后仅作者和管理员可见。填写原因后会展示给作者。",
+          modalTitle: "下线风笺",
+          modalDescription: "风笺下线后仅作者和管理员可见。填写原因后会展示给作者。",
           placeholder: "填写下线原因，例如：内容过期、违规或需作者修改。",
           confirmText: "确认下线",
         },
@@ -246,10 +246,10 @@ export function PostAdminPanel({
     {
       action: "post.delete",
       targetId: postId,
-      label: "删除帖子",
+      label: "删除风笺",
       tone: "danger" as const,
-      modalTitle: "确认删除帖子",
-      modalDescription: "删除后帖子、回复和相关互动数据会被永久移除，无法恢复。",
+      modalTitle: "确认删除风笺",
+      modalDescription: "删除后风笺、回复和相关互动数据会被永久移除，无法恢复。",
       placeholder: "可选：填写删除原因，便于记录后台日志。",
       confirmText: "确认删除",
     },
@@ -266,7 +266,7 @@ export function PostAdminPanel({
       <div className="mt-3 flex flex-wrap gap-2">
         {canEditPostContent ? (
           <Button variant="outline" className="h-8 px-3 text-xs" onClick={openEditPage} disabled={pendingAction}>
-            编辑帖子
+            编辑风笺
           </Button>
         ) : null}
         <Button variant="outline" className="h-8 px-3 text-xs" onClick={openMoveDialog} disabled={pendingAction}>
@@ -306,8 +306,8 @@ export function PostAdminPanel({
 
       <Modal
         open={moveDialogOpen}
-        title="移动帖子节点"
-        description="选择目标节点后确认，帖子会整体迁移到新的节点。"
+        title="移动风笺节点"
+        description="选择目标节点后确认，风笺会整体迁移到新的节点。"
         onClose={() => setMoveDialogOpen(false)}
         footer={(
           <div className="flex items-center justify-end gap-2">
@@ -331,7 +331,7 @@ export function PostAdminPanel({
             boardOptions={boardOptions}
             disabled={pendingAction}
             title="选择目标节点"
-            description="支持按分区、节点名或 slug 搜索，确认后帖子将移动到所选节点。"
+            description="支持按分区、节点名或 slug 搜索，确认后风笺将移动到所选节点。"
           />
         </div>
       </Modal>

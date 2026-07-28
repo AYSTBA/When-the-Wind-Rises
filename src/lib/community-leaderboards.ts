@@ -192,7 +192,7 @@ export async function getPointsLeaderboard(
   }, {
     area: "leaderboards",
     action: "getPointsLeaderboard",
-    message: "积分排行榜加载失败",
+    message: "风铃排行榜加载失败",
     metadata: {
       currentUserId: currentUser?.id ?? null,
       limit,

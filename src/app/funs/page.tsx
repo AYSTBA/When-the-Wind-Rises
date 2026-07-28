@@ -65,7 +65,7 @@ export default async function FunsPage() {
                               <p className="mt-1 text-sm text-muted-foreground">{board.description}</p>
                             </div>
                           </div>
-                          <p className="mt-4 text-xs text-muted-foreground">帖子 {board.count}</p>
+                          <p className="mt-4 text-xs text-muted-foreground">风笺 {board.count}</p>
                         </a>
                       ))}
                     </CardContent>

@@ -94,8 +94,8 @@ export function useCreatePostSubmit({
       } | null
 
       if (!response.ok) {
-        const errorMessage = result?.message ?? (isEditMode ? "保存失败" : "发帖失败")
-        toast.error(errorMessage, isEditMode ? "保存失败" : "发帖失败")
+        const errorMessage = result?.message ?? (isEditMode ? "保存失败" : "发笺失败")
+        toast.error(errorMessage, isEditMode ? "保存失败" : "发笺失败")
         return
       }
 
@@ -120,8 +120,8 @@ export function useCreatePostSubmit({
       }
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : isEditMode ? "保存失败" : "发帖失败",
-        isEditMode ? "保存失败" : "发帖失败",
+        error instanceof Error ? error.message : isEditMode ? "保存失败" : "发笺失败",
+        isEditMode ? "保存失败" : "发笺失败",
       )
     } finally {
       setLoading(false)

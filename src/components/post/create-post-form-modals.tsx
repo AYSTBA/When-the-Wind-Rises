@@ -2,7 +2,6 @@
 
 import {
   CoverConfigModal,
-  PostRewardPoolModal,
   TagConfigModal,
 } from "@/components/post/create-post-form-modals-ui"
 import { HiddenContentModal } from "@/components/post/hidden-content-modal"
@@ -15,7 +14,6 @@ interface CreatePostFormModalsProps {
   pointName: string
   viewLevelOptions: AccessThresholdOption[]
   viewVipLevelOptions: AccessThresholdOption[]
-  postJackpotMaxInitialPoints: number
   draftController: CreatePostDraftController
 }
 
@@ -23,7 +21,6 @@ export function CreatePostFormModals({
   pointName,
   viewLevelOptions,
   viewVipLevelOptions,
-  postJackpotMaxInitialPoints,
   draftController,
 }: CreatePostFormModalsProps) {
   const {
@@ -31,27 +28,21 @@ export function CreatePostFormModals({
     tagInput,
     tagModalOpen,
     coverModalOpen,
-    rewardPoolModalOpen,
     attachmentModalOpen,
     tagEditingIndex,
     tagEditingValue,
     activeModal,
     coverUploading,
     attachmentUploading,
-    fixedRedPacketTotalPoints,
-    effectiveRewardPoolOptions,
     autoExtractedTags,
     canManageAttachments,
     canAddAttachments,
     currentUser,
     attachmentFeature,
     isEditMode,
-    postRedPacketMaxPoints,
-    postJackpotMinInitialPoints,
     setTagInput,
     setTagEditingValue,
     setCoverModalOpen,
-    setRewardPoolModalOpen,
     setAttachmentModalOpen,
     setActiveModal,
     updateDraftField,
@@ -71,7 +62,6 @@ export function CreatePostFormModals({
     addExternalAttachment,
     removeAttachment,
     updateAttachment,
-    resolveAvailableRewardPoolMode,
   } = draftController
 
   return (
@@ -130,61 +120,6 @@ export function CreatePostFormModals({
         onAttachmentChange={updateAttachment}
       />
 
-      <PostRewardPoolModal
-        open={rewardPoolModalOpen}
-        pointName={pointName}
-        redPacketEnabled={effectiveRewardPoolOptions.postRedPacketEnabled}
-        redPacketMaxPoints={postRedPacketMaxPoints}
-        jackpotEnabled={effectiveRewardPoolOptions.postJackpotEnabled}
-        jackpotMinInitialPoints={postJackpotMinInitialPoints}
-        jackpotMaxInitialPoints={postJackpotMaxInitialPoints}
-        jackpotReplyIncrementPoints={draftController.postJackpotReplyIncrementPoints}
-        currentUserPoints={currentUser.points}
-        value={{
-          enabled: draft.redPacketEnabled,
-          mode: draft.redPacketMode,
-          grantMode: draft.redPacketGrantMode,
-          claimOrderMode: draft.redPacketClaimOrderMode,
-          triggerType: draft.redPacketTriggerType,
-          jackpotInitialPoints: draft.jackpotInitialPoints,
-          unitPoints: draft.redPacketUnitPoints,
-          totalPoints: draft.redPacketTotalPoints,
-          packetCount: draft.redPacketPacketCount,
-          fixedTotalPoints: fixedRedPacketTotalPoints,
-        }}
-        disabled={isEditMode}
-        onClose={() => setRewardPoolModalOpen(false)}
-        onChange={{
-          onEnabledChange: (checked) =>
-            patchDraft({
-              redPacketEnabled: checked,
-              ...(checked
-                ? {
-                    redPacketMode: resolveAvailableRewardPoolMode(
-                      draft.redPacketMode,
-                      effectiveRewardPoolOptions,
-                    ),
-                  }
-                : {}),
-            }),
-          onModeChange: (value) => updateDraftField("redPacketMode", value),
-          onGrantModeChange: (value) =>
-            updateDraftField("redPacketGrantMode", value),
-          onClaimOrderModeChange: (value) =>
-            updateDraftField("redPacketClaimOrderMode", value),
-          onTriggerTypeChange: (value) =>
-            updateDraftField("redPacketTriggerType", value),
-          onJackpotInitialPointsChange: (value) =>
-            updateDraftField("jackpotInitialPoints", value),
-          onUnitPointsChange: (value) =>
-            updateDraftField("redPacketUnitPoints", value),
-          onTotalPointsChange: (value) =>
-            updateDraftField("redPacketTotalPoints", value),
-          onPacketCountChange: (value) =>
-            updateDraftField("redPacketPacketCount", value),
-        }}
-      />
-
       <HiddenContentModal
         open={activeModal === "login"}
         title="配置登录后可看"
@@ -214,18 +149,6 @@ export function CreatePostFormModals({
         onChange={({ minViewLevel, minViewVipLevel }) =>
           patchDraft({ minViewLevel, minViewVipLevel })}
         onClose={() => setActiveModal(null)}
-      />
-
-      <HiddenContentModal
-        open={activeModal === "purchase"}
-        title="配置购买后可看"
-        description={`用户支付后才可查看这部分内容。适合资料、附件说明、完整版教程等付费内容，价格单位为 ${pointName}。`}
-        value={draft.purchaseUnlockContent}
-        onChange={(value) => updateDraftField("purchaseUnlockContent", value)}
-        onClose={() => setActiveModal(null)}
-        price={draft.purchasePrice}
-        onPriceChange={(value) => updateDraftField("purchasePrice", value)}
-        priceLabel={`购买价格（${pointName}）`}
       />
     </>
   )

@@ -532,7 +532,7 @@ function UserProfilePreviewCardContent({ data }: { data: UserPreviewCardData }) 
             <PreviewNavLink
               href={data.postsHref ?? `/users/${user.username}?tab=posts`}
               icon={<FileText className="h-3.5 w-3.5" />}
-              label="帖子"
+              label="风笺"
             />
             <PreviewNavLink
               href={data.collectionsHref ?? `/users/${user.username}?tab=collections`}

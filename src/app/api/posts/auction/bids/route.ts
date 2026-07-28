@@ -2,14 +2,14 @@ import { apiError, apiSuccess, createRouteHandler, requireSearchParam } from "@/
 import { getPostAuctionBidRecordPage } from "@/lib/post-auctions"
 
 export const GET = createRouteHandler(async ({ request }) => {
-  const postId = requireSearchParam(request, "postId", "缺少帖子参数")
+  const postId = requireSearchParam(request, "postId", "缺少风笺参数")
   const url = new URL(request.url)
   const page = Math.max(1, Number(url.searchParams.get("page") ?? "1") || 1)
   const pageSize = Math.max(1, Number(url.searchParams.get("pageSize") ?? "10") || 10)
 
   const result = await getPostAuctionBidRecordPage(postId, { page, pageSize })
   if (!result) {
-    apiError(404, "当前帖子没有可公开的拍卖记录")
+    apiError(404, "当前风笺没有可公开的拍卖记录")
   }
 
   return apiSuccess(result)

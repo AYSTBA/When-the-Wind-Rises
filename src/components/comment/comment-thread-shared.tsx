@@ -75,7 +75,7 @@ export function CommentAuthorIdentityBadges({
   )
 }
 
-export function CommentRewardBadge({ rewardClaim, pointName = "积分" }: { rewardClaim?: SiteCommentItem["rewardClaim"] | SiteCommentReplyItem["rewardClaim"]; pointName?: string }) {
+export function CommentRewardBadge({ rewardClaim, pointName = "风铃" }: { rewardClaim?: SiteCommentItem["rewardClaim"] | SiteCommentReplyItem["rewardClaim"]; pointName?: string }) {
   if (!rewardClaim) return null
   const isJackpot = rewardClaim.rewardMode === "JACKPOT"
 
@@ -89,7 +89,7 @@ export function CommentRewardBadge({ rewardClaim, pointName = "积分" }: { rewa
   )
 }
 
-export function CommentJackpotDepositBadge({ feedback, pointName = "积分" }: { feedback?: PostRewardPoolEffectFeedback | null; pointName?: string }) {
+export function CommentJackpotDepositBadge({ feedback, pointName = "风铃" }: { feedback?: PostRewardPoolEffectFeedback | null; pointName?: string }) {
   const jackpotDepositPoints = feedback?.jackpotDepositPoints
   if (typeof jackpotDepositPoints !== "number" || jackpotDepositPoints < 0) return null
 

@@ -340,7 +340,7 @@ function readPointTopupMetadata(value: Prisma.JsonValue | null | undefined) {
   return {
     kind: "points.topup" as const,
     packageId: typeof root.packageId === "string" ? root.packageId : "",
-    title: typeof root.title === "string" ? root.title : "积分充值",
+    title: typeof root.title === "string" ? root.title : "风铃充值",
     points,
     bonusPoints,
     totalPoints,
@@ -915,7 +915,7 @@ async function fulfillPointTopupOrder(orderId: string) {
       }
 
       if (!order.userId) {
-        apiError(400, "积分充值订单缺少用户信息")
+        apiError(400, "风铃充值订单缺少用户信息")
       }
 
       const user = await tx.user.findUnique({
@@ -941,7 +941,7 @@ async function fulfillPointTopupOrder(orderId: string) {
           appliedRules: [],
         },
         pointName: settings.pointName,
-        reason: `积分充值到账（${topup.title} / +${topup.totalPoints}${settings.pointName}）`,
+        reason: `风铃充值到账（${topup.title} / +${topup.totalPoints}${settings.pointName}）`,
         eventType: POINT_LOG_EVENT_TYPES.POINTS_TOPUP,
         eventData: {
           kind: "points.topup",
@@ -989,7 +989,7 @@ async function fulfillPointTopupOrder(orderId: string) {
       await maybeEnqueuePaymentGatewayOrderSuccessEmail(successEmailSnapshot)
     }
   } catch (error) {
-    const message = error instanceof Error ? error.message : "积分充值履约失败"
+    const message = error instanceof Error ? error.message : "风铃充值履约失败"
     await prisma.paymentOrder.update({
       where: { id: orderId },
       data: {
@@ -1572,7 +1572,7 @@ export async function createPointTopupCheckout(input: {
 }) {
   const config = await getServerPaymentGatewayConfig()
   if (!config.enabled || !config.topupEnabled) {
-    apiError(400, "当前未开放积分充值")
+    apiError(400, "当前未开放风铃充值")
   }
 
   let amountFen = 0

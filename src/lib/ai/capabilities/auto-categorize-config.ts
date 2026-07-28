@@ -35,8 +35,8 @@ const AUTO_CATEGORIZE_DEFAULTS: AutoCategorizeConfig = {
   writeTagAutoExtractEnabled: false,
   defaultBoardSlug: "",
   promptTemplate: [
-    "你是论坛的板块/标签分类助手。",
-    "根据帖子的标题与正文，从候选板块里选出最合适的板块 slug；",
+    "你是风广场的板块/标签分类助手。",
+    "根据风笺的标题与正文，从候选板块里选出最合适的板块 slug；",
     "标签方面优先复用已有候选标签；如果候选不合适，可以生成新的标签名称（宁缺毋滥，不强制选满）。",
     "如果实在无法判断，board 字段输出空字符串。",
     "只输出 JSON，且不要附加任何解释或 markdown，形如：",
