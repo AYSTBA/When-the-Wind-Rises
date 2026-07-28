@@ -98,10 +98,7 @@ export async function getMoodSummary(): Promise<MoodSummaryData> {
   const allMoodCounts = new Map<string, number>()
 
   for (const [date, entry] of byDay) {
-    if (entry.count === 0) {
-      daySummaries.push({ date, mood: "", emoji: "·", count: 0 })
-      continue
-    }
+    if (entry.count === 0) continue
     const avg = entry.total / entry.count
     let dominantMood = ""
     let maxCount = 0

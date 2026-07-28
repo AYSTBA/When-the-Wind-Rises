@@ -1,20 +1,11 @@
 import type { Metadata } from "next"
 
-import { ForumPageShell } from "@/components/forum/forum-page-shell"
-import {
-  buildHomeSidebarCurrentUserSettings,
-  HomeSidebarPanels,
-} from "@/components/home/home-sidebar-panels"
 import { SiteHeader } from "@/components/site-header"
 import { getZones } from "@/lib/zones"
 import { getBoards } from "@/lib/boards"
 import { getSiteSettings } from "@/lib/site-settings"
-import { getMoodSummary, getMoodEmoji } from "@/lib/mood-summary"
-import { getHomeSidebarHotTopics } from "@/lib/home-sidebar"
-import { getHomeAnnouncements } from "@/lib/announcements"
-import { groupHomeSidebarPanels } from "@/lib/home-sidebar-layout"
-import { getHomeSidebarStats } from "@/lib/home-sidebar-stats"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getMoodSummary } from "@/lib/mood-summary"
+import { Card, CardContent } from "@/components/ui/card"
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
@@ -40,139 +31,67 @@ function formatDayLabel(dateStr: string): string {
   return `${d.getMonth() + 1}/${d.getDate()}`
 }
 
-function MoodDayBlock({ day }: { day: { date: string; mood: string; emoji: string; count: number } }) {
-  return (
-    <div className="flex flex-col items-center gap-1.5 rounded-lg border border-border bg-background/50 px-3 py-3 min-w-[52px]">
-      <span className="text-[11px] text-muted-foreground">{formatDayLabel(day.date)}</span>
-      <span className="text-xl leading-none">{day.emoji}</span>
-      {day.mood ? (
-        <span className="text-[10px] text-muted-foreground leading-tight">{day.mood}</span>
-      ) : (
-        <span className="text-[10px] text-muted-foreground/50 leading-tight">暂无</span>
-      )}
-      {day.count > 0 && (
-        <span className="text-[10px] text-muted-foreground/70">{day.count}笺</span>
-      )}
-    </div>
-  )
-}
-
-function MoodScoreGauge({ score }: { score: number }) {
-  const pct = score > 0 ? (score / 5) * 100 : 0
-  const color = score >= 4 ? "bg-emerald-500" : score >= 3 ? "bg-amber-500" : score > 0 ? "bg-orange-400" : "bg-muted"
-  return (
-    <div className="w-full h-2 rounded-full bg-muted/50 overflow-hidden">
-      <div className={`h-full rounded-full transition-all ${color}`} style={{ width: `${pct}%` }} />
-    </div>
-  )
-}
-
 export default async function MoodPage() {
-  const [settings, moodSummary, zones, boards, hotTopics, announcements, sidebarStats] = await Promise.all([
+  const [settings, moodSummary] = await Promise.all([
     getSiteSettings(),
     getMoodSummary(),
-    getZones(),
-    getBoards(),
-    getHomeSidebarHotTopics(),
-    getHomeAnnouncements(),
-    getHomeSidebarStats(),
   ])
 
-  const sidebarPanels = groupHomeSidebarPanels([])
-
-  const mainContent = (
-    <div className="space-y-6 py-1">
-      {/* 心情总结卡片 */}
-      <Card className="overflow-hidden">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <span className="text-xl">{moodSummary.dominantEmoji}</span>
-            <span>最近心情</span>
-            {moodSummary.totalCount > 0 && (
-              <span className="ml-auto text-xs font-normal text-muted-foreground">
-                近7天 · {moodSummary.totalCount}笺心情
-              </span>
-            )}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {moodSummary.totalCount === 0 ? (
-            <div className="flex flex-col items-center gap-3 py-8 text-center">
-              <span className="text-4xl">🌙</span>
-              <p className="text-sm text-muted-foreground">暂无心情数据</p>
-              <p className="text-xs text-muted-foreground/70">发笺时记录心情，七天心情将在这里汇聚</p>
-            </div>
-          ) : (
-            <>
-              {/* 平均心情 */}
-              <div className="flex items-center gap-3 rounded-lg bg-muted/30 px-4 py-3">
-                <span className="text-3xl">{moodSummary.dominantEmoji}</span>
-                <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium">{moodSummary.dominantMood}</p>
-                  <p className="text-xs text-muted-foreground">七日平均心情</p>
-                  <MoodScoreGauge score={moodSummary.averageScore} />
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-light tabular-nums">{moodSummary.averageScore.toFixed(1)}</p>
-                  <p className="text-[10px] text-muted-foreground">/ 5</p>
-                </div>
-              </div>
-
-              {/* 每日心情 */}
-              <div>
-                <p className="mb-2 text-xs font-medium text-muted-foreground">每日心情</p>
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  {moodSummary.daySummaries.map((day) => (
-                    <MoodDayBlock key={day.date} day={day} />
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* 未来心情记录入口占位 */}
-      <Card className="border-dashed">
-        <CardContent className="flex flex-col items-center gap-2 py-8 text-center">
-          <span className="text-2xl">📝</span>
-          <p className="text-sm text-muted-foreground">心情记录</p>
-          <p className="text-xs text-muted-foreground/70">即将开放，敬请期待</p>
-        </CardContent>
-      </Card>
-    </div>
-  )
+  const hasData = moodSummary.totalCount > 0
+  const dayCount = moodSummary.daySummaries.length
 
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-[1200px] px-1">
-        <ForumPageShell
-          zones={zones}
-          boards={boards}
-          main={<div className="pb-12">{mainContent}</div>}
-          rightSidebar={
-            <div className="mt-6 hidden pb-12 lg:block">
-              <HomeSidebarPanels
-                user={null}
-                hotTopics={hotTopics}
-                postLinkDisplayMode={settings.postLinkDisplayMode}
-                announcements={announcements}
-                showAnnouncements={settings.homeSidebarAnnouncementsEnabled}
-                friendLinksEnabled={settings.friendLinksEnabled}
-                topPanels={sidebarPanels.top}
-                middlePanels={sidebarPanels.middle}
-                bottomPanels={sidebarPanels.bottom}
-                stats={sidebarStats}
-                siteName={settings.siteName}
-                siteDescription={settings.siteDescription}
-                siteLogoPath={settings.siteLogoPath}
-                siteIconPath={settings.siteIconPath}
-                currentUserSettings={buildHomeSidebarCurrentUserSettings(settings)}
-              />
+      <div className="mx-auto max-w-[1200px] px-4 py-6">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {/* 最近心情 - 正方形小卡片 */}
+          <Card className="w-[160px] h-[160px] flex flex-col items-center justify-center gap-1">
+            <CardContent className="flex flex-col items-center justify-center p-0">
+              {hasData ? (
+                <>
+                  <span className="text-5xl font-light tabular-nums leading-none">
+                    {moodSummary.averageScore.toFixed(1)}
+                  </span>
+                  <span className="mt-2 text-sm text-muted-foreground">最近心情</span>
+                  <span className="text-xs text-muted-foreground/70">{dayCount}天数据</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-4xl">🌙</span>
+                  <span className="mt-2 text-sm text-muted-foreground">最近心情</span>
+                </>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* 未来心情记录入口占位 */}
+          <Card className="w-[160px] h-[160px] flex flex-col items-center justify-center gap-1 border-dashed">
+            <CardContent className="flex flex-col items-center justify-center p-0 gap-1">
+              <span className="text-3xl">📝</span>
+              <span className="text-sm text-muted-foreground">心情记录</span>
+              <span className="text-xs text-muted-foreground/70">即将开放</span>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* 每日心情条 - 仅展示有数据的天 */}
+        {hasData && dayCount > 0 && (
+          <div className="mt-8 flex justify-center">
+            <div className="flex gap-2">
+              {moodSummary.daySummaries.map((day) => (
+                <div
+                  key={day.date}
+                  className="flex flex-col items-center gap-1 rounded-lg border border-border bg-background/50 px-3 py-3 min-w-[52px]"
+                >
+                  <span className="text-[11px] text-muted-foreground">{formatDayLabel(day.date)}</span>
+                  <span className="text-xl leading-none">{day.emoji}</span>
+                  <span className="text-[10px] text-muted-foreground leading-tight">{day.mood}</span>
+                </div>
+              ))}
             </div>
-          }
-        />
+          </div>
+        )}
       </div>
     </div>
   )
