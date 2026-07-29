@@ -66,6 +66,7 @@ interface ListPostSource {
   title: string
   summary?: string | null
   content: string
+  mood?: string | null
   coverPath?: string | null
   type: string
   status: string
@@ -230,6 +231,7 @@ export function mapListPost(post: ListPostSource, anonymousMaskIdentity: Anonymo
       : undefined,
 
 
+    mood: post.mood ?? null,
     stats: {
       comments: post.commentCount,
       likes: post.likeCount,

@@ -198,6 +198,7 @@ export interface SitePostItem {
   statusLabel: string
   reviewNote?: string | null
   isPinned: boolean
+  mood?: string | null
   pinScope?: string | null
   hasRedPacket?: boolean
   rewardMode?: PostRewardPoolMode

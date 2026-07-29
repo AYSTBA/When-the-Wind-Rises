@@ -6,7 +6,6 @@ import { LayoutDashboard, LogOut, Medal, MessageSquareMore, Settings, TrendingUp
 
 import { useInboxRealtime } from "@/components/inbox-realtime-provider"
 import { useCurrentUser, type CurrentUserClient } from "@/components/current-user-provider"
-import { Skeleton } from "@/components/ui/skeleton"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -58,24 +57,6 @@ function HeaderUnreadBadge({ count, className }: { count: number; className?: st
     >
       {label}
     </span>
-  )
-}
-
-function HeaderUserActionsSkeleton({ messageEnabled }: { messageEnabled: boolean }) {
-  return (
-    <>
-      <div className="flex items-center gap-1 sm:hidden" aria-busy="true" aria-label="正在加载用户信息">
-        <Skeleton className="size-8 rounded-md" />
-        {messageEnabled ? <Skeleton className="size-8 rounded-md" /> : null}
-        <Skeleton className="size-8 rounded-md" />
-      </div>
-
-      <div className="hidden items-center gap-1.5 sm:flex" aria-busy="true" aria-label="正在加载用户信息">
-        <Skeleton className="size-8 rounded-md" />
-        {messageEnabled ? <Skeleton className="h-8 w-12 rounded-md" /> : null}
-        <Skeleton className="size-8 rounded-full" />
-      </div>
-    </>
   )
 }
 
@@ -196,10 +177,6 @@ export function HeaderUserActions({ user: userOverride, messageEnabled = true }:
     await refresh()
     router.replace(redirectTarget)
     router.refresh()
-  }
-
-  if (!user && loading) {
-    return <HeaderUserActionsSkeleton messageEnabled={messageEnabled} />
   }
 
   if (!user) {

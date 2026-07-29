@@ -63,6 +63,7 @@ export interface ForumFeedItem {
   isFeatured: boolean
   type: LocalPostType
   typeLabel: string
+  mood: string | null
   status: string
   statusLabel: string
   reviewNote?: string | null
@@ -139,6 +140,7 @@ type FeedPost = {
   title: string
   summary: string | null
   content: string
+  mood: string | null
   coverPath: string | null
   commentCount: number
   viewCount: number
@@ -237,6 +239,7 @@ function mapFeedPost(post: FeedPostRecord | PinnedFeedPostRecord, anonymousMaskI
     isFeatured: feedPost.isFeatured,
     type: postType,
     typeLabel: getPostTypeLabel(postType),
+    mood: feedPost.mood ?? null,
   }
 }
 

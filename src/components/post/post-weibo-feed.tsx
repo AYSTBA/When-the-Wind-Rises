@@ -19,6 +19,7 @@ import { toast } from "@/components/ui/toast"
 import { Tooltip } from "@/components/ui/tooltip"
 import { UserAvatar } from "@/components/user/user-avatar"
 import { UserDisplayedBadges } from "@/components/user/user-displayed-badges"
+import { getMoodEmoji } from "@/lib/mood"
 import { UserProfilePreviewCardTrigger } from "@/components/user/user-profile-preview-card-trigger"
 import { UserStatusBadge } from "@/components/user/user-status-badge"
 import { VipNameTooltip } from "@/components/vip/vip-name-tooltip"
@@ -301,6 +302,11 @@ export function PostWeiboFeed({ items, showBoard = true, postLinkDisplayMode = "
                       {item.title}
                     </h2>
                   </PostListLink>
+                  {getMoodEmoji(item.mood) ? (
+                    <Tooltip content={item.mood ?? ""}>
+                      <span className="inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{getMoodEmoji(item.mood)}</span>
+                    </Tooltip>
+                  ) : null}
                   {item.hasRedPacket ? (
                     <Tooltip content={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
                       <span className="shrink-0" aria-label={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>

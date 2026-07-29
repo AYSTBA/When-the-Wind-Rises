@@ -1,7 +1,7 @@
 "use client"
 
-import { createElement, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
-import { ChevronDown, Coins, Gavel, Gift, Info, Loader2, MessageSquareText, Settings2, Vote, type LucideIcon } from "lucide-react"
+import { createElement, useCallback, useMemo, useRef, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
+import { ChevronDown, Coins, Gavel, Gift, Info, Loader2, MessageSquareText, Plus, Settings2, Vote, X, type LucideIcon } from "lucide-react"
 
 import { AddonSurfaceClientRenderer } from "@/addons-host/client/addon-surface-client-renderer"
 import { BoardSelectField } from "@/components/board/board-select-field"
@@ -22,6 +22,38 @@ import type { CreatePostDraftController } from "@/components/post/use-create-pos
 import type { CreatePostSubmitController } from "@/components/post/use-create-post-submit"
 import type { LocalPostType } from "@/lib/post-types"
 import { formatCompactPointValue, formatDateTime } from "@/lib/formatters"
+
+// ─── Client-side image compression ─────────────────────────────────
+async function compressImageFile(file: File, maxDimension = 1920, quality = 0.82): Promise<Blob> {
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image()
+    el.onload = () => resolve(el)
+    el.onerror = () => reject(new Error("加载图片失败"))
+    el.src = URL.createObjectURL(file)
+  })
+
+  let w = img.naturalWidth
+  let h = img.naturalHeight
+  if (w > maxDimension || h > maxDimension) {
+    const ratio = Math.min(maxDimension / w, maxDimension / h)
+    w = Math.round(w * ratio)
+    h = Math.round(h * ratio)
+  }
+
+  const canvas = document.createElement("canvas")
+  canvas.width = w
+  canvas.height = h
+  const ctx = canvas.getContext("2d")!
+  ctx.drawImage(img, 0, 0, w, h)
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error("WebP 编码失败"))),
+      "image/webp",
+      quality,
+    )
+  })
+}
 
 interface CreatePostFormShellProps {
   boardOptions: CreatePostFormBoardGroup[]
@@ -158,6 +190,70 @@ export function CreatePostFormShell({
 
   const [draftBoxModalOpen, setDraftBoxModalOpen] = useState(false)
   const [isProMode, setIsProMode] = useState(false)
+
+  // ─── Simple-mode image upload ────────────────────────────────────
+  const simpleImageInputRef = useRef<HTMLInputElement | null>(null)
+  const [simpleImageUploading, setSimpleImageUploading] = useState(false)
+
+  // Extract image URLs from markdown content for display
+  const simpleImageUrls = useMemo(() => {
+    const urls: string[] = []
+    const re = /!\[.*?\]\((.*?)\)/g
+    let m: RegExpExecArray | null
+    while ((m = re.exec(draft.content)) !== null) {
+      urls.push(m[1])
+    }
+    return urls
+  }, [draft.content])
+
+  const handleSimpleImageSelect = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files ?? [])
+      if (files.length === 0) return
+
+      setSimpleImageUploading(true)
+      try {
+        let currentContent = draft.content
+        for (const rawFile of files) {
+          // Compress before upload
+          const compressed = await compressImageFile(rawFile)
+          const formData = new FormData()
+          formData.append("file", compressed, rawFile.name.replace(/\.[^.]+$/, "") + ".webp")
+          formData.append("folder", "posts")
+
+          const res = await fetch("/api/upload", { method: "POST", body: formData })
+          if (!res.ok) continue
+
+          const result = await res.json() as { data?: { urlPath?: string } }
+          const urlPath = result.data?.urlPath
+          if (!urlPath) continue
+
+          currentContent = (currentContent ? currentContent + "\n\n" : "") + `![](${urlPath})`
+        }
+        if (currentContent !== draft.content) {
+          updateDraftField("content", currentContent)
+        }
+      } finally {
+        setSimpleImageUploading(false)
+        if (simpleImageInputRef.current) {
+          simpleImageInputRef.current.value = ""
+        }
+      }
+    },
+    [draft.content, updateDraftField],
+  )
+
+  const handleSimpleImageRemove = useCallback(
+    (targetUrl: string) => {
+      const escaped = targetUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      let newContent = draft.content
+        .replace(new RegExp(`\n\n!\\[.*?\\]\\(${escaped}\\)`, "g"), "")
+        .replace(new RegExp(`!\\[.*?\\]\\(${escaped}\\)`, "g"), "")
+        .trim()
+      updateDraftField("content", newContent)
+    },
+    [draft.content, updateDraftField],
+  )
 
   const hasDraftBoxEntries = draftBoxEntries.length > 0
   const draftMetaTimestamp = pendingDraftToRestore?.updatedAt ?? lastSavedDraftAt
@@ -601,13 +697,59 @@ export function CreatePostFormShell({
         ))}
       </div>
 
-      <AddonEditor
-        context="post"
-        value={draft.content}
-        onChange={(value) => updateDraftField("content", value)}
-        placeholder="写点什么..."
-        markdownEmojiMap={markdownEmojiMap}
-      />
+      <div className="rounded-2xl border border-border bg-card">
+        <textarea
+          value={draft.content}
+          onChange={(e) => updateDraftField("content", e.target.value)}
+          placeholder="写点什么..."
+          rows={4}
+          className="w-full resize-none bg-transparent px-4 pt-3 text-sm leading-6 outline-hidden transition-colors placeholder:text-muted-foreground/50"
+        />
+
+        <div className="px-4 pb-3 pt-1">
+          {/* Image grid — 朋友圈 style */}
+          {simpleImageUrls.length > 0 && (
+            <div className="mb-2 flex flex-wrap gap-2">
+              {simpleImageUrls.map((url) => (
+                <div key={url} className="group relative size-16 overflow-hidden rounded-xl bg-muted">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={url} alt="" className="size-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => handleSimpleImageRemove(url)}
+                    className="absolute top-0.5 right-0.5 flex size-4 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    <X className="size-2.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Add-image button — solid gray square with white plus */}
+          <input
+            ref={simpleImageInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleSimpleImageSelect}
+            disabled={simpleImageUploading}
+          />
+          <button
+            type="button"
+            onClick={() => simpleImageInputRef.current?.click()}
+            disabled={simpleImageUploading}
+            className="flex size-16 items-center justify-center rounded-xl bg-muted transition-colors hover:bg-muted/70 disabled:opacity-50"
+          >
+            {simpleImageUploading ? (
+              <Loader2 className="size-5 animate-spin text-muted-foreground" />
+            ) : (
+              <Plus className="size-6 text-white" />
+            )}
+          </button>
+        </div>
+      </div>
     </>
   )
 

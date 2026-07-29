@@ -254,6 +254,7 @@ export async function buildHookedFeedDisplayItems(input: {
       contentMarkdown,
       contentPreviewMarkdown: previewContent.markdown,
       contentPreviewHtml: previewContent.html,
+      mood: legacy?.mood ?? null,
     } satisfies FeedDisplayItem
   })
 
@@ -376,6 +377,7 @@ export async function buildHookedPostStreamDisplayItems(input: {
       commentAccentColor: commentHeat.color,
       contentPreviewMarkdown: previewContent.markdown,
       contentPreviewHtml: previewContent.html,
+      mood: legacy?.mood ?? null,
     } satisfies PostStreamDisplayItem
   })
 

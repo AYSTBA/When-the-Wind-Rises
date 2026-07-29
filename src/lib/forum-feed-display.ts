@@ -55,6 +55,7 @@ export interface FeedDisplayItem {
   contentMarkdown?: string
   contentPreviewMarkdown?: string
   contentPreviewHtml?: string
+  mood: ForumFeedItem["mood"]
 }
 
 type FeedDisplaySettings = Pick<
@@ -152,6 +153,7 @@ export function mapForumFeedItemsToDisplayItems(
       contentMarkdown,
       contentPreviewMarkdown: previewContent.markdown,
       contentPreviewHtml: previewContent.html,
+      mood: item.mood,
     }
   })
 }

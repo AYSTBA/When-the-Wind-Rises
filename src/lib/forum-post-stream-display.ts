@@ -10,6 +10,7 @@ export interface PostStreamDisplayItem {
   id: string
   slug: string
   title: string
+  mood: string | null
   excerpt: string
   contentMarkdown?: string
   coverImage?: string | null
@@ -122,6 +123,7 @@ export function mapSitePostsToDisplayItems(
       id: post.id,
       slug: post.slug,
       title: post.title,
+      mood: post.mood ?? null,
       excerpt: post.excerpt,
       contentMarkdown,
       coverImage: resolveGalleryCoverImage(post.coverImage, previewMedia),

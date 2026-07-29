@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Tooltip } from "@/components/ui/tooltip"
 import { UserAvatar } from "@/components/user/user-avatar"
 import { UserStatusBadge } from "@/components/user/user-status-badge"
+import { getMoodEmoji } from "@/lib/mood"
 import { VipNameTooltip } from "@/components/vip/vip-name-tooltip"
 import { formatCompactNumber, formatNumber } from "@/lib/formatters"
 import { buildGalleryThumbnailSrcSet, buildGalleryThumbnailUrl } from "@/lib/gallery-thumbnail"
@@ -37,6 +38,7 @@ interface PostGalleryGridProps {
     minViewLevel?: number
     minViewVipLevel?: number
     isFeatured?: boolean
+    mood?: string | null
     boardName: string
     boardSlug?: string
     boardIcon?: string
@@ -249,6 +251,11 @@ export function PostGalleryGrid({ items, showBoard = true, postLinkDisplayMode =
                         {item.title}
                       </h2>
                     </PostListLink>
+                    {getMoodEmoji(item.mood) ? (
+                      <Tooltip content={item.mood ?? ""}>
+                        <span className="inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{getMoodEmoji(item.mood)}</span>
+                      </Tooltip>
+                    ) : null}
                     <PostAccessBadges minViewLevel={item.minViewLevel} minViewVipLevel={item.minViewVipLevel} compact />
                   </div>
 

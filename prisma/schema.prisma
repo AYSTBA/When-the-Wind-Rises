@@ -596,6 +596,7 @@ model User {
   updatedTaskDefinitions           TaskDefinition[]               @relation("TaskDefinitionUpdater")
   taskProgresses                   UserTaskProgress[]
   taskEventLedgers                 UserTaskEventLedger[]
+  moodRecords                      MoodRecord[]
 
   @@index([role])
   @@index([status])
@@ -2948,4 +2949,16 @@ model AiModerationSuggestion {
   @@index([postId])
   @@index([status, createdAt])
   @@index([reviewerId])
+}
+
+model MoodRecord {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  mood      String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
 }

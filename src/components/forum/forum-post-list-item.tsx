@@ -9,6 +9,7 @@ import { TimeTooltip } from "@/components/time-tooltip"
 import { Tooltip } from "@/components/ui/tooltip"
 import { VipNameTooltip } from "@/components/vip/vip-name-tooltip"
 import type { PostRewardPoolMode } from "@/lib/post-reward-pool-config"
+import { getMoodEmoji } from "@/lib/mood"
 
 import { MessageCircle, Paperclip } from "lucide-react"
 
@@ -39,6 +40,7 @@ interface ForumPostListItemProps {
     minViewLevel?: number
     minViewVipLevel?: number
     isFeatured: boolean
+    mood?: string | null
 
 
     boardName: string
@@ -83,6 +85,7 @@ export function ForumPostListItem({
 }: ForumPostListItemProps) {
   const isRestrictedAuthor = item.authorStatus === "BANNED" || item.authorStatus === "MUTED"
   const postPath = getPostPath({ id: item.id, slug: item.slug }, { mode: postLinkDisplayMode })
+  const moodEmoji = getMoodEmoji(item.mood)
   const latestReplyPath = item.latestReplyCommentId
     ? getPostCommentPath(
         { id: item.id, slug: item.slug },
@@ -143,6 +146,11 @@ export function ForumPostListItem({
                 {item.title}
               </h2>
             </PostListLink>
+            {moodEmoji ? (
+              <Tooltip content={item.mood ?? ""}>
+                <span className="inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{moodEmoji}</span>
+              </Tooltip>
+            ) : null}
             {item.hasRedPacket ? (
               <Tooltip content={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
                 <span aria-label={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>

@@ -8,33 +8,28 @@ export const MOOD_MAP: Record<string, { score: number; emoji: string }> = {
   "很失落": { score: 1, emoji: "😞" },
 }
 
+function toLocalDateKey(date: Date): string {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, "0")
+  const d = String(date.getDate()).padStart(2, "0")
+  return `${y}-${m}-${d}`
+}
+
 export function getMoodEmoji(mood: string): string {
-  return MOOD_MAP[mood]?.emoji ?? "❓"
+  return MOOD_MAP[mood]?.emoji ?? "📝"
 }
 
 export function getMoodScore(mood: string): number {
   return MOOD_MAP[mood]?.score ?? 0
 }
 
-function scoreToMood(score: number): string {
-  const entries = Object.entries(MOOD_MAP)
-  let closest = entries[0][0]
-  let closestDiff = Math.abs(score - entries[0][1].score)
-  for (const [label, { score: s }] of entries) {
-    const diff = Math.abs(score - s)
-    if (diff < closestDiff) {
-      closest = label
-      closestDiff = diff
-    }
-  }
-  return closest
-}
-
 export interface DayMoodSummary {
   date: string
   mood: string
   emoji: string
-  count: number
+  postCount: number
+  moodCount: number
+  averageScore: number
 }
 
 export interface MoodSummaryData {
@@ -42,27 +37,33 @@ export interface MoodSummaryData {
   averageScore: number
   dominantMood: string
   dominantEmoji: string
-  totalCount: number
+  totalPostCount: number
+  totalMoodCount: number
+  moodDistribution: Record<string, number>
 }
 
-const EMPTY_SUMMARY: MoodSummaryData = {
-  daySummaries: [],
-  averageScore: 0,
-  dominantMood: "",
-  dominantEmoji: "🌙",
-  totalCount: 0,
-}
-
-export async function getMoodSummary(): Promise<MoodSummaryData> {
+export async function getMoodSummary(userId?: number): Promise<MoodSummaryData> {
   const now = new Date()
   const sevenDaysAgo = new Date(now)
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6)
   sevenDaysAgo.setHours(0, 0, 0, 0)
 
+  if (!userId) {
+    return {
+      daySummaries: [],
+      averageScore: 0,
+      dominantMood: "",
+      dominantEmoji: "🌙",
+      totalPostCount: 0,
+      totalMoodCount: 0,
+      moodDistribution: {},
+    }
+  }
+
   const posts = await db.post.findMany({
     where: {
+      authorId: userId,
       createdAt: { gte: sevenDaysAgo },
-      mood: { not: null },
     },
     select: {
       mood: true,
@@ -70,36 +71,66 @@ export async function getMoodSummary(): Promise<MoodSummaryData> {
     },
   })
 
-  if (posts.length === 0) return EMPTY_SUMMARY
+  const moodRecords = await db.moodRecord.findMany({
+    where: {
+      userId,
+      createdAt: { gte: sevenDaysAgo },
+    },
+    select: {
+      mood: true,
+      createdAt: true,
+    },
+  })
 
-  const byDay = new Map<string, { total: number; count: number; moodCounts: Map<string, number> }>()
+  const allEntries = [
+    ...posts.map((p) => ({ mood: p.mood, createdAt: p.createdAt })),
+    ...moodRecords.map((r) => ({ mood: r.mood, createdAt: r.createdAt })),
+  ]
+
+  if (allEntries.length === 0) {
+    return {
+      daySummaries: [],
+      averageScore: 0,
+      dominantMood: "",
+      dominantEmoji: "🌙",
+      totalPostCount: 0,
+      totalMoodCount: 0,
+      moodDistribution: {},
+    }
+  }
+
+  const byDay = new Map<string, { moodTotal: number; moodCount: number; postCount: number; moodCounts: Map<string, number> }>()
 
   for (let i = 0; i < 7; i++) {
     const d = new Date(sevenDaysAgo)
     d.setDate(d.getDate() + i)
-    const key = d.toISOString().slice(0, 10)
-    byDay.set(key, { total: 0, count: 0, moodCounts: new Map() })
+    const key = toLocalDateKey(d)
+    byDay.set(key, { moodTotal: 0, moodCount: 0, postCount: 0, moodCounts: new Map() })
   }
 
-  for (const post of posts) {
-    if (!post.mood) continue
-    const key = post.createdAt.toISOString().slice(0, 10)
-    const entry = byDay.get(key)
-    if (!entry) continue
-    const sc = getMoodScore(post.mood)
-    entry.total += sc
-    entry.count += 1
-    entry.moodCounts.set(post.mood, (entry.moodCounts.get(post.mood) ?? 0) + 1)
+  for (const entry of allEntries) {
+    const key = toLocalDateKey(entry.createdAt)
+    const dayEntry = byDay.get(key)
+    if (!dayEntry) continue
+    dayEntry.postCount += 1
+    if (entry.mood) {
+      const sc = getMoodScore(entry.mood)
+      dayEntry.moodTotal += sc
+      dayEntry.moodCount += 1
+      dayEntry.moodCounts.set(entry.mood, (dayEntry.moodCounts.get(entry.mood) ?? 0) + 1)
+    }
   }
 
   const daySummaries: DayMoodSummary[] = []
-  let grandTotal = 0
-  let grandCount = 0
+  let grandMoodTotal = 0
+  let grandMoodCount = 0
+  let grandPostCount = 0
   const allMoodCounts = new Map<string, number>()
 
   for (const [date, entry] of byDay) {
-    if (entry.count === 0) continue
-    const avg = entry.total / entry.count
+    if (entry.postCount === 0) continue
+
+    const avg = entry.moodCount > 0 ? entry.moodTotal / entry.moodCount : 0
     let dominantMood = ""
     let maxCount = 0
     for (const [mood, c] of entry.moodCounts) {
@@ -109,17 +140,22 @@ export async function getMoodSummary(): Promise<MoodSummaryData> {
       }
       allMoodCounts.set(mood, (allMoodCounts.get(mood) ?? 0) + c)
     }
-    grandTotal += entry.total
-    grandCount += entry.count
+
+    grandMoodTotal += entry.moodTotal
+    grandMoodCount += entry.moodCount
+    grandPostCount += entry.postCount
+
     daySummaries.push({
       date,
       mood: dominantMood,
-      emoji: getMoodEmoji(dominantMood),
-      count: entry.count,
+      emoji: dominantMood ? getMoodEmoji(dominantMood) : "📝",
+      postCount: entry.postCount,
+      moodCount: entry.moodCount,
+      averageScore: avg,
     })
   }
 
-  const averageScore = grandCount > 0 ? grandTotal / grandCount : 0
+  const averageScore = grandMoodCount > 0 ? grandMoodTotal / grandMoodCount : 0
   let dominantMood = ""
   let maxCount = 0
   for (const [mood, c] of allMoodCounts) {
@@ -134,6 +170,23 @@ export async function getMoodSummary(): Promise<MoodSummaryData> {
     averageScore,
     dominantMood: dominantMood || scoreToMood(averageScore),
     dominantEmoji: dominantMood ? getMoodEmoji(dominantMood) : "🌙",
-    totalCount: grandCount,
+    totalPostCount: grandPostCount,
+    totalMoodCount: grandMoodCount,
+    moodDistribution: Object.fromEntries(allMoodCounts),
   }
+}
+
+function scoreToMood(score: number): string {
+  if (score === 0) return ""
+  const entries = Object.entries(MOOD_MAP)
+  let closest = entries[0][0]
+  let closestDiff = Math.abs(score - entries[0][1].score)
+  for (const [label, { score: s }] of entries) {
+    const diff = Math.abs(score - s)
+    if (diff < closestDiff) {
+      closest = label
+      closestDiff = diff
+    }
+  }
+  return closest
 }
