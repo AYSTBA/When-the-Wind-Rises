@@ -1,18 +1,15 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useState, useSyncExternalStore } from "react"
+import { useRef, useState } from "react"
 
-import { AddonEditor } from "@/components/addon-editor"
-import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { Button } from "@/components/ui/rbutton"
 import { toast } from "@/components/ui/toast"
-import { getClientPlatform, type ClientPlatform } from "@/lib/client-platform"
 import { COMMENT_LOAD_MODE_INFINITE, COMMENT_LOAD_MODE_PAGINATION, type CommentLoadMode } from "@/lib/comment-load-mode"
 import { buildCommentNavigationUrl } from "@/lib/comment-navigation"
+import { dispatchPostReplyCreated } from "@/lib/post-discussion-events"
 import type { MarkdownEmojiItem } from "@/lib/markdown-emoji"
 import type { PrivateReplyRecipient } from "@/components/refined-rich-post-editor/types"
-import { dispatchPostReplyCreated } from "@/lib/post-discussion-events"
 import { cn } from "@/lib/utils"
 
 interface CommentFormProps {
@@ -70,18 +67,54 @@ function CommentFormContent({ postId, commentId, initialContent = "", mode = "cr
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const [expanded, setExpanded] = useState(mode === "edit" || !compact || (mode === "create" && Boolean(replyToUserName)))
-  const shortcutPlatform = useSyncExternalStore(
-    () => () => undefined,
-    getClientPlatform,
-    () => "other" satisfies ClientPlatform,
-  )
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [imageUploading, setImageUploading] = useState(false)
+
+  const builtContent = content + (imageUrls.length > 0 ? "\n\n" + imageUrls.map((url) => `![](${url})`).join("\n\n") : "")
+
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? [])
+    if (files.length === 0) return
+
+    setImageUploading(true)
+    try {
+      const newUrls = [...imageUrls]
+      for (const rawFile of files) {
+        const formData = new FormData()
+        formData.append("file", rawFile)
+        formData.append("folder", "comments")
+
+        const res = await fetch("/api/upload", { method: "POST", body: formData })
+        if (!res.ok) continue
+
+        const result = await res.json() as { data?: { urlPath?: string } }
+        const urlPath = result.data?.urlPath
+        if (!urlPath) continue
+
+        newUrls.push(urlPath)
+      }
+      if (newUrls.length !== imageUrls.length) {
+        setImageUrls(newUrls)
+      }
+    } finally {
+      setImageUploading(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
+    }
+  }
+
+  const handleImageRemove = (targetUrl: string) => {
+    setImageUrls((prev) => prev.filter((url) => url !== targetUrl))
+  }
 
   const helperMessage = privateReplyRecipient
     ? `本次回复仅 ${privateReplyRecipient.displayName} 和你本人可见。`
     : commentsVisibleToAuthorOnly
     ? "当前风笺开启了评论仅楼主可见，你的评论仅楼主、管理员和你自己可见。"
     : "可使用 @昵称/用户名 提及他人。"
-  const primaryShortcutKey = shortcutPlatform === "mac" ? "Cmd" : "Ctrl"
   const formClassName = compact
     ? "min-w-0 w-full max-w-full flex flex-col gap-3 overflow-x-hidden rounded-[18px] border border-border bg-card p-4"
     : embedded
@@ -123,9 +156,9 @@ function CommentFormContent({ postId, commentId, initialContent = "", mode = "cr
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(mode === "edit" ? { postId, commentId, content } : {
+      body: JSON.stringify(mode === "edit" ? { postId, commentId, content: builtContent } : {
         postId,
-        content,
+        content: builtContent,
         parentId,
         replyToUserName,
         replyToCommentId,
@@ -147,6 +180,7 @@ function CommentFormContent({ postId, commentId, initialContent = "", mode = "cr
 
     if (mode !== "edit") {
       setContent("")
+      setImageUrls([])
       setPrivateReplyRecipient(null)
     }
 
@@ -205,41 +239,68 @@ function CommentFormContent({ postId, commentId, initialContent = "", mode = "cr
   return (
     <form onSubmit={handleSubmit} onKeyDown={handleSubmitShortcut} className={formClassName}>
       {disabledMessage ? <div className={cn("rounded-[16px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800", embedded && "mx-4")}>{disabledMessage}</div> : null}
-      <AddonEditor
-        context="comment"
-        value={content}
-        onChange={setContent}
-        disabled={Boolean(disabledMessage)}
-        minHeight={compact ? 120 : 180}
-        uploadFolder="comments"
-        markdownEmojiMap={markdownEmojiMap}
-        placeholder={mode === "edit" ? `修改评论内容…可在 ${editWindowMinutes} 分钟内编辑` : replyToUserName ? `回复 @${replyToUserName}…` : "写下你的回复…支持 @昵称/用户名 提及"}
-        shellClassName={embedded ? "rounded-none border-0 bg-transparent shadow-none" : undefined}
-        privateReplyPostId={postId}
-        privateReplyRecipient={mode === "create" ? privateReplyRecipient : null}
-        onPrivateReplyInsert={mode === "create"
-          ? ({ recipient, content: nextContent }) => {
-              setPrivateReplyRecipient(recipient)
-              setContent(nextContent)
-              setExpanded(true)
-            }
-          : undefined}
-        onClearPrivateReply={mode === "create" ? () => setPrivateReplyRecipient(null) : undefined}
-      />
+      <div className={cn("relative flex flex-col", embedded ? "rounded-none border-0 bg-transparent" : "rounded-[18px] border border-border bg-card")}>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          disabled={Boolean(disabledMessage)}
+          placeholder={mode === "edit" ? `修改评论内容…可在 ${editWindowMinutes} 分钟内编辑` : replyToUserName ? `回复 @${replyToUserName}…` : "写下你的回复…"}
+          rows={4}
+          className="w-full resize-none bg-transparent px-4 pt-3 text-sm leading-6 outline-hidden transition-colors placeholder:text-muted-foreground/50 disabled:opacity-50"
+        />
+        {imageUrls.length > 0 && (
+          <div className="flex flex-wrap gap-2 px-4 pb-2">
+            {imageUrls.map((url) => (
+              <div key={url} className="group relative size-16 overflow-hidden rounded-xl bg-muted">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt="" className="size-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => handleImageRemove(url)}
+                  className="absolute top-0.5 right-0.5 flex size-4 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-2.5">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="flex items-center justify-between px-4 pb-3 pt-1">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleImageSelect}
+            disabled={imageUploading || Boolean(disabledMessage)}
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={imageUploading || Boolean(disabledMessage)}
+            className="flex size-8 items-center justify-center rounded-lg bg-muted text-xs text-muted-foreground transition-colors hover:bg-muted/70 disabled:opacity-50"
+            title="添加图片"
+          >
+            {imageUploading ? (
+              <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
       <div className={cn("flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between", embedded && "px-4")}>
         {message ? (
           <p className="text-sm text-muted-foreground">{message}</p>
         ) : (
-          <span className="inline-flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-            <span>{helperMessage}</span>
-            <KbdGroup className="hidden flex-wrap items-center gap-1.5 sm:inline-flex">
-              <span>按</span>
-              <Kbd className="min-w-fit px-1.5 font-mono text-[10px]">{primaryShortcutKey}</Kbd>
-              <span>+</span>
-              <Kbd className="min-w-fit px-1.5 font-mono text-[10px]">Enter</Kbd>
-              <span>快速提交</span>
-            </KbdGroup>
-          </span>
+          <span className="text-xs text-muted-foreground">{helperMessage}</span>
         )}
 
         <div className="flex flex-wrap items-center justify-end gap-2">
