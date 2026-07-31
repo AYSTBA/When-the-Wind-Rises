@@ -357,12 +357,12 @@ function mapSiteSettings(record: SiteSettingsRecordData, tippingGifts: SiteTippi
   })
   const postContentLengthSettings = resolvePostContentLengthSettings({
     appStateJson: record.appStateJson,
-    postTitleMinLengthFallback: 5,
-    postTitleMaxLengthFallback: 100,
-    postContentMinLengthFallback: 10,
-    postContentMaxLengthFallback: 50000,
-    commentContentMinLengthFallback: 2,
-    commentContentMaxLengthFallback: 2000,
+    postTitleMinLengthFallback: 1,
+    postTitleMaxLengthFallback: 50000,
+    postContentMinLengthFallback: 1,
+    postContentMaxLengthFallback: 100000,
+    commentContentMinLengthFallback: 1,
+    commentContentMaxLengthFallback: 20000,
   })
   const authProviderSettings = resolveAuthProviderSettings({
     appStateJson: record.appStateJson,

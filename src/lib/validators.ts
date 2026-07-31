@@ -274,21 +274,19 @@ export function validatePostPayload(body: unknown, options: PostPayloadValidatio
 
 
 
-  if (!title || !content || !boardSlug) {
+  if (!content || !boardSlug) {
     return { success: false, message: "缺少必要参数" }
   }
 
-  const titleMinLength = Math.max(1, Math.min(100, options.titleMinLength ?? 5))
-  const titleMaxLength = Math.max(titleMinLength, Math.min(500, options.titleMaxLength ?? 100))
-  const contentMinLength = Math.max(1, Math.min(1000, options.contentMinLength ?? 10))
-  const contentMaxLength = Math.max(contentMinLength, Math.min(100000, options.contentMaxLength ?? 50000))
+  const titleMinLength = Math.max(1, options.titleMinLength ?? 1)
+  const contentMinLength = Math.max(1, options.contentMinLength ?? 1)
 
-  if (title.length < titleMinLength || title.length > titleMaxLength) {
-    return { success: false, message: `标题长度需为 ${titleMinLength}-${titleMaxLength} 个字符` }
+  if (title && title.length < titleMinLength) {
+    return { success: false, message: `标题长度至少 ${titleMinLength} 个字符` }
   }
 
-  if (content.length < contentMinLength || content.length > contentMaxLength) {
-    return { success: false, message: `正文字数需为 ${contentMinLength}-${contentMaxLength} 个字符` }
+  if (content.length < contentMinLength) {
+    return { success: false, message: `正文长度至少 ${contentMinLength} 个字符` }
   }
 
   if (boardSlug.length > 50) {
@@ -425,11 +423,10 @@ export function validateCommentPayload(body: unknown, options: CommentPayloadVal
     return { success: false, message: "缺少必要参数" }
   }
 
-  const contentMinLength = Math.max(1, Math.min(500, options.contentMinLength ?? 2))
-  const contentMaxLength = Math.max(contentMinLength, Math.min(20000, options.contentMaxLength ?? 2000))
+  const contentMinLength = Math.max(1, options.contentMinLength ?? 1)
 
-  if (content.length < contentMinLength || content.length > contentMaxLength) {
-    return { success: false, message: `评论长度需为 ${contentMinLength}-${contentMaxLength} 个字符` }
+  if (content.length < contentMinLength) {
+    return { success: false, message: `评论长度至少 ${contentMinLength} 个字符` }
   }
 
   return {

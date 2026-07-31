@@ -102,12 +102,12 @@ export async function updateInteractionSiteSettingsSection(existing: SiteSetting
     })
     const existingPostContentLengthSettings = resolvePostContentLengthSettings({
       appStateJson: existing.appStateJson,
-      postTitleMinLengthFallback: 5,
-      postTitleMaxLengthFallback: 100,
-      postContentMinLengthFallback: 10,
-      postContentMaxLengthFallback: 50000,
-      commentContentMinLengthFallback: 2,
-      commentContentMaxLengthFallback: 2000,
+      postTitleMinLengthFallback: 1,
+      postTitleMaxLengthFallback: 50000,
+      postContentMinLengthFallback: 1,
+      postContentMaxLengthFallback: 100000,
+      commentContentMinLengthFallback: 1,
+      commentContentMaxLengthFallback: 20000,
     })
     const commentPageSize = Math.min(100, Math.max(1, readOptionalNumberField(body, "commentPageSize") ?? existingPostPageSizeSettings.comments))
     const existingSiteChatSettings = resolveSiteChatSettings({
@@ -117,30 +117,12 @@ export async function updateInteractionSiteSettingsSection(existing: SiteSetting
     const siteChatEnabled = body.siteChatEnabled === undefined
       ? existingSiteChatSettings.enabled
       : Boolean(body.siteChatEnabled)
-    const postTitleMinLength = Math.min(
-      100,
-      Math.max(1, readOptionalNumberField(body, "postTitleMinLength") ?? existingPostContentLengthSettings.postTitleMinLength),
-    )
-    const postTitleMaxLength = Math.min(
-      500,
-      Math.max(postTitleMinLength, readOptionalNumberField(body, "postTitleMaxLength") ?? existingPostContentLengthSettings.postTitleMaxLength),
-    )
-    const postContentMinLength = Math.min(
-      1000,
-      Math.max(1, readOptionalNumberField(body, "postContentMinLength") ?? existingPostContentLengthSettings.postContentMinLength),
-    )
-    const postContentMaxLength = Math.min(
-      100000,
-      Math.max(postContentMinLength, readOptionalNumberField(body, "postContentMaxLength") ?? existingPostContentLengthSettings.postContentMaxLength),
-    )
-    const commentContentMinLength = Math.min(
-      500,
-      Math.max(1, readOptionalNumberField(body, "commentContentMinLength") ?? existingPostContentLengthSettings.commentContentMinLength),
-    )
-    const commentContentMaxLength = Math.min(
-      20000,
-      Math.max(commentContentMinLength, readOptionalNumberField(body, "commentContentMaxLength") ?? existingPostContentLengthSettings.commentContentMaxLength),
-    )
+    const postTitleMinLength = Math.max(1, readOptionalNumberField(body, "postTitleMinLength") ?? existingPostContentLengthSettings.postTitleMinLength)
+    const postTitleMaxLength = Math.max(postTitleMinLength, readOptionalNumberField(body, "postTitleMaxLength") ?? existingPostContentLengthSettings.postTitleMaxLength)
+    const postContentMinLength = Math.max(1, readOptionalNumberField(body, "postContentMinLength") ?? existingPostContentLengthSettings.postContentMinLength)
+    const postContentMaxLength = Math.max(postContentMinLength, readOptionalNumberField(body, "postContentMaxLength") ?? existingPostContentLengthSettings.postContentMaxLength)
+    const commentContentMinLength = Math.max(1, readOptionalNumberField(body, "commentContentMinLength") ?? existingPostContentLengthSettings.commentContentMinLength)
+    const commentContentMaxLength = Math.max(commentContentMinLength, readOptionalNumberField(body, "commentContentMaxLength") ?? existingPostContentLengthSettings.commentContentMaxLength)
     const tippingEnabled = Boolean(body.tippingEnabled)
     const tippingDailyLimit = Math.max(1, readOptionalNumberField(body, "tippingDailyLimit") ?? 1)
     const tippingPerPostLimit = Math.max(1, readOptionalNumberField(body, "tippingPerPostLimit") ?? 1)

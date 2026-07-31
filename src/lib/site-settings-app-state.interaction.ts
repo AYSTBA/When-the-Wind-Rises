@@ -445,17 +445,17 @@ export function resolvePostContentLengthSettings(options: {
   const postContentLengths = isRecord(siteSettingsState.postContentLengths)
     ? siteSettingsState.postContentLengths
     : {}
-  const postTitleMinLength = Math.min(100, Math.max(1, normalizeNonNegativeInteger(postContentLengths.postTitleMinLength, normalizeNonNegativeInteger(options.postTitleMinLengthFallback, 5))))
-  const postContentMinLength = Math.min(1000, Math.max(1, normalizeNonNegativeInteger(postContentLengths.postContentMinLength, normalizeNonNegativeInteger(options.postContentMinLengthFallback, 10))))
-  const commentContentMinLength = Math.min(500, Math.max(1, normalizeNonNegativeInteger(postContentLengths.commentContentMinLength, normalizeNonNegativeInteger(options.commentContentMinLengthFallback, 2))))
+  const postTitleMinLength = Math.max(1, normalizeNonNegativeInteger(postContentLengths.postTitleMinLength, normalizeNonNegativeInteger(options.postTitleMinLengthFallback, 1)))
+  const postContentMinLength = Math.max(1, normalizeNonNegativeInteger(postContentLengths.postContentMinLength, normalizeNonNegativeInteger(options.postContentMinLengthFallback, 1)))
+  const commentContentMinLength = Math.max(1, normalizeNonNegativeInteger(postContentLengths.commentContentMinLength, normalizeNonNegativeInteger(options.commentContentMinLengthFallback, 1)))
 
   return {
     postTitleMinLength,
-    postTitleMaxLength: Math.min(500, Math.max(postTitleMinLength, normalizeNonNegativeInteger(postContentLengths.postTitleMaxLength, normalizeNonNegativeInteger(options.postTitleMaxLengthFallback, 100)))),
+    postTitleMaxLength: Math.max(postTitleMinLength, normalizeNonNegativeInteger(postContentLengths.postTitleMaxLength, normalizeNonNegativeInteger(options.postTitleMaxLengthFallback, 50000))),
     postContentMinLength,
-    postContentMaxLength: Math.min(100000, Math.max(postContentMinLength, normalizeNonNegativeInteger(postContentLengths.postContentMaxLength, normalizeNonNegativeInteger(options.postContentMaxLengthFallback, 50000)))),
+    postContentMaxLength: Math.max(postContentMinLength, normalizeNonNegativeInteger(postContentLengths.postContentMaxLength, normalizeNonNegativeInteger(options.postContentMaxLengthFallback, 100000))),
     commentContentMinLength,
-    commentContentMaxLength: Math.min(20000, Math.max(commentContentMinLength, normalizeNonNegativeInteger(postContentLengths.commentContentMaxLength, normalizeNonNegativeInteger(options.commentContentMaxLengthFallback, 2000)))),
+    commentContentMaxLength: Math.max(commentContentMinLength, normalizeNonNegativeInteger(postContentLengths.commentContentMaxLength, normalizeNonNegativeInteger(options.commentContentMaxLengthFallback, 20000))),
   }
 }
 
@@ -464,19 +464,19 @@ export function mergePostContentLengthSettings(
   input: PostContentLengthSettings,
 ) {
   const siteSettingsState = readSiteSettingsState(appStateJson)
-  const postTitleMinLength = Math.min(100, Math.max(1, normalizeNonNegativeInteger(input.postTitleMinLength, 5)))
-  const postContentMinLength = Math.min(1000, Math.max(1, normalizeNonNegativeInteger(input.postContentMinLength, 10)))
-  const commentContentMinLength = Math.min(500, Math.max(1, normalizeNonNegativeInteger(input.commentContentMinLength, 2)))
+  const postTitleMinLength = Math.max(1, normalizeNonNegativeInteger(input.postTitleMinLength, 1))
+  const postContentMinLength = Math.max(1, normalizeNonNegativeInteger(input.postContentMinLength, 1))
+  const commentContentMinLength = Math.max(1, normalizeNonNegativeInteger(input.commentContentMinLength, 1))
 
   return writeSiteSettingsState(appStateJson, {
     ...siteSettingsState,
     postContentLengths: {
       postTitleMinLength,
-      postTitleMaxLength: Math.min(500, Math.max(postTitleMinLength, normalizeNonNegativeInteger(input.postTitleMaxLength, 100))),
+      postTitleMaxLength: Math.max(postTitleMinLength, normalizeNonNegativeInteger(input.postTitleMaxLength, 50000)),
       postContentMinLength,
-      postContentMaxLength: Math.min(100000, Math.max(postContentMinLength, normalizeNonNegativeInteger(input.postContentMaxLength, 50000))),
+      postContentMaxLength: Math.max(postContentMinLength, normalizeNonNegativeInteger(input.postContentMaxLength, 100000)),
       commentContentMinLength,
-      commentContentMaxLength: Math.min(20000, Math.max(commentContentMinLength, normalizeNonNegativeInteger(input.commentContentMaxLength, 2000))),
+      commentContentMaxLength: Math.max(commentContentMinLength, normalizeNonNegativeInteger(input.commentContentMaxLength, 20000)),
     },
   })
 }
