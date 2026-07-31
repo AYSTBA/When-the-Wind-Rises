@@ -1,6 +1,6 @@
 "use client"
 
-import { createElement, useCallback, useMemo, useRef, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
+import { createElement, useCallback, useEffect, useMemo, useRef, useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
 import { ChevronDown, Coins, Gavel, Gift, Info, Loader2, MessageSquareText, Plus, Settings2, Vote, X, type LucideIcon } from "lucide-react"
 
 import { AddonSurfaceClientRenderer } from "@/addons-host/client/addon-surface-client-renderer"
@@ -191,20 +191,16 @@ export function CreatePostFormShell({
   const [draftBoxModalOpen, setDraftBoxModalOpen] = useState(false)
   const [isProMode, setIsProMode] = useState(false)
 
+  // Sync isSimpleMode with pro mode toggle
+  useEffect(() => {
+    updateDraftField("isSimpleMode", !isProMode)
+  }, [isProMode])
+
   // ─── Simple-mode image upload ────────────────────────────────────
   const simpleImageInputRef = useRef<HTMLInputElement | null>(null)
   const [simpleImageUploading, setSimpleImageUploading] = useState(false)
 
-  // Extract image URLs from markdown content for display
-  const simpleImageUrls = useMemo(() => {
-    const urls: string[] = []
-    const re = /!\[.*?\]\((.*?)\)/g
-    let m: RegExpExecArray | null
-    while ((m = re.exec(draft.content)) !== null) {
-      urls.push(m[1])
-    }
-    return urls
-  }, [draft.content])
+  const simpleImageUrls = draft.simpleImages
 
   const handleSimpleImageSelect = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,7 +209,7 @@ export function CreatePostFormShell({
 
       setSimpleImageUploading(true)
       try {
-        let currentContent = draft.content
+        const newUrls = [...draft.simpleImages]
         for (const rawFile of files) {
           // Compress before upload
           const compressed = await compressImageFile(rawFile)
@@ -228,10 +224,10 @@ export function CreatePostFormShell({
           const urlPath = result.data?.urlPath
           if (!urlPath) continue
 
-          currentContent = (currentContent ? currentContent + "\n\n" : "") + `![](${urlPath})`
+          newUrls.push(urlPath)
         }
-        if (currentContent !== draft.content) {
-          updateDraftField("content", currentContent)
+        if (newUrls.length !== draft.simpleImages.length) {
+          updateDraftField("simpleImages", newUrls)
         }
       } finally {
         setSimpleImageUploading(false)
@@ -245,14 +241,9 @@ export function CreatePostFormShell({
 
   const handleSimpleImageRemove = useCallback(
     (targetUrl: string) => {
-      const escaped = targetUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      let newContent = draft.content
-        .replace(new RegExp(`\n\n!\\[.*?\\]\\(${escaped}\\)`, "g"), "")
-        .replace(new RegExp(`!\\[.*?\\]\\(${escaped}\\)`, "g"), "")
-        .trim()
-      updateDraftField("content", newContent)
+      updateDraftField("simpleImages", draft.simpleImages.filter((url) => url !== targetUrl))
     },
-    [draft.content, updateDraftField],
+    [draft.simpleImages, updateDraftField],
   )
 
   const hasDraftBoxEntries = draftBoxEntries.length > 0
@@ -669,7 +660,10 @@ export function CreatePostFormShell({
           variant="ghost"
           size="sm"
           className="h-9 shrink-0 gap-1.5 text-xs text-muted-foreground"
-          onClick={() => setIsProMode(true)}
+          onClick={() => {
+            updateDraftField("isSimpleMode", false)
+            setIsProMode(true)
+          }}
         >
           <Settings2 className="h-3.5 w-3.5" />
           专业编辑

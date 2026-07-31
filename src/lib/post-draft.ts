@@ -1,6 +1,7 @@
 export type PostDraftMode = "create" | "edit"
 
 export interface LocalPostDraft {
+  isSimpleMode: boolean
   title: string
   content: string
   isAnonymous: boolean
@@ -41,6 +42,7 @@ export interface LocalPostDraft {
   redPacketUnitPoints: string
   redPacketTotalPoints: string
   redPacketPacketCount: string
+  simpleImages: string[]
   attachments: Array<{
     id?: string
     sourceType: "UPLOAD" | "EXTERNAL_LINK"
@@ -89,6 +91,7 @@ const MAX_DRAFT_BOX_ITEMS = 12
 
 export function createEmptyLocalPostDraft(boardSlug = ""): LocalPostDraft {
   return {
+    isSimpleMode: false,
     title: "",
     content: "",
     isAnonymous: false,
@@ -129,6 +132,7 @@ export function createEmptyLocalPostDraft(boardSlug = ""): LocalPostDraft {
     redPacketUnitPoints: "10",
     redPacketTotalPoints: "10",
     redPacketPacketCount: "1",
+    simpleImages: [],
     attachments: [],
   }
 }
@@ -190,6 +194,7 @@ function normalizeStoredDraftData(draft: LocalPostDraft) {
             redemptionCodes: typeof item.redemptionCodes === "string" ? item.redemptionCodes : "",
           }))
       : createEmptyLocalPostDraft(draft.boardSlug || "").lotteryPrizes,
+    simpleImages: Array.isArray(draft.simpleImages) ? draft.simpleImages.filter((item): item is string => typeof item === "string") : [],
     attachments: Array.isArray(draft.attachments)
       ? draft.attachments
           .filter((item): item is LocalPostDraft["attachments"][number] => Boolean(item) && typeof item === "object" && !Array.isArray(item))

@@ -11,6 +11,7 @@ export interface FeedDisplayItem {
   id: string
   slug: string
   title: string
+  isSimpleMode: boolean
   type: ForumFeedItem["type"]
   typeLabel: string
   status: string
@@ -109,6 +110,7 @@ export function mapForumFeedItemsToDisplayItems(
       id: item.id,
       slug: item.slug,
       title: item.title,
+      isSimpleMode: item.isSimpleMode,
       type: item.type,
       typeLabel: item.typeLabel,
       status: item.status,

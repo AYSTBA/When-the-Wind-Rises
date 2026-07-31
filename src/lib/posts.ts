@@ -119,6 +119,7 @@ export interface SitePostItem {
   id: string
   slug: string
   title: string
+  isSimpleMode?: boolean
   description: string
   board: string
   boardIcon: string

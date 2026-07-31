@@ -26,6 +26,7 @@ export interface ForumFeedItem {
   id: string
   slug: string
   title: string
+  isSimpleMode: boolean
   summary: string
   contentMarkdown: string
   coverImage?: string | null
@@ -135,6 +136,7 @@ type PinnedFeedPostRecord = Awaited<ReturnType<typeof findGlobalPinnedPosts>>[nu
 type FeedPost = {
   isAnonymous?: boolean
   isPinned: boolean
+  isSimpleMode: boolean
   id: string
   slug: string
   title: string
@@ -200,6 +202,7 @@ function mapFeedPost(post: FeedPostRecord | PinnedFeedPostRecord, anonymousMaskI
     id: feedPost.id,
     slug: feedPost.slug,
     title: feedPost.title,
+    isSimpleMode: feedPost.isSimpleMode,
     summary: feedPost.summary ?? feedPost.title,
     contentMarkdown: publicContent,
     coverImage: resolvePostCoverImage(feedPost.content, feedPost.coverPath),

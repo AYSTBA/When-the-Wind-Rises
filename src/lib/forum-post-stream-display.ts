@@ -10,6 +10,7 @@ export interface PostStreamDisplayItem {
   id: string
   slug: string
   title: string
+  isSimpleMode?: boolean
   mood: string | null
   excerpt: string
   contentMarkdown?: string
@@ -123,6 +124,7 @@ export function mapSitePostsToDisplayItems(
       id: post.id,
       slug: post.slug,
       title: post.title,
+      isSimpleMode: post.isSimpleMode,
       mood: post.mood ?? null,
       excerpt: post.excerpt,
       contentMarkdown,

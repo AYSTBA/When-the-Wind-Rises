@@ -170,6 +170,7 @@ export interface CreatePostFormBoardGroup {
 export interface CreatePostFormInitialValues {
   title: string
   content: string
+  isSimpleMode?: boolean
   isAnonymous?: boolean
   coverPath?: string | null
   boardSlug: string
@@ -456,6 +457,7 @@ export function buildInitialPostDraft(
   return {
     title: initialValues.title,
     content: initialValues.content,
+    isSimpleMode: Boolean(initialValues.isSimpleMode),
     isAnonymous: Boolean(initialValues.isAnonymous),
     coverPath: initialValues.coverPath ?? "",
     boardSlug: initialValues.boardSlug,
@@ -494,6 +496,7 @@ export function buildInitialPostDraft(
     redPacketTotalPoints: String(initialValues.redPacketConfig?.totalPoints ?? 10),
     redPacketPacketCount: String(initialValues.redPacketConfig?.packetCount ?? 1),
     mood: initialValues.mood ?? "",
+    simpleImages: [],
     attachments: Array.isArray(initialValues.attachments)
       ? initialValues.attachments.map((attachment) => ({
           id: attachment.id,
@@ -629,9 +632,15 @@ export function buildSubmitRequest({
         }
     : undefined
 
+  const simpleImagesMarkdown = draft.simpleImages.map((url) => `![](${url})`).join("\n\n")
+  const content = draft.isSimpleMode
+    ? (draft.content + (simpleImagesMarkdown ? "\n\n" + simpleImagesMarkdown : ""))
+    : draft.content
+
   const commonPayload = {
-    title: draft.title || draft.content.split("\n")[0].slice(0, 50) || "无标题",
-    content: draft.content,
+    title: draft.isSimpleMode ? "" : (draft.title || draft.content.split("\n")[0].slice(0, 50) || "无标题"),
+    content,
+    isSimpleMode: draft.isSimpleMode,
     isAnonymous: draft.isAnonymous,
     coverPath: draft.coverPath.trim() || undefined,
     commentsVisibleToAuthorOnly: draft.commentsVisibleToAuthorOnly,

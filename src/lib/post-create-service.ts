@@ -114,6 +114,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
   })
 
   const rawBody = body as Record<string, unknown>
+  const isSimpleMode = Boolean(rawBody?.isSimpleMode)
   const manualTags = normalizeManualTags(Array.isArray(rawBody?.manualTags)
     ? rawBody.manualTags.filter((item): item is string => typeof item === "string")
     : [])
@@ -383,6 +384,7 @@ export async function createPostFlow(body: unknown, options: CreatePostFlowOptio
           content: serializedContent,
           coverPath,
           summary: summary || titleSafety.sanitizedText,
+          isSimpleMode,
           boardId: boardContext.board.id,
           authorId: author.id,
           isAnonymous,

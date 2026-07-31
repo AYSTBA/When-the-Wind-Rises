@@ -64,6 +64,7 @@ interface ListPostSource {
   id: string
   slug: string
   title: string
+  isSimpleMode?: boolean
   summary?: string | null
   content: string
   mood?: string | null
@@ -131,6 +132,7 @@ export function mapListPost(post: ListPostSource, anonymousMaskIdentity: Anonymo
     id: post.id,
     slug: post.slug,
     title: post.title,
+    isSimpleMode: Boolean(post.isSimpleMode),
     description: post.summary ?? post.title,
     board: post.board.name,
     boardIcon: post.board.iconPath ?? "💬",

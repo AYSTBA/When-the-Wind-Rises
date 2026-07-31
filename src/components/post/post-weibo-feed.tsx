@@ -296,57 +296,95 @@ export function PostWeiboFeed({ items, showBoard = true, postLinkDisplayMode = "
               </div>
 
               <div className="mt-5">
-                <div className="flex min-w-0 flex-wrap items-start gap-2">
-                  <PostListLink href={postPath} visitedPath={postPath} dimWhenRead className="min-w-0 flex-1">
-                    <h2 className={getPostTitleClassName({ isFeatured: item.isFeatured, pinScope: item.pinScope, compact: false })}>
-                      {item.title}
-                    </h2>
-                  </PostListLink>
-                  {getMoodEmoji(item.mood) ? (
-                    <Tooltip content={item.mood ?? ""}>
-                      <span className="inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{getMoodEmoji(item.mood)}</span>
-                    </Tooltip>
-                  ) : null}
-                  {item.hasRedPacket ? (
-                    <Tooltip content={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
-                      <span className="shrink-0" aria-label={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
-                        <PostRewardPoolIcon mode={item.rewardMode} />
-                      </span>
-                    </Tooltip>
-                  ) : null}
-                  {item.hasAttachments ? (
-                    <Tooltip content="含附件">
-                      <span className="shrink-0 text-muted-foreground" aria-label="含附件">
-                        <Paperclip className="h-4 w-4" />
-                      </span>
-                    </Tooltip>
-                  ) : null}
-                  <PostAccessBadges minViewLevel={item.minViewLevel} minViewVipLevel={item.minViewVipLevel} compact />
-                </div>
-
-                <PostNoteMedia href={postPath} media={item.previewMedia} title={item.title} />
-
-                {(() => {
-                  if (!rawContent) return null
-
-                  const plain = stripMarkdown(rawContent)
-                    .replace(/\r\n/g, " ")
-                    .replace(/\n/g, " ")
-                    .replace(/\s+/g, " ")
-                    .trim()
-
-                  const display = plain.length > 20 ? plain.slice(0, 20) : plain
-
-                  return (
-                    <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                      <span>{display}</span>
-                      <span className="text-muted-foreground/60">...</span>
-                      <PostListLink href={postPath} visitedPath={postPath} dimWhenRead className="ml-0.5 font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
-                        全文
+                {item.isSimpleMode ? (
+                  <>
+                    {/* Simple mode: render content inline, no title, no excerpt, no "全文" link */}
+                    {item.contentPreviewHtml ? (
+                      <div
+                        className="prose prose-sm dark:prose-invert max-w-none text-sm leading-7 text-foreground [&_img]:mt-2 [&_img]:max-h-[680px] [&_img]:w-full [&_img]:rounded-md [&_img]:object-cover"
+                        dangerouslySetInnerHTML={{ __html: item.contentPreviewHtml }}
+                      />
+                    ) : item.contentMarkdown ? (
+                      <div className="text-sm leading-7 text-foreground whitespace-pre-wrap">{item.contentMarkdown}</div>
+                    ) : null}
+                    <div className="mt-3 flex min-w-0 flex-wrap items-center gap-2">
+                      {item.hasRedPacket ? (
+                        <Tooltip content={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
+                          <span className="shrink-0" aria-label={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
+                            <PostRewardPoolIcon mode={item.rewardMode} />
+                          </span>
+                        </Tooltip>
+                      ) : null}
+                      {item.hasAttachments ? (
+                        <Tooltip content="含附件">
+                          <span className="shrink-0 text-muted-foreground" aria-label="含附件">
+                            <Paperclip className="h-4 w-4" />
+                          </span>
+                        </Tooltip>
+                      ) : null}
+                      <PostAccessBadges minViewLevel={item.minViewLevel} minViewVipLevel={item.minViewVipLevel} compact />
+                      {getMoodEmoji(item.mood) ? (
+                        <Tooltip content={item.mood ?? ""}>
+                          <span className="ml-auto inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{getMoodEmoji(item.mood)}</span>
+                        </Tooltip>
+                      ) : null}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex min-w-0 flex-wrap items-start gap-2">
+                      <PostListLink href={postPath} visitedPath={postPath} dimWhenRead className="min-w-0 flex-1">
+                        <h2 className={getPostTitleClassName({ isFeatured: item.isFeatured, pinScope: item.pinScope, compact: false })}>
+                          {item.title}
+                        </h2>
                       </PostListLink>
-                    </p>
-                  )
-                })()}
+                      {item.hasRedPacket ? (
+                        <Tooltip content={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
+                          <span className="shrink-0" aria-label={item.rewardMode === "JACKPOT" ? "聚宝盆帖" : "红包帖"}>
+                            <PostRewardPoolIcon mode={item.rewardMode} />
+                          </span>
+                        </Tooltip>
+                      ) : null}
+                      {item.hasAttachments ? (
+                        <Tooltip content="含附件">
+                          <span className="shrink-0 text-muted-foreground" aria-label="含附件">
+                            <Paperclip className="h-4 w-4" />
+                          </span>
+                        </Tooltip>
+                      ) : null}
+                      <PostAccessBadges minViewLevel={item.minViewLevel} minViewVipLevel={item.minViewVipLevel} compact />
+                      {getMoodEmoji(item.mood) ? (
+                        <Tooltip content={item.mood ?? ""}>
+                          <span className="ml-auto inline-flex shrink-0 text-xl leading-none sm:text-2xl" aria-label={item.mood ?? ""}>{getMoodEmoji(item.mood)}</span>
+                        </Tooltip>
+                      ) : null}
+                    </div>
+
+                    <PostNoteMedia href={postPath} media={item.previewMedia} title={item.title} />
+
+                    {(() => {
+                      if (!rawContent) return null
+
+                      const plain = stripMarkdown(rawContent)
+                        .replace(/\r\n/g, " ")
+                        .replace(/\n/g, " ")
+                        .replace(/\s+/g, " ")
+                        .trim()
+
+                      const display = plain.length > 20 ? plain.slice(0, 20) : plain
+
+                      return (
+                        <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                          <span>{display}</span>
+                          <span className="text-muted-foreground/60">...</span>
+                          <PostListLink href={postPath} visitedPath={postPath} dimWhenRead className="ml-0.5 font-medium text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                            全文
+                          </PostListLink>
+                        </p>
+                      )
+                    })()}
+                  </>
+                )}
               </div>
             </div>
 
