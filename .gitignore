@@ -16,3 +16,10 @@ tsconfig.tsbuildinfo
 /addons/
 /uploads/
 /backups/
+
+# 运行日志与本地产物
+*.log
+dev-error.txt
+dev-output.txt
+*.tar.gz
+.omo/
