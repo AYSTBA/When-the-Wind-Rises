@@ -99,7 +99,6 @@ const siteSettingsSectionMap: Record<string, AdminSettingsSectionKey> = {
   "site-interaction": "interaction",
   messages: "messages",
   "site-messages": "messages",
-  "site-friend-links": "friend-links",
   vip: "vip",
   upload: "upload",
   "site-oauth": "oauth",

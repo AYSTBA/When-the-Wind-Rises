@@ -333,22 +333,5 @@ export async function updateInteractionSiteSettingsSection(existing: SiteSetting
     })
   }
 
-  if (section === "site-friend-links") {
-    const friendLinksEnabled = Boolean(body.friendLinksEnabled)
-    const friendLinkApplicationEnabled = Boolean(body.friendLinkApplicationEnabled)
-    const friendLinkAnnouncement = readOptionalStringField(body, "friendLinkAnnouncement")
-
-    const settings = await updateSiteSettingsRecord(existing.id, {
-      friendLinksEnabled,
-      friendLinkApplicationEnabled,
-      friendLinkAnnouncement: friendLinkAnnouncement || "欢迎与本站交换友情链接，请先添加我方链接后再提交申请，我们会在 1-3 个工作日内完成审核。",
-    })
-
-    return finalizeSiteSettingsUpdate({
-      settings,
-      message: "友情链接设置已保存",
-    })
-  }
-
   return null
 }

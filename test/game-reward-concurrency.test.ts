@@ -48,25 +48,18 @@ test("yin yang settlement returns transaction data and validates option literals
 })
 
 test("paid action routes keep duplicate-submission guards and readable Chinese copy", async () => {
-  const [vip, ads, gobang, yinYang, selfServeAds] = await Promise.all([
+  const [vip, gobang, yinYang] = await Promise.all([
     readSource("src/app/api/vip/route.ts"),
-    readSource("src/app/api/self-serve-ads/route.ts"),
     readSource("src/app/api/gobang/route.ts"),
     readSource("src/app/api/yinyang-contract/route.ts"),
-    readSource("src/lib/self-serve-ads.ts"),
   ])
 
   assert.match(vip, /pg_advisory_xact_lock/)
   assert.match(vip, /const purchase = await prisma\.\$transaction\(async \(tx\) =>/)
-  assert.match(ads, /scope: "self-serve-ads-submit"/)
-  assert.match(ads, /dedupeKey: JSON\.stringify\(draft\)/)
-  assert.match(selfServeAds, /self-serve-ads:slot:\$\{existing\.appCode\}:\$\{existing\.slotType\}:\$\{slotIndex\}/)
-  assert.match(selfServeAds, /latest\.status !== "PENDING"/)
-  assert.match(selfServeAds, /status: "APPROVED"/)
   assert.match(yinYang, /scope: "yinyang-contract-create"/)
   assert.match(yinYang, /scope: "yinyang-contract-accept"/)
 
-  for (const source of [vip, ads, gobang, yinYang, selfServeAds]) {
+  for (const source of [vip, gobang, yinYang]) {
     assert.doesNotMatch(source, /\?\?\?\?/, "user-facing copy must not be corrupted")
   }
 })

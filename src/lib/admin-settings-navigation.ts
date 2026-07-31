@@ -90,10 +90,6 @@ const adminSettingsSectionDetails: Record<
     defaultSubTab: "general",
     subTabs: [{ key: "general", label: "私信配置" }],
   },
-  "friend-links": {
-    label: "友情链接",
-    subTabs: [],
-  },
   vip: {
     label: "风铃与VIP",
     defaultSubTab: "points-vip",

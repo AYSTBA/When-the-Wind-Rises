@@ -10,7 +10,6 @@ import { SiteSettingsProvider } from "@/components/site-settings-provider"
 import { getHomeAnnouncements } from "@/lib/announcements"
 import { getCurrentUser } from "@/lib/auth"
 import { getBoards } from "@/lib/boards"
-import { getFriendLinkListData } from "@/lib/friend-links"
 import { getHomeSidebarHotTopics, resolveSidebarUser } from "@/lib/home-sidebar"
 import { getHomeSidebarStats } from "@/lib/home-sidebar-stats"
 import { getSiteSettings } from "@/lib/site-settings"
@@ -99,7 +98,7 @@ export default async function AddonPublicPage({ params, searchParams }: AddonPag
   const needsShellData = showLeftSidebar || showRightSidebar
   const settingsPromise = needsShellData ? getSiteSettings() : Promise.resolve(null)
   const currentUserPromise = showRightSidebar ? getCurrentUser() : Promise.resolve(null)
-  const [settings, zones, boards, currentUser, hotTopics, announcements, friendLinks, stats] = await Promise.all([
+  const [settings, zones, boards, currentUser, hotTopics, announcements, stats] = await Promise.all([
     settingsPromise,
     showLeftSidebar ? getZones() : Promise.resolve([]),
     showLeftSidebar ? getBoards() : Promise.resolve([]),
@@ -108,7 +107,6 @@ export default async function AddonPublicPage({ params, searchParams }: AddonPag
       ? settingsPromise.then((siteSettings) => siteSettings ? getHomeSidebarHotTopics(siteSettings.homeSidebarHotTopicsCount) : [])
       : Promise.resolve([]),
     showRightSidebar ? getHomeAnnouncements(3) : Promise.resolve([]),
-    showRightSidebar ? getFriendLinkListData() : Promise.resolve(null),
     showRightSidebar ? getHomeSidebarStats() : Promise.resolve(null),
   ])
   const sidebarUser = showRightSidebar && settings
@@ -186,8 +184,6 @@ export default async function AddonPublicPage({ params, searchParams }: AddonPag
                   hotTopics={hotTopics}
                   announcements={announcements}
                   showAnnouncements={settings.homeSidebarAnnouncementsEnabled}
-                  friendLinks={friendLinks?.compact ?? []}
-                  friendLinksEnabled={friendLinks?.compact?.length ? settings.friendLinksEnabled : settings.friendLinksEnabled}
                   createPostHref="/write"
                   stats={stats}
                   siteName={settings.siteName}

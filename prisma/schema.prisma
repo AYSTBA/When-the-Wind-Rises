@@ -258,12 +258,6 @@ enum SiteDocumentSourceType {
   LINK
 }
 
-enum FriendLinkStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  DISABLED
-}
 
 enum BoardApplicationStatus {
   PENDING
@@ -1959,24 +1953,6 @@ model PostAttachmentPurchase {
   @@index([sellerId, createdAt])
 }
 
-model FriendLink {
-  id          String           @id @default(cuid())
-  name        String
-  url         String           @unique
-  logoPath    String?
-  description String?
-  contact     String?
-  sortOrder   Int              @default(0)
-  clickCount  Int              @default(0)
-  status      FriendLinkStatus @default(PENDING)
-  reviewNote  String?
-  reviewedAt  DateTime?        @db.Timestamptz(3)
-  createdAt   DateTime         @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime         @updatedAt @db.Timestamptz(3)
-
-  @@index([status, sortOrder, createdAt])
-  @@index([createdAt])
-}
 
 model BoardApplication {
   id           String                 @id @default(cuid())
@@ -2273,9 +2249,6 @@ model SiteSetting {
   postLinkDisplayMode           String   @default("SLUG")
   homeFeedPostListDisplayMode   String   @default("DEFAULT")
   homeSidebarStatsCardEnabled   Boolean  @default(true)
-  friendLinksEnabled            Boolean  @default(true)
-  friendLinkApplicationEnabled  Boolean  @default(true)
-  friendLinkAnnouncement        String   @default("欢迎与本站交换友情链接，请先添加我方链接后再提交申请，我们会在 1-3 个工作日内完成审核。")
   checkInEnabled                Boolean  @default(true)
   checkInReward                 Int      @default(5)
   checkInMakeUpCardPrice        Int      @default(0)

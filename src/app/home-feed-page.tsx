@@ -33,7 +33,6 @@ import {
 import { getCurrentUser } from "@/lib/auth"
 import { getBoards } from "@/lib/boards"
 import { getLocalDateKey } from "@/lib/date-key"
-import { getFriendLinkListData } from "@/lib/friend-links"
 import { getLatestFeed } from "@/lib/forum-feed"
 import {
   buildAddonHomeFeedHref,
@@ -157,7 +156,6 @@ export async function HomeFeedPage({
     announcements,
     settings,
     rssHomeSettings,
-    friendLinks,
     addonTabs,
   ] = await Promise.all([
     getBoards(),
@@ -166,7 +164,6 @@ export async function HomeFeedPage({
     getHomeAnnouncements(3),
     settingsPromise,
     rssHomeSettingsPromise,
-    getFriendLinkListData(10),
     addonTabsPromise,
   ])
 
@@ -468,7 +465,6 @@ export async function HomeFeedPage({
                   surface="feed.sidebar"
                   props={{
                     announcements,
-                    friendLinks,
                     hotTopics,
                     settings,
                     sidebarPanels,
@@ -481,8 +477,6 @@ export async function HomeFeedPage({
                     postLinkDisplayMode={settings.postLinkDisplayMode}
                     announcements={announcements}
                     showAnnouncements={settings.homeSidebarAnnouncementsEnabled}
-                    friendLinks={friendLinks.compact}
-                    friendLinksEnabled={settings.friendLinksEnabled}
                     topPanels={sidebarPanels.top}
                     middlePanels={sidebarPanels.middle}
                     bottomPanels={sidebarPanels.bottom}

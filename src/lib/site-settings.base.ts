@@ -56,7 +56,4 @@ export interface SiteSettingsBaseData {
   theme: ThemeRuntimeSettings
   search: SiteSearchSettings
   analyticsCode?: string | null
-  friendLinksEnabled: boolean
-  friendLinkApplicationEnabled: boolean
-  friendLinkAnnouncement: string
 }

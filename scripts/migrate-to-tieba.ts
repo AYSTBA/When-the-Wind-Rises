@@ -134,8 +134,8 @@ async function main() {
       appStateJson: JSON.stringify(appState),
       // 关闭一些不需要的功能
       homeSidebarStatsCardEnabled: false,
-      friendLinksEnabled: false,
-      friendLinkApplicationEnabled: false,
+
+
       checkInEnabled: false,
       registrationRequireInviteCode: false,
       registerInviteCodeEnabled: false,

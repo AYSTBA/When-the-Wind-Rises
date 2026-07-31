@@ -16,10 +16,6 @@ export const siteSettingsSelect = {
   postLinkDisplayMode: true,
   homeFeedPostListDisplayMode: true,
   homeSidebarStatsCardEnabled: true,
-  friendLinksEnabled: true,
-  friendLinkApplicationEnabled: true,
-  friendLinkAnnouncement: true,
-
   checkInEnabled: true,
   checkInReward: true,
   checkInMakeUpCardPrice: true,

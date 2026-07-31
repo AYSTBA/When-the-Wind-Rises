@@ -63,25 +63,7 @@ test("verification applications bound input and serialize user verification stat
   assert.match(unbindRoute, /withRequestWriteGuard\([\s\S]*?scope: "verifications-unbind"/)
 })
 
-test("friend link applications validate public destinations and atomically deduplicate", async () => {
-  const [service, queries, route, autoReview] = await Promise.all([
-    readSource("src/lib/friend-links.ts"),
-    readSource("src/db/friend-links.ts"),
-    readSource("src/app/api/friend-links/apply/route.ts"),
-    readSource("src/lib/friend-link-auto-review.ts"),
-  ])
 
-  assert.match(service, /await resolveSafeOutboundTarget\(url\)/)
-  assert.match(service, /Website URL and placement page must use the same host/)
-  assert.match(service, /parsed\.username \|\| parsed\.password/)
-  assert.match(queries, /createFriendLinkIfAbsent/)
-  assert.match(queries, /pg_advisory_xact_lock/)
-  assert.match(queries, /mode: "insensitive"/)
-  assert.match(route, /identity: \{ ip: getRequestIp\(request\) \}/)
-  assert.match(route, /dedupeWindowMs: 60_000/)
-  assert.match(autoReview, /safeOutboundFetch\(currentUrl/)
-  assert.match(autoReview, /FRIEND_LINK_VERIFY_MAX_RESPONSE_BYTES/)
-})
 
 test("favorite collection mutations serialize collection policy and only count inserted rows", async () => {
   const [service, route] = await Promise.all([

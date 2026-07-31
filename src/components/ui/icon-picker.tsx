@@ -47,7 +47,7 @@ interface IconPickerProps {
   textareaRows?: number
   description?: string
   popoverTitle?: string
-  uploadFolder?: "avatars" | "posts" | "comments" | "friend-links" | "site-logo" | "icon"
+  uploadFolder?: "avatars" | "posts" | "comments" | "site-logo" | "icon"
   hideLabel?: boolean
   triggerMode?: "full" | "icon" | "input"
   allowEmpty?: boolean

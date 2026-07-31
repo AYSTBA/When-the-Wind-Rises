@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Link2 } from "lucide-react"
 import type { ComponentProps } from "react"
 
 import { HomeAnnouncementPanel } from "@/components/home/home-announcement-panel"
@@ -8,7 +7,6 @@ import { HomeSiteStatsCard } from "@/components/home/home-site-stats-card"
 import { SidebarUserCard, type SidebarUserCardData } from "@/components/user/sidebar-user-card"
 
 import type { AnnouncementItem } from "@/lib/announcements"
-import type { FriendLinkItem } from "@/lib/friend-links"
 import { groupHomeSidebarPanels, type HomeSidebarPanelItem } from "@/lib/home-sidebar-layout"
 import type { HomeSidebarStatsData } from "@/lib/home-sidebar-stats"
 import type { SiteSettingsData } from "@/lib/site-settings.types"
@@ -31,8 +29,6 @@ interface HomeSidebarPanelsProps {
   postLinkDisplayMode?: "SLUG" | "ID"
   announcements?: AnnouncementItem[]
   showAnnouncements?: boolean
-  friendLinks?: FriendLinkItem[]
-  friendLinksEnabled?: boolean
   createPostHref?: string
   topPanels?: HomeSidebarPanelItem[]
   middlePanels?: HomeSidebarPanelItem[]
@@ -75,7 +71,7 @@ export function buildHomeSidebarCurrentUserSettings(settings: SiteSettingsData):
   }
 }
 
-export async function HomeSidebarPanels({ user, hotTopics: _hotTopics, postLinkDisplayMode = "SLUG", announcements = [], showAnnouncements = true, friendLinks = [], friendLinksEnabled = false, createPostHref, topPanels = [], middlePanels = [], bottomPanels = [], stats = null, siteName, siteDescription, siteLogoPath, siteIconPath, currentUserSettings, stickyTopClass = "top-20", sticky = true }: HomeSidebarPanelsProps) {
+export async function HomeSidebarPanels({ user, hotTopics: _hotTopics, postLinkDisplayMode = "SLUG", announcements = [], showAnnouncements = true, createPostHref, topPanels = [], middlePanels = [], bottomPanels = [], stats = null, siteName, siteDescription, siteLogoPath, siteIconPath, currentUserSettings, stickyTopClass = "top-20", sticky = true }: HomeSidebarPanelsProps) {
   const sidebarPanels = groupHomeSidebarPanels([
     ...topPanels,
     ...middlePanels,
@@ -98,34 +94,6 @@ export async function HomeSidebarPanels({ user, hotTopics: _hotTopics, postLinkD
 
       <AddonSlotRenderer slot="home.right.middle" />
       {sidebarPanels.middle.map((panel) => <div key={panel.id}>{panel.content}</div>)}
-
-      {friendLinksEnabled ? (
-
-        <section className="mobile-sidebar-section rounded-xl border border-border bg-card p-4 shadow-xs shadow-black/5 dark:shadow-black/30">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Link2 className="h-5 w-5 text-sky-500" />
-              <div>
-                <h3 className="font-semibold">友情链接</h3>
-              </div>
-            </div>
-            <Link href="/link" className="text-xs text-muted-foreground transition hover:text-foreground">全部链接</Link>
-          </div>
-          {friendLinks.length > 0 ? (
-            <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
-              {friendLinks.map((link) => (
-                <a key={link.id} href={link.url} target="_blank" rel="noreferrer" className="truncate rounded-lg px-2 py-1.5 text-muted-foreground transition hover:bg-accent hover:text-foreground" title={link.name}>
-                  {link.name}
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-[18px] border border-dashed border-border px-3 py-4 text-xs leading-6 text-muted-foreground">
-              当前还没有已通过的友情链接，审核通过后会显示在这里。
-            </div>
-          )}
-        </section>
-      ) : null}
 
       <AddonSlotRenderer slot="home.right.bottom" />
       {sidebarPanels.bottom.map((panel) => <div key={panel.id}>{panel.content}</div>)}

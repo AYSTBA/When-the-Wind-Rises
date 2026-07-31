@@ -8,7 +8,6 @@ import { SiteHeader } from "@/components/site-header"
 import { getHomeAnnouncements } from "@/lib/announcements"
 import { getCurrentUser } from "@/lib/auth"
 import { getFavoriteCollectionDetailPage } from "@/lib/favorite-collections"
-import { getFriendLinkListData } from "@/lib/friend-links"
 import { getBoards } from "@/lib/boards"
 import { getHomeSidebarHotTopics, resolveSidebarUser } from "@/lib/home-sidebar"
 import { getHomeSidebarStats } from "@/lib/home-sidebar-stats"
@@ -61,11 +60,10 @@ export default async function FavoriteCollectionDetailPage(props: {
     page: currentPage,
     pendingPage: currentPendingPage,
   })
-  const [sidebarUser, hotTopics, announcements, friendLinks, sidebarStats] = await Promise.all([
+  const [sidebarUser, hotTopics, announcements, sidebarStats] = await Promise.all([
     resolveSidebarUser(currentUser, settings),
     getHomeSidebarHotTopics(settings.homeSidebarHotTopicsCount),
     getHomeAnnouncements(3),
-    getFriendLinkListData(),
     settings.homeSidebarStatsCardEnabled ? getHomeSidebarStats() : Promise.resolve(null),
   ])
 
@@ -95,15 +93,13 @@ export default async function FavoriteCollectionDetailPage(props: {
           rightSidebar={(
             <div className="mt-6 hidden pb-12 lg:block">
               <AddonSlotRenderer slot="collection.sidebar.before" />
-              <AddonSurfaceRenderer surface="collection.sidebar" props={{ announcements, friendLinks, hotTopics, settings, sidebarStats }}>
+              <AddonSurfaceRenderer surface="collection.sidebar" props={{ announcements, hotTopics, settings, sidebarStats }}>
                 <HomeSidebarPanels
                   user={sidebarUser}
                   hotTopics={hotTopics}
                   postLinkDisplayMode={settings.postLinkDisplayMode}
                   announcements={announcements}
                   showAnnouncements={settings.homeSidebarAnnouncementsEnabled}
-                  friendLinks={friendLinks.compact}
-                  friendLinksEnabled={settings.friendLinksEnabled}
                   stats={sidebarStats}
                   siteName={settings.siteName}
                   siteDescription={settings.siteDescription}

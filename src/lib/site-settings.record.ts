@@ -13,9 +13,6 @@ export interface SiteSettingsBaseRecordData {
   headerAppLinksJson?: string | null
   headerAppIconName?: string | null
   analyticsCode?: string | null
-  friendLinksEnabled: boolean
-  friendLinkApplicationEnabled: boolean
-  friendLinkAnnouncement: string
 }
 
 export interface SiteSettingsCommunityRecordData {

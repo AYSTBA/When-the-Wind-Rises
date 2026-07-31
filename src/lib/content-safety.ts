@@ -21,7 +21,6 @@ export type SensitiveScene =
   | "verification.customDescription"
   | "report.reasonDetail"
   | "message.body"
-  | "friendLink.name"
   | "selfServeAd.title"
   | "yinyang.question"
   | "yinyang.answer"

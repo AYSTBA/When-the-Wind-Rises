@@ -57,7 +57,6 @@ export type AdminSettingsSectionKey =
   | "board-applications"
   | "interaction"
   | "messages"
-  | "friend-links"
   | "invite-codes"
   | "redeem-codes"
   | "vip"
@@ -120,7 +119,6 @@ export const adminSettingsSections: AdminSettingsSectionKey[] = [
   "board-applications",
   "interaction",
   "messages",
-  "friend-links",
   "invite-codes",
   "redeem-codes",
   "vip",
@@ -190,7 +188,6 @@ export const adminSettingsGroups = [
       { key: "interaction", label: "互动与热度" },
       { key: "messages", label: "私信" },
       { key: "board-applications", label: "节点申请" },
-      { key: "friend-links", label: "友情链接" },
     ],
   },
   {
@@ -237,7 +234,6 @@ const adminSettingsSectionsByTier: Record<AdminManagementTier, ReadonlySet<Admin
     "registration",
     "board-applications",
     "messages",
-    "friend-links",
     "invite-codes",
     "redeem-codes",
     "vip",
@@ -259,7 +255,6 @@ const adminSettingsSectionPermissions: Record<AdminSettingsSectionKey, AdminPerm
   "board-applications": "admin.operations.manage",
   interaction: "admin.operations.manage",
   messages: "admin.operations.manage",
-  "friend-links": "admin.operations.manage",
   "invite-codes": "admin.operations.manage",
   "redeem-codes": "admin.operations.manage",
   vip: "admin.operations.manage",

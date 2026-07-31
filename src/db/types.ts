@@ -11,7 +11,6 @@ export {
   ChangeType,
   CommentStatus,
   ConversationKind,
-  FriendLinkStatus,
   GodCommentSource,
   LotteryStatus,
   LotteryTriggerMode,

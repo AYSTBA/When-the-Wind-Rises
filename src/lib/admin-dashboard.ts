@@ -31,7 +31,6 @@ export interface AdminDashboardData {
     offlinePostCount: number
     pendingBoardApplicationCount: number
     pendingVerificationCount: number
-    pendingFriendLinkCount: number
     pendingRssSourceApplicationCount: number
     pendingOAuthClientCount: number
     pendingPaymentApplicationCount: number

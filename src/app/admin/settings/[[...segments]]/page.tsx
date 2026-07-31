@@ -6,7 +6,6 @@ import { AdminAppsSettingsForm } from "@/components/admin/admin-apps-settings-fo
 import { AdminBasicSettingsForm } from "@/components/admin/admin-basic-settings-form"
 import { AdminEditorToolbarSettingsForm } from "@/components/admin/admin-editor-toolbar-settings-form"
 import { AdminFooterLinksSettingsForm } from "@/components/admin/admin-footer-links-settings-form"
-import { AdminFriendLinksSettingsForm } from "@/components/admin/admin-friend-links-settings-form"
 import { AdminMarkdownEmojiSettingsForm } from "@/components/admin/admin-markdown-emoji-settings-form"
 import { AdminMessageSettingsForm } from "@/components/admin/admin-message-settings-form"
 import { AdminModuleSearch } from "@/components/admin/admin-module-search"
@@ -35,7 +34,6 @@ import {
   sectionsRequiringSiteSettings,
 } from "@/lib/admin-navigation"
 import { resolveAdminPermissionState } from "@/lib/admin-permission-overrides"
-import { getAdminFriendLinkPageData } from "@/lib/friend-links"
 import { getServerSiteSettings } from "@/lib/site-settings"
 import { requireAdminActor } from "@/lib/moderator-permissions"
 
@@ -105,7 +103,6 @@ export default async function AdminSettingsPage(
     redeemCodes,
     tasks,
     taskBoards,
-    friendLinks,
     levelDefinitions,
     oauthClients,
     paymentApplications,
@@ -125,9 +122,6 @@ export default async function AdminSettingsPage(
     resolved.section === "vip"
       ? getBoards()
       : Promise.resolve<Awaited<ReturnType<typeof getBoards>>>([]),
-    resolved.section === "friend-links"
-      ? getAdminFriendLinkPageData()
-      : Promise.resolve<Awaited<ReturnType<typeof getAdminFriendLinkPageData>> | null>(null),
     resolved.section === "upload"
       ? getLevelDefinitions()
       : Promise.resolve<Awaited<ReturnType<typeof getLevelDefinitions>>>([]),
@@ -252,14 +246,6 @@ export default async function AdminSettingsPage(
               messageRealtimeEnabled: Boolean(siteSettings!.messageRealtimeEnabled),
               messageRealtimeHeartbeatSeconds: siteSettings!.messageRealtimeHeartbeatSeconds,
             }}
-          />
-        ) : null}
-
-        {resolved.section === "friend-links" ? (
-          <AdminFriendLinksSettingsForm
-            initialSettings={friendLinks!.settings}
-            items={friendLinks!.items}
-            pendingCount={friendLinks!.pendingCount}
           />
         ) : null}
 

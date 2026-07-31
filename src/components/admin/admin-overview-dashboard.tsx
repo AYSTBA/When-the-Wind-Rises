@@ -15,7 +15,6 @@ import {
   LayoutGrid,
   MessageSquare,
   Rss,
-  Shield,
   TrendingUp,
   Users,
 } from "lucide-react"
@@ -287,13 +286,6 @@ export function AdminOverviewDashboard({
               value={data.overview.pendingPaymentApplicationCount}
               description="审核用户提交的 Payment 应用收款申请"
               icon={<CreditCard className="h-3.5 w-3.5" />}
-            />
-            <PendingReviewCard
-              href={getAdminSettingsHref("friend-links")}
-              title="友情链接审核"
-              value={data.overview.pendingFriendLinkCount}
-              description="审核站点互链申请与展示资料"
-              icon={<Shield className="h-3.5 w-3.5" />}
             />
             <PendingReviewCard
               href="/admin/apps/rss-harvest/applications"

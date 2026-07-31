@@ -109,10 +109,6 @@ export const ADDON_SURFACE_CATALOG = [
   surface("feed.universe", "接管宇宙流专属区。"),
   surface("feed.sidebar", "接管首页内容流右侧栏。"),
 
-  surface("friend-links.page", "接管友情链接页主体区域。", { category: "friend-links" }),
-  surface("friend-links.hero", "接管友情链接顶部说明区。", { category: "friend-links" }),
-  surface("friend-links.content", "接管友情链接目录区。", { category: "friend-links" }),
-
   surface("funs.page", "接管全部节点页主体区域。"),
   surface("funs.content", "接管全部节点内容区。"),
   surface("funs.sidebar", "接管全部节点右侧栏。"),

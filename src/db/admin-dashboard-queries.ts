@@ -135,7 +135,6 @@ async function getAdminDashboardRawDataUncached() {
       zoneCount: NumericLike
       pendingBoardApplicationCount: NumericLike
       pendingVerificationCount: NumericLike
-      pendingFriendLinkCount: NumericLike
       pendingRssSourceApplicationCount: NumericLike
       pendingOAuthClientCount: NumericLike
       pendingPaymentApplicationCount: NumericLike
@@ -147,7 +146,6 @@ async function getAdminDashboardRawDataUncached() {
         (SELECT COUNT(*) FROM "Zone") AS "zoneCount",
         (SELECT COUNT(*) FROM "BoardApplication" WHERE status = 'PENDING') AS "pendingBoardApplicationCount",
         (SELECT COUNT(*) FROM "UserVerification" WHERE status = 'PENDING') AS "pendingVerificationCount",
-        (SELECT COUNT(*) FROM "FriendLink" WHERE status = 'PENDING') AS "pendingFriendLinkCount",
         (SELECT COUNT(*) FROM "rss_source_application" WHERE status = 'PENDING') AS "pendingRssSourceApplicationCount",
         (SELECT COUNT(*) FROM "OAuthClient" WHERE status = 'PENDING') AS "pendingOAuthClientCount",
         (SELECT COUNT(*) FROM "PaymentApplication" WHERE status = 'PENDING') AS "pendingPaymentApplicationCount",
@@ -211,7 +209,6 @@ async function getAdminDashboardRawDataUncached() {
       offlinePostCount: toNumber(resolvedPostStats?.offlinePostCount),
       pendingBoardApplicationCount: toNumber(resolvedSiteStats?.pendingBoardApplicationCount),
       pendingVerificationCount: toNumber(resolvedSiteStats?.pendingVerificationCount),
-      pendingFriendLinkCount: toNumber(resolvedSiteStats?.pendingFriendLinkCount),
       pendingRssSourceApplicationCount: toNumber(resolvedSiteStats?.pendingRssSourceApplicationCount),
       pendingOAuthClientCount: toNumber(resolvedSiteStats?.pendingOAuthClientCount),
       pendingPaymentApplicationCount: toNumber(resolvedSiteStats?.pendingPaymentApplicationCount),
