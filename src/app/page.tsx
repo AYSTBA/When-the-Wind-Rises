@@ -39,10 +39,10 @@ export default async function MoodPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <div className="mx-auto max-w-[1200px] px-4 py-6">
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex items-stretch justify-center gap-3 sm:gap-4">
           {/* 最近心情 - 正方形小卡片 */}
-          <Card className="w-[160px] h-[160px] flex flex-col items-center justify-center gap-1">
-            <CardContent className="flex flex-col items-center justify-center p-0">
+          <Card className="h-[160px] w-[120px] shrink-0 sm:w-[160px]">
+            <CardContent className="flex h-full flex-col items-center justify-center gap-1 p-0">
               {hasAnyData ? (
                 <>
                   <span className="text-5xl font-light tabular-nums leading-none">
@@ -60,9 +60,9 @@ export default async function MoodPage() {
             </CardContent>
           </Card>
 
-          {/* 今日心情记录 */}
-          <Card className="w-auto min-w-[280px] h-[160px] flex flex-col items-center justify-center">
-            <CardContent className="flex flex-col items-center justify-center p-4 w-full">
+          {/* 今日心情记录 - 与最近心情同一行同一高度 */}
+          <Card className="h-[160px] min-w-0 flex-1 sm:w-auto sm:min-w-[280px] sm:flex-none">
+            <CardContent className="flex h-full w-full flex-col items-center justify-center px-2 sm:px-4">
               {user ? (
                 <MoodRecorder initialTodayMood={todayMood?.mood ?? null} />
               ) : (

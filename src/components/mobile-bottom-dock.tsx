@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Sparkles, LayoutGrid } from "lucide-react"
+import { Sparkles, LayoutGrid, House } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
 const dockItems = [
   { href: "/", label: "心情", icon: Sparkles },
+  { href: "/house", label: "风屋", icon: House },
   { href: "/hot", label: "广场", icon: LayoutGrid },
 ]
 

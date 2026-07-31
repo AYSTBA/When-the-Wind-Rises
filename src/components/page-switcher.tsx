@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 const TABS = [
   { label: "心情", href: "/", match: (p: string) => p === "/" },
   { label: "风屋", href: "/house", match: (p: string) => p.startsWith("/house") },
-  { label: "风广场", href: "/forum", match: (p: string) => p.startsWith("/forum") },
+  { label: "风广场", href: "/forum", match: (p: string) => p.startsWith("/forum") || p.startsWith("/users") },
 ] as const
 
 export function PageSwitcher() {

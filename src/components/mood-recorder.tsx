@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { toast } from "sonner"
 
+import { cn } from "@/lib/utils"
+
 const MOOD_OPTIONS = [
   { value: "很开心", emoji: "😄", label: "很开心" },
   { value: "开心", emoji: "😊", label: "开心" },
@@ -45,30 +47,33 @@ export function MoodRecorder({ initialTodayMood }: MoodRecorderProps) {
   if (todayMood) {
     const recorded = MOOD_OPTIONS.find((m) => m.value === todayMood)
     return (
-      <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-3">
-        <span className="text-2xl">{recorded?.emoji ?? "📝"}</span>
+      <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 sm:gap-3 sm:px-5 sm:py-3">
+        <span className="text-xl sm:text-2xl">{recorded?.emoji ?? "📝"}</span>
         <div className="flex-1">
-          <p className="text-sm font-medium">今日心情：{todayMood}</p>
-          <p className="text-xs text-muted-foreground">今天的心情已经记录啦~</p>
+          <p className="text-xs font-medium sm:text-sm">今日心情：{todayMood}</p>
+          <p className="text-[10px] text-muted-foreground sm:text-xs">今天的心情已经记录啦~</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <p className="text-sm text-muted-foreground">现在心情怎么样</p>
-      <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4">
+    <div className="flex flex-col items-center gap-2">
+      <p className="text-xs text-muted-foreground sm:text-sm">现在心情怎么样</p>
+      <div className="flex items-center gap-1 rounded-xl border border-border bg-card px-2 py-2 sm:gap-3 sm:px-5 sm:py-4">
         {MOOD_OPTIONS.map((mood) => (
           <button
             key={mood.value}
             type="button"
             disabled={loading}
             onClick={() => handleRecord(mood.value)}
-            className="flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-background transition-all hover:border-foreground/30 hover:bg-accent active:scale-95 disabled:opacity-50"
+            className={cn(
+              "flex items-center justify-center rounded-xl border border-border bg-background transition-all hover:border-foreground/30 hover:bg-accent active:scale-95 disabled:opacity-50",
+              "h-8 w-8 sm:h-14 sm:w-14",
+            )}
             title={mood.label}
           >
-            <span className="text-2xl">{mood.emoji}</span>
+            <span className="text-lg sm:text-2xl">{mood.emoji}</span>
           </button>
         ))}
       </div>
