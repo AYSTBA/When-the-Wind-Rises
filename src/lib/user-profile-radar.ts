@@ -1,9 +1,18 @@
+import { db } from "@/db/client"
 import type { BadgeEligibilitySnapshot } from "@/lib/badges"
 import { formatCompactNumber, formatCompactPointValue } from "@/lib/formatters"
 import type { SiteUserProfile } from "@/lib/users"
 
+const MOOD_VALUE_MAP: Record<string, number> = {
+  "很开心": 5,
+  "开心": 4,
+  "一般": 3,
+  "低落": 2,
+  "很失落": 1,
+}
+
 export interface UserProfileRadarDimension {
-  key: "wealth" | "experience" | "diligence" | "skill" | "charm" | "activity"
+  key: "wealth" | "experience" | "diligence" | "skill" | "mood" | "activity"
   label: string
   score: number
   displayScore: number
@@ -55,10 +64,10 @@ function getRegisterDays(createdAt: string) {
   return Math.max(0, Math.floor((Date.now() - createdAtDate.getTime()) / 86_400_000))
 }
 
-export function buildUserProfileRadarData(params: {
+export async function buildUserProfileRadarData(params: {
   user: SiteUserProfile
   snapshot: BadgeEligibilitySnapshot | null
-}): UserProfileRadarData {
+}): Promise<UserProfileRadarData> {
   const { user, snapshot } = params
   const registerDays = snapshot?.registerDays ?? getRegisterDays(user.createdAt)
   const level = snapshot?.level ?? user.level
@@ -73,6 +82,19 @@ export function buildUserProfileRadarData(params: {
   const followerCount = snapshot?.followerCount ?? user.followerCount
   const postCount = snapshot?.postCount ?? user.postCount
   const commentCount = snapshot?.commentCount ?? user.commentCount
+
+  // Fetch recent mood records for the mood dimension
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 86_400_000)
+  const moodRecords = await db.moodRecord.findMany({
+    where: {
+      userId: user.id,
+      createdAt: { gte: thirtyDaysAgo },
+    },
+    select: { mood: true },
+  })
+  const moodAvg = moodRecords.length > 0
+    ? moodRecords.reduce((sum, r) => sum + (MOOD_VALUE_MAP[r.mood] ?? 0), 0) / moodRecords.length
+    : 0
 
   const dimensions: UserProfileRadarDimension[] = [
     {
@@ -117,14 +139,15 @@ export function buildUserProfileRadarData(params: {
       detail: `采纳 ${formatShortCount(acceptedAnswerCount)} · 被打赏 ${formatShortCount(receivedTipCount)}`,
     },
     {
-      key: "charm",
-      label: "魅力",
+      key: "mood",
+      label: "心情",
       score: combineScore([
-        { normalized: normalizeLog(likeReceivedCount, 600), weight: 0.7 },
-        { normalized: normalizeLog(followerCount, 120), weight: 0.3 },
+        { normalized: moodRecords.length > 0 ? normalizeLinear(moodAvg, 5) : 0, weight: 1 },
       ]),
       displayScore: 0,
-      detail: `获赞 ${formatShortCount(likeReceivedCount)} · 粉丝 ${formatShortCount(followerCount)}`,
+      detail: moodRecords.length > 0
+        ? `心情均分 ${moodAvg.toFixed(1)} · 记录 ${moodRecords.length} 天`
+        : "暂无心情记录",
     },
     {
       key: "activity",

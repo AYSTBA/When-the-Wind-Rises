@@ -129,7 +129,7 @@ export async function getUserPreviewCardData(username: string): Promise<UserPrev
       initialFollowed,
     },
     canSendMessage: Boolean(settings.messageEnabled && currentUser && currentUser.id !== user.id && !profileAccess.relation.isBlocked),
-    radarData: buildUserProfileRadarData({
+    radarData: await buildUserProfileRadarData({
       user,
       snapshot: radarSnapshot,
     }),

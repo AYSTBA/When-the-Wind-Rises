@@ -6,6 +6,7 @@ import type { CSSProperties } from "react"
 
 import { AddonSlotRenderer, AddonSurfaceRenderer } from "@/addons-host"
 import { AccessDeniedCard } from "@/components/access-denied-card"
+import { BackButton } from "@/components/back-button"
 import { ForumPageShell } from "@/components/forum/forum-page-shell"
 import { PageNumberPagination } from "@/components/page-number-pagination"
 import { AiAgentIndicator } from "@/components/user/ai-agent-indicator"
@@ -224,6 +225,9 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
       <div className="min-h-screen bg-background">
         <SiteHeader />
         <main className="mx-auto max-w-[1200px] px-1 py-8">
+          <div className="mb-3 flex items-center gap-2">
+            <BackButton />
+          </div>
           <AddonSlotRenderer slot="user.page.before" props={userSlotProps} />
           <div className="mx-auto max-w-[960px]">
             <AccessDeniedCard
@@ -311,7 +315,7 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
   const canToggleFollow = (!currentUser || currentUser.id !== user.id) && !profileAccess.relation.isBlocked
   const isAnonymousMaskUser = settings.anonymousPostMaskUserId === user.id
   const isAiAgentUser = aiAgentUserIds.includes(user.id)
-  const profileRadarData = buildUserProfileRadarData({
+  const profileRadarData = await buildUserProfileRadarData({
     user,
     snapshot: radarSnapshot,
   })
@@ -511,6 +515,9 @@ export default async function UserPage(props: PageProps<"/users/[username]">) {
             boards={boards}
             main={(
               <main className={cn("mt-6 pb-12", isRestrictedUser && "grayscale")}>
+                <div className="mb-3 flex items-center gap-2">
+                  <BackButton />
+                </div>
                 <div className="flex flex-col gap-0">
                   <AddonSlotRenderer slot="user.profile.before" props={userSlotProps} />
                   <AddonSurfaceRenderer surface="user.profile" props={{ ...userSlotProps, user }}>
